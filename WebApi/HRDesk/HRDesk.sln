@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRDesk", "HRDesk.csproj", "{CF0FA0C6-3E50-4FAA-A105-93A69B8A683D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D699B1B-09A4-4A3B-98DA-A038A169067A} = {4D699B1B-09A4-4A3B-98DA-A038A169067A}
+		{4C5E13CE-157C-41F5-BB4E-13A1F67AA137} = {4C5E13CE-157C-41F5-BB4E-13A1F67AA137}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRDesk.Infrastructure", "..\HRDesk.Infrastructure\HRDesk.Infrastructure.csproj", "{4D699B1B-09A4-4A3B-98DA-A038A169067A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRDesk.Services", "..\HRDesk.Services\HRDesk.Services.csproj", "{4C5E13CE-157C-41F5-BB4E-13A1F67AA137}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D699B1B-09A4-4A3B-98DA-A038A169067A} = {4D699B1B-09A4-4A3B-98DA-A038A169067A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF0FA0C6-3E50-4FAA-A105-93A69B8A683D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0FA0C6-3E50-4FAA-A105-93A69B8A683D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0FA0C6-3E50-4FAA-A105-93A69B8A683D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0FA0C6-3E50-4FAA-A105-93A69B8A683D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D699B1B-09A4-4A3B-98DA-A038A169067A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D699B1B-09A4-4A3B-98DA-A038A169067A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D699B1B-09A4-4A3B-98DA-A038A169067A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D699B1B-09A4-4A3B-98DA-A038A169067A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C5E13CE-157C-41F5-BB4E-13A1F67AA137}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C5E13CE-157C-41F5-BB4E-13A1F67AA137}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C5E13CE-157C-41F5-BB4E-13A1F67AA137}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C5E13CE-157C-41F5-BB4E-13A1F67AA137}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D58A9B5A-41E6-411E-8224-88E4931E51DC}
+	EndGlobalSection
+EndGlobal
