@@ -15,10 +15,13 @@ function createData(id, date, start, end, room, description) {
 
 const rows = [
   createData(0, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(0, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(0, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(0, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(0, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
+  createData(1, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
+  createData(2, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
+  createData(3, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
+  createData(4, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
+  createData(5, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
+  createData(6, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
+  createData(7, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
 ];
 
 function preventDefault(event) {

@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
 
 const drawerWidth = 240;
 
@@ -74,7 +75,24 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9),
     },
   },
+  copyright: {
+    marginTop: "auto",
+    marginBottom: 10,
+  },
 }));
+
+function Copyright() {
+  const classes = useStyles();
+  return (
+    <Box className={classes.copyright}>
+      <Typography variant="body2" color="textSecondary" align="center">
+        {"Copyright © "}
+        {"HRDesk "}
+        {new Date().getFullYear()}
+      </Typography>
+    </Box>
+  );
+}
 
 export default function NavBar() {
   const classes = useStyles();
@@ -114,9 +132,9 @@ export default function NavBar() {
             Dashboard
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            {/* <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
-            </Badge>
+            </Badge> */}
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -136,6 +154,7 @@ export default function NavBar() {
         <List>{mainListItems}</List>
         <Divider />
         <List>{secondaryListItems}</List>
+        {open && <Copyright />}
       </Drawer>
     </div>
   );

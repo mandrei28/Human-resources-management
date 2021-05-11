@@ -46,9 +46,9 @@ export default function CustomCard(props) {
         <CardMedia
           className={classes.media}
           media="picture"
-          alt="Contemplative Reptile"
+          alt={props.title}
           image={employee}
-          title="Contemplative Reptile"
+          title={props.title}
         />
         <CardContent className={classes.fiCardContent}>
           <Typography gutterBottom variant="h5" component="h3">

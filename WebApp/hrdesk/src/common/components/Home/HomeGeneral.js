@@ -24,16 +24,6 @@ class HomeGeneral extends React.Component {
     classes: PropTypes.object.isRequired,
   };
 
-  copyright = () => {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {"Copyright © "}
-        {"HRDesk "}
-        {new Date().getFullYear()}
-      </Typography>
-    );
-  };
-
   render() {
     const { classes } = this.props;
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -87,7 +77,6 @@ class HomeGeneral extends React.Component {
                 </Paper>
               </Grid>
             </Grid>
-            <Box className={classes.copyright}>{this.copyright()}</Box>
           </Container>
         </main>
       </div>

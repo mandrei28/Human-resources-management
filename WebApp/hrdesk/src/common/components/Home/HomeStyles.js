@@ -25,8 +25,6 @@ const styles = (theme) => ({
   copyright: {
     position: "fixed",
     bottom: theme.spacing(2),
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 
