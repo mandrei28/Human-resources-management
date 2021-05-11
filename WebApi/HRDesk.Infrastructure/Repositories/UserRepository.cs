@@ -2,6 +2,7 @@
 using HRDesk.Infrastructure.RepositoryInterfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HRDesk.Infrastructure.Repositories
@@ -10,7 +11,15 @@ namespace HRDesk.Infrastructure.Repositories
     {
         public UserRepository(HRDeskDbContext dbContext) : base(dbContext)
         {
+        }
+        public bool EmailAlreadyInUse(string email)
+        {
+            return GetAll().Any(u => u.Email == email);
+        }
 
+        public User GetUserByEmail(string email)
+        {
+            return GetAll().Where(u => u.Email == email).FirstOrDefault();
         }
     }
 }

@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using HRDesk.Infrastructure.Entities;
 using HRDesk.Infrastructure.RepositoryInterfaces;
+using HRDesk.Services.Models;
+using HRDesk.Services.ServiceInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRDesk.Controllers
@@ -13,18 +16,35 @@ namespace HRDesk.Controllers
     public class UserController : Controller
     {
         private IUnitOfWork _unitOfWork;
+        private IAuthService _authService;
 
-        public UserController(IUnitOfWork unitOfWork)
+        public UserController(IUnitOfWork unitOfWork, IAuthService authService)
         {
             _unitOfWork = unitOfWork;
+            _authService = authService;
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public ActionResult<AuthResponseModel> Post([FromBody] AuthModel model)
         {
-            _unitOfWork.Users.Insert(new User() { Name = "Andrei" });
-            _unitOfWork.Commit();
-            return Ok();
+            var hashPassword = _authService.HashPassword(model.Password);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var user = _unitOfWork.Users.GetUserByEmail(model.Email);
+
+            if (user == null)
+            {
+                return BadRequest(new { email = "no user with this email" });
+            }
+
+            var passwordValid = _authService.VerifyPassword(model.Password, user.Password);
+            if (!passwordValid)
+            {
+                return BadRequest(new { password = "invalid password" });
+            }
+
+            return _authService.GetAuthData(user);
         }
     }
 }

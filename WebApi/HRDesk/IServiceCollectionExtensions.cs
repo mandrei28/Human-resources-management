@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HRDesk.Services.ServiceInterfaces;
+using HRDesk.Services.Services;
 
 namespace HRDesk
 {
@@ -36,10 +38,14 @@ namespace HRDesk
             //.AddScoped<ISalaryRepository, SalaryRepository>();
         }
 
-        //public static IServiceCollection AddServices(this IServiceCollection services)
-        //{
-        //    return services
-        //        .AddScoped<DepartmentService>();
-        //}
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            return services.AddSingleton<IAuthService>(
+                new AuthService(
+                    configuration.GetValue<string>("JWTSecretKey"),
+                    configuration.GetValue<int>("JWTLifespan")
+                )
+            );
+        }
     }
 }
