@@ -1,90 +1,39 @@
 import React from "react";
 import clsx from "clsx";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import Drawer from "@material-ui/core/Drawer";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router-dom";
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
+  Box,
+  Typography,
+  Drawer,
+  List,
+  Toolbar,
+  AppBar,
+  IconButton,
+  Divider,
+} from "@material-ui/core";
+import {
+  People,
+  Dashboard,
+  ChevronLeft,
+  Menu,
+  Home,
+  WorkOutline,
+  CalendarToday,
+  Equalizer,
+  HowToReg,
+  Schedule,
+  Comment,
+} from "@material-ui/icons";
+import { styles } from "./NavBarStyles";
 
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: "none",
-  },
-  title: {
-    flexGrow: 1,
-  },
-  drawerPaper: {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: "hidden",
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9),
-    },
-  },
-  copyright: {
-    marginTop: "auto",
-    marginBottom: 10,
-  },
-}));
-
-function Copyright() {
-  const classes = useStyles();
+function Copyright(props) {
   return (
-    <Box className={classes.copyright}>
+    <Box className={props.styles.copyright}>
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright © "}
         {"HRDesk "}
@@ -94,68 +43,192 @@ function Copyright() {
   );
 }
 
-export default function NavBar() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      selected: "Dashboard",
+    };
+    this.itemsList = [
+      {
+        text: "Dashboard",
+        icon: <Dashboard />,
+        onClick: () => {
+          this.setState({ selected: "Dashboard" });
+          props.history.push("/");
+        },
+      },
+      {
+        text: "Leave requests",
+        icon: <Home />,
+        onClick: () => {
+          this.setState({ selected: "Leave requests" });
+          props.history.push("/leaverequests");
+        },
+      },
+      {
+        text: "Daysoff requests",
+        icon: <WorkOutline />,
+        onClick: () => {
+          this.setState({ selected: "Daysoff requests" });
+          props.history.push("/daysoff");
+        },
+      },
+      {
+        text: "Reports",
+        icon: <Equalizer />,
+        onClick: () => {
+          this.setState({ selected: "Reports" });
+          props.history.push("/reports");
+        },
+      },
+      {
+        text: "Booking",
+        icon: <CalendarToday />,
+        onClick: () => {
+          this.setState({ selected: "Booking" });
+          props.history.push("/booking");
+        },
+      },
+      {
+        text: "Team",
+        icon: <People />,
+        onClick: () => {
+          this.setState({ selected: "Team" });
+          props.history.push("/team");
+        },
+      },
+    ];
+    this.adminItemsList = [
+      {
+        text: "Manage employees",
+        icon: <HowToReg />,
+        onClick: () => {
+          this.setState({ selected: "Manage employees" });
+          props.history.push("/employees");
+        },
+      },
+      {
+        text: "Create pool",
+        icon: <Comment />,
+        onClick: () => {
+          this.setState({ selected: "Create pool" });
+          props.history.push("/pool");
+        },
+      },
+      {
+        text: "Book room",
+        icon: <Schedule />,
+        onClick: () => {
+          this.setState({ selected: "Book room" });
+          props.history.push("/book");
+        },
+      },
+    ];
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
+  handleDrawerClose = () => {
+    this.setState({ open: false });
   };
-  return (
-    <div className={classes.root}>
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(
-              classes.menuButton,
-              open && classes.menuButtonHidden
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            {/* <Badge badgeContent={4} color="secondary">
+  render() {
+    const { classes } = this.props;
+    return (
+      <div className={classes.root}>
+        <AppBar
+          position="absolute"
+          className={clsx(
+            classes.appBar,
+            this.state.open && classes.appBarShift
+          )}
+        >
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={this.handleDrawerOpen}
+              className={clsx(
+                classes.menuButton,
+                this.state.open && classes.menuButtonHidden
+              )}
+            >
+              <Menu />
+            </IconButton>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+            >
+              {this.state.selected}
+            </Typography>
+            <IconButton color="inherit">
+              {/* <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge> */}
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
-        {open && <Copyright />}
-      </Drawer>
-    </div>
-  );
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(
+              classes.drawerPaper,
+              !this.state.open && classes.drawerPaperClose
+            ),
+          }}
+          open={this.state.open}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={this.handleDrawerClose}>
+              <ChevronLeft />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {this.itemsList.map((item, index) => {
+              const { text, icon, onClick } = item;
+              return (
+                <ListItem
+                  button
+                  key={text}
+                  onClick={onClick}
+                  selected={this.state.selected === text}
+                >
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            })}
+          </List>
+          <Divider />
+          <List>
+            <ListSubheader inset>Admin</ListSubheader>
+            {this.adminItemsList.map((item, index) => {
+              const { text, icon, onClick } = item;
+              return (
+                <ListItem
+                  button
+                  key={text}
+                  onClick={onClick}
+                  selected={this.state.selected === text}
+                >
+                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            })}
+          </List>
+          {this.state.open && <Copyright styles={classes} />}
+        </Drawer>
+      </div>
+    );
+  }
 }
+
+export default withStyles(styles, { withTheme: true })(withRouter(NavBar));

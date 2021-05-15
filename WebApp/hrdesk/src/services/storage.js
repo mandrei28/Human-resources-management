@@ -1,10 +1,8 @@
 export const storeToken = (rememberMe, token) => {
   if (rememberMe) {
-    debugger;
     localStorage.setItem("token", token);
   } else {
     sessionStorage.setItem("token", token);
-    debugger;
   }
 };
 

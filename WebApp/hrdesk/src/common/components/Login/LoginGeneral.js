@@ -59,7 +59,6 @@ class LoginGeneral extends React.Component {
 
   render() {
     const { classes } = this.props;
-    debugger;
     return (
       <Grid container component="main" className={classes.root}>
         <CssBaseline />

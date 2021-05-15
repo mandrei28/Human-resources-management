@@ -4,13 +4,19 @@ import "./index.css";
 import { Provider } from "react-redux";
 import App from "./App";
 import store from "./store";
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import reportWebVitals from "./reportWebVitals";
+
+const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Router history={history}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
