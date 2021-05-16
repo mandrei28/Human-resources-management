@@ -53,6 +53,7 @@ class NavBar extends React.Component {
     this.itemsList = [
       {
         text: "Dashboard",
+        pathname: "/",
         icon: <Dashboard />,
         onClick: () => {
           this.setState({ selected: "Dashboard" });
@@ -61,6 +62,7 @@ class NavBar extends React.Component {
       },
       {
         text: "Leave requests",
+        pathname: "/leaverequests",
         icon: <Home />,
         onClick: () => {
           this.setState({ selected: "Leave requests" });
@@ -69,6 +71,7 @@ class NavBar extends React.Component {
       },
       {
         text: "Daysoff requests",
+        pathname: "/daysoff",
         icon: <WorkOutline />,
         onClick: () => {
           this.setState({ selected: "Daysoff requests" });
@@ -77,6 +80,7 @@ class NavBar extends React.Component {
       },
       {
         text: "Reports",
+        pathname: "/reports",
         icon: <Equalizer />,
         onClick: () => {
           this.setState({ selected: "Reports" });
@@ -85,6 +89,7 @@ class NavBar extends React.Component {
       },
       {
         text: "Booking",
+        pathname: "/booking",
         icon: <CalendarToday />,
         onClick: () => {
           this.setState({ selected: "Booking" });
@@ -93,6 +98,7 @@ class NavBar extends React.Component {
       },
       {
         text: "Team",
+        pathname: "/team",
         icon: <People />,
         onClick: () => {
           this.setState({ selected: "Team" });
@@ -103,6 +109,7 @@ class NavBar extends React.Component {
     this.adminItemsList = [
       {
         text: "Manage employees",
+        pathname: "/employees",
         icon: <HowToReg />,
         onClick: () => {
           this.setState({ selected: "Manage employees" });
@@ -111,6 +118,7 @@ class NavBar extends React.Component {
       },
       {
         text: "Create pool",
+        pathname: "/pool",
         icon: <Comment />,
         onClick: () => {
           this.setState({ selected: "Create pool" });
@@ -119,6 +127,7 @@ class NavBar extends React.Component {
       },
       {
         text: "Book room",
+        pathname: "/book",
         icon: <Schedule />,
         onClick: () => {
           this.setState({ selected: "Book room" });
@@ -127,6 +136,30 @@ class NavBar extends React.Component {
       },
     ];
   }
+
+  componentDidMount() {
+    this.checkCurrentPath();
+  }
+
+  checkCurrentPath = () => {
+    if (this.props.location.pathname !== "/") {
+      var item = this.itemsList.find(
+        (item) => item.pathname === this.props.location.pathname
+      );
+      debugger;
+      if (item !== undefined) {
+        this.setState({ selected: item.text });
+      } else {
+        var adminItem = this.adminItemsList.find(
+          (adminItem) => adminItem.pathname === this.props.location.pathname
+        );
+        debugger;
+        if (adminItem !== undefined) {
+          this.setState({ selected: adminItem.text });
+        }
+      }
+    }
+  };
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
