@@ -11,12 +11,14 @@ import { DataGrid, GridApi } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import "./DaysoffStyles.css";
+import DaysoffDialog from "./UIComponents/DaysoffDialog";
 
 class DaysoffGeneral extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       disabled: true,
+      showNewDaysoffDialog: false,
     };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
@@ -43,8 +45,9 @@ class DaysoffGeneral extends React.Component {
               disabled={this.state.disabled}
               variant="contained"
               color="primary"
+              onClick={this.openNewDaysoffDialog}
             >
-              ADD
+              NEW
             </Button>
           );
         },
@@ -163,6 +166,16 @@ class DaysoffGeneral extends React.Component {
     this.setState({ disabled: false });
   }
 
+  openNewDaysoffDialog = () => {
+    this.setState({ showNewDaysoffDialog: true });
+  };
+
+  closeNewDaysoffDialog = () => {
+    this.setState({ showNewDaysoffDialog: false });
+  };
+
+  addNewDayoff = () => {};
+
   render() {
     const { classes } = this.props;
     return (
@@ -214,7 +227,13 @@ class DaysoffGeneral extends React.Component {
                   </div>
                 </Paper>
               </Grid>
-            </Grid>
+            </Grid>{" "}
+            {this.state.showNewDaysoffDialog && (
+              <DaysoffDialog
+                onClose={this.closeNewDaysoffDialog}
+                onAdd={this.addNewDayoff}
+              />
+            )}
           </Container>
         </main>
       </div>

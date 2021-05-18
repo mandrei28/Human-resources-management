@@ -62,11 +62,11 @@ class NavBar extends React.Component {
       },
       {
         text: "Leave requests",
-        pathname: "/leaverequests",
+        pathname: "/leaverequest",
         icon: <Home />,
         onClick: () => {
           this.setState({ selected: "Leave requests" });
-          props.history.push("/leaverequests");
+          props.history.push("/leaverequest");
         },
       },
       {

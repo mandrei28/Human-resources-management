@@ -7,6 +7,7 @@ import { Route } from "react-router-dom";
 import PrivateRoute from "./services/PrivateRoute";
 import { isTokenValid } from "./services/authService";
 import { makeStyles } from "@material-ui/core/styles";
+import LeaveRequestGeneral from "./common/components/LeaveRequest/LeaveRequestGeneral";
 
 const isLoggedIn = isTokenValid();
 
@@ -33,6 +34,12 @@ function App() {
         exact
         path="/daysoff"
         component={DaysoffGeneral}
+        isLoggedIn={isLoggedIn}
+      />
+      <PrivateRoute
+        exact
+        path="/leaverequest"
+        component={LeaveRequestGeneral}
         isLoggedIn={isLoggedIn}
       />
     </div>
