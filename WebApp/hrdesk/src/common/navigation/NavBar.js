@@ -49,111 +49,135 @@ class NavBar extends React.Component {
     this.state = {
       open: false,
       selected: "Dashboard",
+      itemsList: [
+        {
+          text: "Dashboard",
+          pathname: "/",
+          icon: <Dashboard />,
+          onClick: () => {
+            this.setState({ selected: "Dashboard", pathname: "/" });
+            props.history.push("/");
+          },
+        },
+        {
+          text: "Leave requests",
+          pathname: "/leaverequest",
+          icon: <Home />,
+          onClick: () => {
+            this.setState({
+              selected: "Leave requests",
+              pathname: "/leaverequest",
+            });
+            props.history.push("/leaverequest");
+          },
+        },
+        {
+          text: "Daysoff requests",
+          pathname: "/daysoff",
+          icon: <WorkOutline />,
+          onClick: () => {
+            this.setState({
+              selected: "Daysoff requests",
+              pathname: "/daysoff",
+            });
+            props.history.push("/daysoff");
+          },
+        },
+        {
+          text: "Reports",
+          pathname: "/reports",
+          icon: <Equalizer />,
+          onClick: () => {
+            this.setState({ selected: "Reports", pathname: "/reports" });
+            props.history.push("/reports");
+          },
+        },
+        {
+          text: "Meetings",
+          pathname: "/meetings",
+          icon: <CalendarToday />,
+          onClick: () => {
+            this.setState({ selected: "Meetings", pathname: "/meetings" });
+            props.history.push("/meetings");
+          },
+        },
+        {
+          text: "Team",
+          pathname: "/team",
+          icon: <People />,
+          onClick: () => {
+            this.setState({ selected: "Team", pathname: "/team" });
+            props.history.push("/team");
+          },
+        },
+      ],
+      adminItemsList: [
+        {
+          text: "Manage employees",
+          pathname: "/employees",
+          icon: <HowToReg />,
+          onClick: () => {
+            this.setState({
+              selected: "Manage employees",
+              pathname: "/employees",
+            });
+            props.history.push("/employees");
+          },
+        },
+        {
+          text: "Create pool",
+          pathname: "/pool",
+          icon: <Comment />,
+          onClick: () => {
+            this.setState({ selected: "Create pool", pathname: "/pool" });
+            props.history.push("/pool");
+          },
+        },
+        {
+          text: "Book room",
+          pathname: "/book",
+          icon: <Schedule />,
+          onClick: () => {
+            this.setState({ selected: "Book room", pathname: "/book" });
+            props.history.push("/book");
+          },
+        },
+      ],
     };
-    this.itemsList = [
-      {
-        text: "Dashboard",
-        pathname: "/",
-        icon: <Dashboard />,
-        onClick: () => {
-          this.setState({ selected: "Dashboard" });
-          props.history.push("/");
-        },
-      },
-      {
-        text: "Leave requests",
-        pathname: "/leaverequest",
-        icon: <Home />,
-        onClick: () => {
-          this.setState({ selected: "Leave requests" });
-          props.history.push("/leaverequest");
-        },
-      },
-      {
-        text: "Daysoff requests",
-        pathname: "/daysoff",
-        icon: <WorkOutline />,
-        onClick: () => {
-          this.setState({ selected: "Daysoff requests" });
-          props.history.push("/daysoff");
-        },
-      },
-      {
-        text: "Reports",
-        pathname: "/reports",
-        icon: <Equalizer />,
-        onClick: () => {
-          this.setState({ selected: "Reports" });
-          props.history.push("/reports");
-        },
-      },
-      {
-        text: "Booking",
-        pathname: "/booking",
-        icon: <CalendarToday />,
-        onClick: () => {
-          this.setState({ selected: "Booking" });
-          props.history.push("/booking");
-        },
-      },
-      {
-        text: "Team",
-        pathname: "/team",
-        icon: <People />,
-        onClick: () => {
-          this.setState({ selected: "Team" });
-          props.history.push("/team");
-        },
-      },
-    ];
-    this.adminItemsList = [
-      {
-        text: "Manage employees",
-        pathname: "/employees",
-        icon: <HowToReg />,
-        onClick: () => {
-          this.setState({ selected: "Manage employees" });
-          props.history.push("/employees");
-        },
-      },
-      {
-        text: "Create pool",
-        pathname: "/pool",
-        icon: <Comment />,
-        onClick: () => {
-          this.setState({ selected: "Create pool" });
-          props.history.push("/pool");
-        },
-      },
-      {
-        text: "Book room",
-        pathname: "/book",
-        icon: <Schedule />,
-        onClick: () => {
-          this.setState({ selected: "Book room" });
-          props.history.push("/book");
-        },
-      },
-    ];
   }
 
   componentDidMount() {
     this.checkCurrentPath();
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.location.pathname !== prevState.pathname) {
+      var item = prevState.itemsList.find(
+        (item) => item.pathname === nextProps.location.pathname
+      );
+      if (item === undefined) {
+        item = prevState.adminItemsList.find(
+          (adminItem) => adminItem.pathname === nextProps.location.pathname
+        );
+      }
+      if (item !== undefined) {
+        return { pathname: nextProps.location.pathname, selected: item.text };
+      }
+    }
+    return null;
+  }
+
   checkCurrentPath = () => {
     if (this.props.location.pathname !== "/") {
-      var item = this.itemsList.find(
+      var item = this.state.itemsList.find(
         (item) => item.pathname === this.props.location.pathname
       );
-      debugger;
       if (item !== undefined) {
         this.setState({ selected: item.text });
       } else {
-        var adminItem = this.adminItemsList.find(
+        var adminItem = this.state.adminItemsList.find(
           (adminItem) => adminItem.pathname === this.props.location.pathname
         );
-        debugger;
         if (adminItem !== undefined) {
           this.setState({ selected: adminItem.text });
         }
@@ -224,7 +248,7 @@ class NavBar extends React.Component {
           </div>
           <Divider />
           <List>
-            {this.itemsList.map((item, index) => {
+            {this.state.itemsList.map((item, index) => {
               const { text, icon, onClick } = item;
               return (
                 <ListItem
@@ -242,7 +266,7 @@ class NavBar extends React.Component {
           <Divider />
           <List>
             <ListSubheader inset>Admin</ListSubheader>
-            {this.adminItemsList.map((item, index) => {
+            {this.state.adminItemsList.map((item, index) => {
               const { text, icon, onClick } = item;
               return (
                 <ListItem

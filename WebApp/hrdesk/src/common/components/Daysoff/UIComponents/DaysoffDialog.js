@@ -39,7 +39,6 @@ export default class DaysoffDialog extends Component {
   }
 
   handleDayoffFieldChange = (event, field) => {
-    debugger;
     this.setState((prevState) => {
       const { dayoff } = prevState;
       dayoff[field] = event.target.value;
@@ -48,7 +47,6 @@ export default class DaysoffDialog extends Component {
   };
 
   handleDayoffPersonFieldChange = (value, field) => {
-    debugger;
     this.setState((prevState) => {
       const { dayoff } = prevState;
       dayoff[field] = value;
@@ -57,7 +55,6 @@ export default class DaysoffDialog extends Component {
   };
 
   handleDayoffDateFieldChange = (value, field) => {
-    debugger;
     this.setState((prevState) => {
       const { dayoff } = prevState;
       dayoff[field] = value;
@@ -141,7 +138,6 @@ export default class DaysoffDialog extends Component {
                 this.handleDayoffPersonFieldChange(newValue, "person")
               }
               renderInput={(params) => {
-                debugger;
                 return (
                   <Grid container spacing={1} alignItems="flex-end">
                     <Grid item lg={1} md={1} xs={1}>

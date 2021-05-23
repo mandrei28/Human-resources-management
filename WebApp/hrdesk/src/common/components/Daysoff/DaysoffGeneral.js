@@ -1,7 +1,5 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import CustomCard from "../Home/UIComponents/CustomCard";
-import Orders from "../Home/UIComponents/Orders";
 import { styles } from "./DaysoffStyles";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
@@ -54,7 +52,6 @@ class DaysoffGeneral extends React.Component {
         renderCell: (params) => {
           const onClick = () => {
             const api = params.api;
-            debugger;
             const fields = api
               .getAllColumns()
               .map((c) => c.field)
@@ -85,7 +82,6 @@ class DaysoffGeneral extends React.Component {
         endDate: new Date(),
         status: "Approved",
         verified: null,
-        command: <Button />,
       },
       {
         id: 2,
@@ -158,7 +154,6 @@ class DaysoffGeneral extends React.Component {
         endDate: new Date(),
         status: "Approved",
         verified: null,
-        command: <Button />,
       },
     ];
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import CustomCard from "./UIComponents/CustomCard";
-import Orders from "./UIComponents/Orders";
+import Meetings from "./UIComponents/Meetings";
 import { styles } from "./HomeStyles";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
@@ -46,7 +46,7 @@ class HomeGeneral extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                  <Orders />
+                  <Meetings />
                 </Paper>
               </Grid>
             </Grid>
