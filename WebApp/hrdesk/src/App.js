@@ -9,6 +9,7 @@ import { isTokenValid } from "./services/authService";
 import { makeStyles } from "@material-ui/core/styles";
 import LeaveRequestGeneral from "./common/components/LeaveRequest/LeaveRequestGeneral";
 import TeamGeneral from "./common/components/Team/TeamGeneral";
+import BookGeneral from "./common/components/Book/BookGeneral";
 
 const isLoggedIn = isTokenValid();
 
@@ -47,6 +48,12 @@ function App() {
         exact
         path="/team"
         component={TeamGeneral}
+        isLoggedIn={isLoggedIn}
+      />
+      <PrivateRoute
+        exact
+        path="/book"
+        component={BookGeneral}
         isLoggedIn={isLoggedIn}
       />
     </div>

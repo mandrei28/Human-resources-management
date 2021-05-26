@@ -4,6 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withRouter } from "react-router-dom";
+import TextField from "@material-ui/core/TextField";
 import employee from "../../../../media/employee.jpg";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Button from "@material-ui/core/Button";
@@ -44,11 +45,8 @@ class PersonDialog extends Component {
           aria-labelledby="max-width-dialog-title"
           open
         >
-          {/* <DialogTitle id="max-width-dialog-title">
-            {this.props.user.name}
-          </DialogTitle> */}
-          <DialogContent>
-            <Grid container spacing={2}>
+          <DialogContent style={{ height: "540px" }}>
+            <Grid container spacing={3}>
               <Grid container item lg={12} justify="center">
                 <Avatar
                   alt="Remy Sharp"
@@ -56,27 +54,102 @@ class PersonDialog extends Component {
                   className={classes.large}
                 />
               </Grid>
-              <Grid container item lg={6} justify="center">
-                <Grid container item lg={12} justify="center">
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={employee}
-                    className={classes.large}
-                  />
-                </Grid>
-                <Grid container item lg={12} justify="center">
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={employee}
-                    className={classes.large}
-                  />
-                </Grid>
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Name"
+                  value={this.props.user.name}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
               </Grid>
-              <Grid container item lg={6} justify="center">
-                <Avatar
-                  alt="Remy Sharp"
-                  src={employee}
-                  className={classes.large}
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Function"
+                  value={this.props.user.function}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+              </Grid>
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Room"
+                  value={this.props.user.room}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+              </Grid>
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Birth Date"
+                  value={
+                    this.props.user.birthDate.toLocaleString().split(",")[0]
+                  }
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+              </Grid>
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Since"
+                  value={this.props.user.since.toLocaleString().split(",")[0]}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+              </Grid>
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Email"
+                  value={this.props.user.email}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+              </Grid>
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Phone number"
+                  value={this.props.user.phoneNumber}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
+                />
+              </Grid>
+              <Grid container item lg={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Team"
+                  value={this.props.user.team}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  fullWidth
                 />
               </Grid>
             </Grid>
