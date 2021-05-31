@@ -9,7 +9,7 @@ import {
   Paper,
   Box,
   Grid,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import PropTypes from "prop-types";
 import logo from "../../../media/logo.png";
@@ -21,13 +21,13 @@ class LoginGeneral extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: { email: "", password: "", rememberMe: false },
+      user: { email: "", password: "", rememberMe: false }
     };
   }
 
   static propTypes = {
     onLogin: PropTypes.func,
-    classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
   };
 
   copyright = () => {
@@ -40,14 +40,14 @@ class LoginGeneral extends React.Component {
     );
   };
   handleFieldChange = async (event, field) => {
-    await this.setState((prevState) => {
+    await this.setState(prevState => {
       const { user } = prevState;
       user[field] = event.target.value;
       return { user };
     });
   };
   handleCheckBoxChange = async (event, field) => {
-    await this.setState((prevState) => {
+    await this.setState(prevState => {
       const { user } = prevState;
       user[field] = event.target.checked;
       return { user };
@@ -66,7 +66,7 @@ class LoginGeneral extends React.Component {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <div className={classes.paper}>
             <img src={logo} alt="logo" width="200px" height="200px"></img>
-            <Box mt={7}>
+            <Box mt={5}>
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
@@ -83,7 +83,7 @@ class LoginGeneral extends React.Component {
                 autoComplete="email"
                 autoFocus
                 value={this.state.user.email}
-                onChange={(event) => this.handleFieldChange(event, "email")}
+                onChange={event => this.handleFieldChange(event, "email")}
               />
               <TextField
                 variant="outlined"
@@ -96,13 +96,13 @@ class LoginGeneral extends React.Component {
                 id="password"
                 autoComplete="current-password"
                 value={this.state.user.password}
-                onChange={(event) => this.handleFieldChange(event, "password")}
+                onChange={event => this.handleFieldChange(event, "password")}
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     value={this.state.user.rememberMe}
-                    onChange={(event) =>
+                    onChange={event =>
                       this.handleCheckBoxChange(event, "rememberMe")
                     }
                     color="primary"
