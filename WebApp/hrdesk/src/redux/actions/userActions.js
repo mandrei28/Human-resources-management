@@ -1,5 +1,6 @@
 import axiosWrapper from "../../api/axiosWrapper";
 import { storeToken } from "../../services/storage";
+import { toastr } from "react-redux-toastr";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 
@@ -26,11 +27,27 @@ export const login = (user) => {
       .then((response) => {
         dispatch(userLoginSuccess(response.data.userModel));
         storeToken(user.rememberMe, response.data.token);
+        toastr.success("Login", "Logged in succesfully");
         window.location = "/";
       })
       .catch((error) => {
-        console.info(error.response);
-        debugger;
+        toastr.error("Error", error.response.data.Message);
+        dispatch(userLoginError(error));
+        throw error;
+      });
+  };
+};
+
+export const silentLogin = () => {
+  return (dispatch) => {
+    return apiClient
+      .post("user/silentLogin")
+      .then((response) => {
+        dispatch(userLoginSuccess(response.data.userModel));
+        toastr.success("Login", "Logged in succesfully");
+      })
+      .catch((error) => {
+        toastr.error("Error", error.response.data.Message);
         dispatch(userLoginError(error));
         throw error;
       });

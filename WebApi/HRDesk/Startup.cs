@@ -73,7 +73,8 @@ namespace HRDesk
             app.UseCors(
                 "AllowAllHeaders"
             );
-            //app.ConfigureExceptionHandler();
+            app.UseAuthentication();
+
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();

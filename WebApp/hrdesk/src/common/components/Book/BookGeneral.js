@@ -21,6 +21,7 @@ import {
   ViewSwitcher,
   AllDayPanel,
   DragDropProvider,
+  DateNavigator,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import DateFnsUtils from "@date-io/date-fns";
 import { blue, orange } from "@material-ui/core/colors";
@@ -108,28 +109,7 @@ class BookGeneral extends Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="xl" className={classes.container}>
-            <Grid container spacing={3} style={{ paddingBottom: "10px" }}>
-              <Grid item xs={12} md={12} lg={12}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
-                    margin="normal"
-                    id="date"
-                    label="Date"
-                    value={new Date()}
-                    onChange={(event) =>
-                      this.handleDayoffDateFieldChange(event, "date")
-                    }
-                    KeyboardButtonProps={{
-                      "aria-label": "change date",
-                    }}
-                  />
-                </MuiPickersUtilsProvider>
-              </Grid>
-            </Grid>
-            <Scheduler data={schedulerData} height={700}>
+            <Scheduler data={schedulerData} height={755}>
               <ViewState defaultCurrentDate="2018-05-30" />
               <EditingState onCommitChanges={this.onCommitChanges} />
               <GroupingState grouping={grouping} />
@@ -143,9 +123,10 @@ class BookGeneral extends Component {
               <AppointmentForm />
 
               <GroupingPanel />
-
+              <Toolbar />
               {/* <ViewSwitcher /> */}
               <DragDropProvider />
+              <DateNavigator />
             </Scheduler>
           </Container>
         </main>

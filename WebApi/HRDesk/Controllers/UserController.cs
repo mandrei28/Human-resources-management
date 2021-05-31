@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using HRDesk.Infrastructure.Entities;
 using HRDesk.Infrastructure.RepositoryInterfaces;
@@ -29,9 +30,7 @@ namespace HRDesk.Controllers
         public ActionResult<AuthResponseModel> Post([FromBody] AuthModel model)
         {
             var hashPassword = _authService.HashPassword(model.Password);
-            throw new Exception("test");
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
             var user = _unitOfWork.Users.GetUserByEmail(model.Email);
 
             if (user == null)
@@ -46,6 +45,26 @@ namespace HRDesk.Controllers
             }
 
             return _authService.GetAuthData(user);
+        }
+
+        [Authorize]
+        [HttpPost("silentLogin")]
+        public ActionResult<AuthResponseModel> SilentLogin()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                IEnumerable<Claim> claims = identity.Claims;
+                var userId = claims.ElementAt(0).Value;
+                var user = _unitOfWork.Users.GetUserById(Int32.Parse(userId));
+                if (user == null)
+                {
+                    return BadRequest(new { email = "no user with this email" });
+                }
+
+                return _authService.GetAuthData(user);
+            }
+            return Unauthorized();
         }
     }
 }

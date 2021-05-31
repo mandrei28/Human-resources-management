@@ -44,7 +44,10 @@ namespace HRDesk.Services.Services
             {
                 Token = token,
                 TokenExpirationTime = ((DateTimeOffset)expirationTime).ToUnixTimeSeconds(),
-                // Id = id
+                UserModel = new UserAuthModel
+                {
+                    Id = user.Id,
+                }
             };
         }
 

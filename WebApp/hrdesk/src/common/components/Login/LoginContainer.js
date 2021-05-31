@@ -12,9 +12,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatch,
-    // onLoadUsersComplete: (users) => {
-    //   dispatch(getUsersSuccess(users));
-    // },
   };
 };
 
@@ -24,7 +21,7 @@ const mergeProps = (stateProps, dispatchProps) => {
     ...stateProps,
     ...dispatchProps,
     onLogin: (user) => {
-      return dispatch(userActions.login(user));
+      dispatch(userActions.login(user));
     },
   };
 };

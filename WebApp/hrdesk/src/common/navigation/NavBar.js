@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
+import { removeToken } from "../../services/storage";
 import { withRouter } from "react-router-dom";
 import {
   ListItem,
@@ -29,6 +30,7 @@ import {
   Schedule,
   Comment,
 } from "@material-ui/icons";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { styles } from "./NavBarStyles";
 
 function Copyright(props) {
@@ -185,6 +187,12 @@ class NavBar extends React.Component {
     }
   };
 
+  logout = () => {
+    removeToken();
+    this.props.logout();
+    this.props.history.push("/login");
+  };
+
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
@@ -224,10 +232,11 @@ class NavBar extends React.Component {
             >
               {this.state.selected}
             </Typography>
-            <IconButton color="inherit">
-              {/* <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge> */}
+            <IconButton color="inherit" onClick={this.logout}>
+              <Typography color="inherit" noWrap>
+                Logout
+              </Typography>
+              <ExitToAppIcon />
             </IconButton>
           </Toolbar>
         </AppBar>

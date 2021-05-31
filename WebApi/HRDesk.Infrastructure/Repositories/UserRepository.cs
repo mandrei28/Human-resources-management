@@ -21,5 +21,10 @@ namespace HRDesk.Infrastructure.Repositories
         {
             return GetAll().Where(u => u.Email == email).FirstOrDefault();
         }
+
+        public User GetUserById(int id)
+        {
+            return GetAll().Where(u => u.Id == id).FirstOrDefault();
+        }
     }
 }

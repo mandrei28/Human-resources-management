@@ -6,7 +6,7 @@ namespace HRDesk.Services.Models
 {
     public class UserAuthModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         //user roles
     }
 }

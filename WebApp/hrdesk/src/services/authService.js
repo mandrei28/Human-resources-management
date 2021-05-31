@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-
+import { removeToken } from "./storage";
 export const isTokenValid = () => {
   var token = localStorage.getItem("token");
   if (token === null) {
@@ -13,6 +13,7 @@ export const isTokenValid = () => {
   var dateNow = new Date();
 
   if (tokenExpDate < dateNow) {
+    removeToken();
     return false;
   }
   return true;
