@@ -29,6 +29,8 @@ export const login = (user) => {
         window.location = "/";
       })
       .catch((error) => {
+        console.info(error.response);
+        debugger;
         dispatch(userLoginError(error));
         throw error;
       });

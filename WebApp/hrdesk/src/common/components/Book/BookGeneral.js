@@ -19,10 +19,16 @@ import {
   AppointmentForm,
   Toolbar,
   ViewSwitcher,
+  AllDayPanel,
   DragDropProvider,
 } from "@devexpress/dx-react-scheduler-material-ui";
+import DateFnsUtils from "@date-io/date-fns";
 import { blue, orange } from "@material-ui/core/colors";
-import { withStyles, CssBaseline } from "@material-ui/core";
+import { withStyles, CssBaseline, Grid, Container } from "@material-ui/core";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
 const currentDate = "2018-11-01";
 const schedulerData = [
@@ -32,6 +38,7 @@ const schedulerData = [
     title: "Meeting1",
     roomId: 4,
     allDay: false,
+    teamId: 4,
     id: 1,
   },
   {
@@ -40,6 +47,7 @@ const schedulerData = [
     title: "Meeting2",
     roomId: 5,
     allDay: false,
+    teamId: 1,
     id: 2,
   },
 ];
@@ -82,9 +90,6 @@ const grouping = [
   {
     resourceName: "roomId",
   },
-  // {
-  //   resourceName: "teamId",
-  // },
 ];
 
 class BookGeneral extends Component {
@@ -101,12 +106,34 @@ class BookGeneral extends Component {
       <div className={classes.root}>
         <CssBaseline />
         <main className={classes.content}>
-          <Paper>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="xl" className={classes.container}>
+            <Grid container spacing={3} style={{ paddingBottom: "10px" }}>
+              <Grid item xs={12} md={12} lg={12}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date"
+                    label="Date"
+                    value={new Date()}
+                    onChange={(event) =>
+                      this.handleDayoffDateFieldChange(event, "date")
+                    }
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                </MuiPickersUtilsProvider>
+              </Grid>
+            </Grid>
             <Scheduler data={schedulerData} height={700}>
               <ViewState defaultCurrentDate="2018-05-30" />
               <EditingState onCommitChanges={this.onCommitChanges} />
               <GroupingState grouping={grouping} />
-              <DayView startDayHour={8} endDayHour={19} cellDuration={60} />
+              <DayView startDayHour={8} endDayHour={20} cellDuration={60} />
               <Appointments />
               <Resources data={resources} mainResourceName="roomId" />
 
@@ -116,11 +143,11 @@ class BookGeneral extends Component {
               <AppointmentForm />
 
               <GroupingPanel />
-              <Toolbar />
-              <ViewSwitcher />
+
+              {/* <ViewSwitcher /> */}
               <DragDropProvider />
             </Scheduler>
-          </Paper>
+          </Container>
         </main>
       </div>
     );
@@ -128,22 +155,3 @@ class BookGeneral extends Component {
 }
 
 export default withStyles(styles, { withTheme: true })(withRouter(BookGeneral));
-{
-  /* <Scheduler data={schedulerData}>
-<ViewState currentDate={currentDate} />
-<GroupingState grouping={grouping} />
-<DayView startDayHour={8} endDayHour={17} />
-<Appointments />
-<Resources data={resources} mainResourceName="priorityId" />
-<IntegratedGrouping />
-<IntegratedEditing />
-<AppointmentTooltip />
-<AppointmentForm />
-
-<GroupingPanel />
-<Toolbar />
-<ViewSwitcher />
-<DragDropProvider />
-<GroupingPanel />
-</Scheduler> */
-}

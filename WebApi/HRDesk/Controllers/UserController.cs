@@ -29,6 +29,7 @@ namespace HRDesk.Controllers
         public ActionResult<AuthResponseModel> Post([FromBody] AuthModel model)
         {
             var hashPassword = _authService.HashPassword(model.Password);
+            throw new Exception("test");
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var user = _unitOfWork.Users.GetUserByEmail(model.Email);

@@ -5,7 +5,9 @@ const styles = (theme) => ({
     display: "flex",
     width: "100vw",
   },
-  appBarSpacer: theme.mixins.toolbar,
+  appBarSpacer: {
+    paddingTop: "35px",
+  },
   content: {
     flexGrow: 1,
     height: "100vh",
