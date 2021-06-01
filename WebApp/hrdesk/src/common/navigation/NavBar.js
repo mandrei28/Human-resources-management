@@ -172,13 +172,15 @@ class NavBar extends React.Component {
   checkCurrentPath = () => {
     if (this.props.location.pathname !== "/") {
       var item = this.state.itemsList.find(
-        (item) => item.pathname === this.props.location.pathname
+        (item) =>
+          this.props.location.pathname.includes(item.pathname) &&
+          item.pathname !== "/"
       );
       if (item !== undefined) {
         this.setState({ selected: item.text });
       } else {
-        var adminItem = this.state.adminItemsList.find(
-          (adminItem) => adminItem.pathname === this.props.location.pathname
+        var adminItem = this.state.adminItemsList.find((adminItem) =>
+          this.props.location.pathname.includes(adminItem.pathname)
         );
         if (adminItem !== undefined) {
           this.setState({ selected: adminItem.text });

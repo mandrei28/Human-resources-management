@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { DataGrid, GridApi } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
 import { styles } from "./EmployeesStyles";
@@ -36,7 +37,7 @@ class EmployeesGeneral extends Component {
               disabled={this.state.disabled}
               variant="contained"
               color="primary"
-              onClick={this.openNewDaysoffDialog}
+              onClick={this.createNewUser}
             >
               NEW
             </Button>
@@ -57,11 +58,40 @@ class EmployeesGeneral extends Component {
 
             return alert(JSON.stringify(thisRow, null, 4));
           };
+          const onDelete = () => {
+            const api = params.api;
+            const fields = api
+              .getAllColumns()
+              .map((c) => c.field)
+              .filter((c) => c !== "__check__" && !!c);
+            const thisRow = {};
+
+            fields.forEach((f) => {
+              thisRow[f] = params.getValue(f);
+            });
+            debugger;
+            return console.info(JSON.stringify(thisRow, null, 4));
+          };
 
           return (
-            <div hidden={params.row.id === 1} style={{ paddingTop: "10px" }}>
-              <EditIcon onClick={onClick} />
-            </div>
+            <React.Fragment>
+              <div
+                hidden={params.row.id === 1}
+                style={{ paddingTop: "10px", cursor: "pointer" }}
+              >
+                <EditIcon onClick={onClick} />
+              </div>
+              <div
+                hidden={params.row.id === 1}
+                style={{
+                  paddingTop: "10px",
+                  paddingLeft: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                <DeleteIcon onClick={onDelete} />
+              </div>
+            </React.Fragment>
           );
         },
       },
@@ -190,6 +220,10 @@ class EmployeesGeneral extends Component {
       },
     ];
   }
+
+  createNewUser = () => {
+    this.props.history.push("/employees/new");
+  };
 
   render() {
     const { classes } = this.props;

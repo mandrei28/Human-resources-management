@@ -18,7 +18,7 @@ import { withRouter } from "react-router-dom";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import React from "react";
 import EmployeesGeneral from "./common/components/Employees/EmployeesGeneral";
-
+import EmployeeGeneral from "./common/components/Employee/EmployeeGeneral";
 const styles = (theme) => ({
   root: {
     display: "flex",
@@ -79,13 +79,19 @@ class App extends React.Component {
           path="/book"
           component={BookGeneral}
           isLoggedIn={this.state.isLoggedIn}
+        />
+        <PrivateRoute
+          exact
+          path="/employees/:id"
+          component={EmployeeGeneral}
+          isLoggedIn={this.state.isLoggedIn}
         />{" "}
         <ReduxToastr
           timeOut={4000}
           newestOnTop={false}
           preventDuplicates
           position="bottom-right"
-          getState={(state) => state.toastr} // This is the default
+          getState={(state) => state.toastr}
           transitionIn="fadeIn"
           transitionOut="fadeOut"
           progressBar
