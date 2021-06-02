@@ -19,6 +19,7 @@ import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import React from "react";
 import EmployeesGeneral from "./common/components/Employees/EmployeesGeneral";
 import EmployeeGeneral from "./common/components/Employee/EmployeeGeneral";
+import ManageRequestsGeneral from "./common/components/ManageRequests/ManageRequestsGeneral";
 const styles = (theme) => ({
   root: {
     display: "flex",
@@ -84,6 +85,12 @@ class App extends React.Component {
           exact
           path="/employees/:id"
           component={EmployeeGeneral}
+          isLoggedIn={this.state.isLoggedIn}
+        />
+        <PrivateRoute
+          exact
+          path="/requests"
+          component={ManageRequestsGeneral}
           isLoggedIn={this.state.isLoggedIn}
         />{" "}
         <ReduxToastr

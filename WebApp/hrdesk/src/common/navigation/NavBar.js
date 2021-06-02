@@ -29,6 +29,7 @@ import {
   HowToReg,
   Schedule,
   Comment,
+  PersonAdd,
 } from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { styles } from "./NavBarStyles";
@@ -117,13 +118,25 @@ class NavBar extends React.Component {
         {
           text: "Manage employees",
           pathname: "/employees",
-          icon: <HowToReg />,
+          icon: <PersonAdd />,
           onClick: () => {
             this.setState({
               selected: "Manage employees",
               pathname: "/employees",
             });
             props.history.push("/employees");
+          },
+        },
+        {
+          text: "Manage requests",
+          pathname: "/requests",
+          icon: <HowToReg />,
+          onClick: () => {
+            this.setState({
+              selected: "Manage requests",
+              pathname: "/requests",
+            });
+            props.history.push("/requests");
           },
         },
         {
