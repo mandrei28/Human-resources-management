@@ -20,6 +20,9 @@ import React from "react";
 import EmployeesGeneral from "./common/components/Employees/EmployeesGeneral";
 import EmployeeGeneral from "./common/components/Employee/EmployeeGeneral";
 import ManageRequestsGeneral from "./common/components/ManageRequests/ManageRequestsGeneral";
+import MeetingsGeneral from "./common/components/Meetings/MeetingsGeneral";
+import ReportsGeneral from "./common/components/Reports/ReportsGeneral";
+
 const styles = (theme) => ({
   root: {
     display: "flex",
@@ -91,6 +94,18 @@ class App extends React.Component {
           exact
           path="/requests"
           component={ManageRequestsGeneral}
+          isLoggedIn={this.state.isLoggedIn}
+        />
+        <PrivateRoute
+          exact
+          path="/meetings"
+          component={MeetingsGeneral}
+          isLoggedIn={this.state.isLoggedIn}
+        />
+        <PrivateRoute
+          exact
+          path="/reports"
+          component={ReportsGeneral}
           isLoggedIn={this.state.isLoggedIn}
         />{" "}
         <ReduxToastr
