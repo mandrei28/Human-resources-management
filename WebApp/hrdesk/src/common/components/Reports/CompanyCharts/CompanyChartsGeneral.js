@@ -6,11 +6,11 @@ export default class CompanyChartsGeneral extends Component {
   render() {
     return (
       <React.Fragment>
-        <Grid container style={{ paddingTop: "30px" }}>
+        <Grid container>
           <Grid item xs={12} md={12} lg={6} xl={4}>
             <Chart
-              width={"620px"}
-              height={"650px"}
+              width={"565px"}
+              height={"750px"}
               chartType="PieChart"
               loader={<div>Age chart</div>}
               data={[
@@ -28,8 +28,8 @@ export default class CompanyChartsGeneral extends Component {
           </Grid>
           <Grid item xs={12} md={12} lg={6} xl={4}>
             <Chart
-              width={"620px"}
-              height={"650px"}
+              width={"565px"}
+              height={"750px"}
               chartType="PieChart"
               loader={<div>Functions chart</div>}
               data={[
@@ -49,8 +49,8 @@ export default class CompanyChartsGeneral extends Component {
           </Grid>
           <Grid item xs={12} md={12} lg={12} xl={4}>
             <Chart
-              width={"620px"}
-              height={"650px"}
+              width={"565px"}
+              height={"750px"}
               chartType="PieChart"
               loader={<div>Provenience chart</div>}
               data={[
