@@ -30,6 +30,7 @@ import {
   Schedule,
   Comment,
   PersonAdd,
+  EventBusy,
 } from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { styles } from "./NavBarStyles";
@@ -113,8 +114,29 @@ class NavBar extends React.Component {
             props.history.push("/team");
           },
         },
+        {
+          text: "Holiday calendar",
+          pathname: "/holidaycalendar",
+          icon: <EventBusy />,
+          onClick: () => {
+            this.setState({
+              selected: "Holiday calendar",
+              pathname: "/holidaycalendar",
+            });
+            props.history.push("/holidaycalendar");
+          },
+        },
       ],
       adminItemsList: [
+        {
+          text: "Book room",
+          pathname: "/book",
+          icon: <Schedule />,
+          onClick: () => {
+            this.setState({ selected: "Book room", pathname: "/book" });
+            props.history.push("/book");
+          },
+        },
         {
           text: "Manage employees",
           pathname: "/employees",
@@ -128,15 +150,15 @@ class NavBar extends React.Component {
           },
         },
         {
-          text: "Manage requests",
-          pathname: "/requests",
+          text: "Manage holidays",
+          pathname: "/holidays",
           icon: <HowToReg />,
           onClick: () => {
             this.setState({
-              selected: "Manage requests",
-              pathname: "/requests",
+              selected: "Manage holidays",
+              pathname: "/holidays",
             });
-            props.history.push("/requests");
+            props.history.push("/holidays");
           },
         },
         {
@@ -146,15 +168,6 @@ class NavBar extends React.Component {
           onClick: () => {
             this.setState({ selected: "Create pool", pathname: "/pool" });
             props.history.push("/pool");
-          },
-        },
-        {
-          text: "Book room",
-          pathname: "/book",
-          icon: <Schedule />,
-          onClick: () => {
-            this.setState({ selected: "Book room", pathname: "/book" });
-            props.history.push("/book");
           },
         },
       ],

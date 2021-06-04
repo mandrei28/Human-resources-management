@@ -10,18 +10,10 @@ import { withRouter } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
-import { styles } from "./EmployeesStyles";
+import { styles } from "./ManageNationalDaysStyles";
 import EditIcon from "@material-ui/icons/Edit";
 
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport />
-    </GridToolbarContainer>
-  );
-}
-
-class EmployeesGeneral extends Component {
+class ManageNationalDaysGeneral extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -233,44 +225,26 @@ class EmployeesGeneral extends Component {
       },
     ];
   }
-
-  createNewUser = () => {
-    this.props.history.push("/employees/new");
-  };
-
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12} lg={12}>
-                <Paper className={classes.paper}>
-                  <div style={{ height: 760, width: "100%" }}>
-                    <DataGrid
-                      rows={this.rows}
-                      columns={this.columns}
-                      pageSize={15}
-                      rowHeight={43}
-                      disableSelectionOnClick={true}
-                      components={{
-                        Toolbar: CustomToolbar,
-                      }}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-            </Grid>{" "}
-          </Container>
-        </main>
-      </div>
+      <Grid item xs={12} md={12} lg={12} style={{ paddingTop: "40px" }}>
+        <Paper className={classes.paper}>
+          <div style={{ height: 560, width: "100%" }}>
+            <DataGrid
+              rows={this.rows}
+              columns={this.columns}
+              pageSize={10}
+              rowHeight={45}
+              disableSelectionOnClick={true}
+            />
+          </div>
+        </Paper>
+      </Grid>
     );
   }
 }
 
 export default withStyles(styles, { withTheme: true })(
-  withRouter(EmployeesGeneral)
+  withRouter(ManageNationalDaysGeneral)
 );
