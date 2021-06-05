@@ -12,11 +12,12 @@ import { withStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
 import { styles } from "./ManageNationalDaysStyles";
 import EditIcon from "@material-ui/icons/Edit";
+import NationalDayDialog from "./UIElements/NationalDayDialog";
 
 class ManageNationalDaysGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { showNationalDayDialog: false };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
       { field: "description", headerName: "Description", width: 250 },
@@ -39,10 +40,10 @@ class ManageNationalDaysGeneral extends Component {
         renderHeader: (params) => {
           return (
             <Button
-              disabled={this.state.disabled}
+              // disabled={this.state.disabled}
               variant="contained"
               color="primary"
-              onClick={this.createNewUser}
+              onClick={this.openNationalDayDialog}
             >
               NEW
             </Button>
@@ -225,22 +226,41 @@ class ManageNationalDaysGeneral extends Component {
       },
     ];
   }
+
+  openNationalDayDialog = () => {
+    this.setState({ showNationalDayDialog: true });
+  };
+
+  closeNationalDayDialog = () => {
+    this.setState({ showNationalDayDialog: false });
+  };
+
+  addNationalDay = () => {};
+
   render() {
     const { classes } = this.props;
     return (
-      <Grid item xs={12} md={12} lg={12} style={{ paddingTop: "40px" }}>
-        <Paper className={classes.paper}>
-          <div style={{ height: 560, width: "100%" }}>
-            <DataGrid
-              rows={this.rows}
-              columns={this.columns}
-              pageSize={10}
-              rowHeight={45}
-              disableSelectionOnClick={true}
-            />
-          </div>
-        </Paper>
-      </Grid>
+      <React.Fragment>
+        <Grid item xs={12} md={12} lg={12} style={{ paddingTop: "40px" }}>
+          <Paper className={classes.paper}>
+            <div style={{ height: 560, width: "100%" }}>
+              <DataGrid
+                rows={this.rows}
+                columns={this.columns}
+                pageSize={10}
+                rowHeight={45}
+                disableSelectionOnClick={true}
+              />
+            </div>
+          </Paper>
+        </Grid>
+        {this.state.showNationalDayDialog && (
+          <NationalDayDialog
+            onClose={this.closeNationalDayDialog}
+            onAdd={this.addNationalDay}
+          />
+        )}
+      </React.Fragment>
     );
   }
 }

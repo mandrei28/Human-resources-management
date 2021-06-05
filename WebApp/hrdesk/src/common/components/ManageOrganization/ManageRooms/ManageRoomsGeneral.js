@@ -10,14 +10,16 @@ import { withRouter } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
 import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
-import { styles } from "./ManageMeetingRoomsStyles";
+import { styles } from "./ManageRoomsStyles";
 import EditIcon from "@material-ui/icons/Edit";
+import MeetingRoomDialog from "./UIElements/MeetingRoomDialog";
+import OfficeDialog from "./UIElements/OfficeDialog";
 
-class ManageMeetingRoomsGeneral extends Component {
+class ManageRoomsGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    this.columns = [
+    this.state = { showMeetingRoomDialog: false, showOfficeDialog: false };
+    this.officeColumns = [
       { field: "id", headerName: "ID", width: 70 },
       { field: "description", headerName: "Description", width: 250 },
       {
@@ -42,7 +44,92 @@ class ManageMeetingRoomsGeneral extends Component {
               disabled={this.state.disabled}
               variant="contained"
               color="primary"
-              onClick={this.createNewUser}
+              onClick={this.openOfficeDialog}
+            >
+              NEW
+            </Button>
+          );
+        },
+        renderCell: (params) => {
+          const onClick = () => {
+            const api = params.api;
+            const fields = api
+              .getAllColumns()
+              .map((c) => c.field)
+              .filter((c) => c !== "__check__" && !!c);
+            const thisRow = {};
+
+            fields.forEach((f) => {
+              thisRow[f] = params.getValue(f);
+            });
+
+            return alert(JSON.stringify(thisRow, null, 4));
+          };
+          const onDelete = () => {
+            const api = params.api;
+            const fields = api
+              .getAllColumns()
+              .map((c) => c.field)
+              .filter((c) => c !== "__check__" && !!c);
+            const thisRow = {};
+
+            fields.forEach((f) => {
+              thisRow[f] = params.getValue(f);
+            });
+            debugger;
+            return console.info(JSON.stringify(thisRow, null, 4));
+          };
+
+          return (
+            <React.Fragment>
+              <div
+                hidden={params.row.id === 1}
+                style={{ paddingTop: "10px", cursor: "pointer" }}
+              >
+                <EditIcon onClick={onClick} />
+              </div>
+              <div
+                hidden={params.row.id === 1}
+                style={{
+                  paddingTop: "10px",
+                  paddingLeft: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                <DeleteIcon onClick={onDelete} />
+              </div>
+            </React.Fragment>
+          );
+        },
+      },
+    ];
+
+    this.meetingRoomColumns = [
+      { field: "id", headerName: "ID", width: 70 },
+      { field: "description", headerName: "Description", width: 250 },
+      {
+        field: "startDate",
+        type: "date",
+        headerName: "Start date",
+        width: 210,
+      },
+      { field: "endDate", type: "date", headerName: "End date", width: 210 },
+      { field: "status", headerName: "Status", width: 150 },
+      { field: "verified", headerName: "Verified By", width: 180 },
+      {
+        field: "",
+        width: 100,
+        disableColumnMenu: true,
+        sortable: false,
+        align: "center",
+        headerClassName: "custom-grid-header",
+        renderHeader: (params) => {
+          return (
+            <Button
+              disabled={this.state.disabled}
+              variant="contained"
+              color="primary"
+              onClick={this.openMeetingRoomDialog}
             >
               NEW
             </Button>
@@ -225,6 +312,27 @@ class ManageMeetingRoomsGeneral extends Component {
       },
     ];
   }
+
+  openMeetingRoomDialog = () => {
+    this.setState({ showMeetingRoomDialog: true });
+  };
+
+  closeMeetingRoomDialog = () => {
+    this.setState({ showMeetingRoomDialog: false });
+  };
+
+  addMeetingRoom = () => {};
+
+  openOfficeDialog = () => {
+    this.setState({ showOfficeDialog: true });
+  };
+
+  closeOfficeDialog = () => {
+    this.setState({ showOfficeDialog: false });
+  };
+
+  addOffice = () => {};
+
   render() {
     const { classes } = this.props;
     return (
@@ -234,7 +342,7 @@ class ManageMeetingRoomsGeneral extends Component {
             <div style={{ height: 355, width: "100%" }}>
               <DataGrid
                 rows={this.rows}
-                columns={this.columns}
+                columns={this.meetingRoomColumns}
                 pageSize={7}
                 rowHeight={35}
                 disableSelectionOnClick={true}
@@ -247,7 +355,7 @@ class ManageMeetingRoomsGeneral extends Component {
             <div style={{ height: 355, width: "100%" }}>
               <DataGrid
                 rows={this.rows}
-                columns={this.columns}
+                columns={this.officeColumns}
                 pageSize={7}
                 rowHeight={35}
                 disableSelectionOnClick={true}
@@ -255,10 +363,22 @@ class ManageMeetingRoomsGeneral extends Component {
             </div>
           </Paper>
         </Grid>
+        {this.state.showMeetingRoomDialog && (
+          <MeetingRoomDialog
+            onClose={this.closeMeetingRoomDialog}
+            onAdd={this.addMeetingRoom}
+          />
+        )}
+        {this.state.showOfficeDialog && (
+          <OfficeDialog
+            onClose={this.closeOfficeDialog}
+            onAdd={this.addOffice}
+          />
+        )}
       </React.Fragment>
     );
   }
 }
 export default withStyles(styles, { withTheme: true })(
-  withRouter(ManageMeetingRoomsGeneral)
+  withRouter(ManageRoomsGeneral)
 );
