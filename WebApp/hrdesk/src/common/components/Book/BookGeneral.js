@@ -32,27 +32,6 @@ import {
 } from "@material-ui/pickers";
 
 const currentDate = "2018-11-01";
-const schedulerData = [
-  {
-    startDate: new Date(2018, 4, 30, 9, 0),
-    endDate: new Date(2018, 4, 30, 11, 0),
-    title: "Meeting1",
-    roomId: 4,
-    allDay: false,
-    teamId: 4,
-    id: 1,
-  },
-  {
-    startDate: new Date(2018, 4, 30, 9, 0),
-    endDate: new Date(2018, 4, 30, 11, 0),
-    title: "Meeting2",
-    roomId: 5,
-    allDay: false,
-    teamId: 1,
-    id: 2,
-  },
-];
-
 const resources = [
   {
     fieldName: "roomId",
@@ -96,10 +75,57 @@ const grouping = [
 class BookGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: [
+        {
+          startDate: new Date(2018, 4, 30, 9, 0),
+          endDate: new Date(2018, 4, 30, 11, 0),
+          title: "Meeting1",
+          roomId: 4,
+          allDay: false,
+          teamId: 4,
+          id: 1,
+        },
+        {
+          startDate: new Date(2018, 4, 30, 9, 0),
+          endDate: new Date(2018, 4, 30, 11, 0),
+          title: "Meeting2",
+          roomId: 5,
+          allDay: false,
+          teamId: 1,
+          id: 3,
+        },
+      ],
+    };
   }
-  onCommitChanges = (props) => {
-    debugger;
+  onCommitChanges = ({ added, changed, deleted }) => {
+    this.setState((state) => {
+      let { data } = state;
+      if (added) {
+        const startingAddedId =
+          data.length > 0 ? data[data.length - 1].id + 1 : 0;
+        data = [...data, { id: startingAddedId, ...added }];
+        //this.props.addNewAppointment(data[startingAddedId]);
+        debugger;
+      }
+      if (changed) {
+        var appointmentIndex = data.findIndex(
+          (appointment) => changed[appointment.id]
+        );
+        data = data.map((appointment) =>
+          changed[appointment.id]
+            ? { ...appointment, ...changed[appointment.id] }
+            : appointment
+        );
+        //this.props.updateAppointment(data[appointmentIndex]);
+      }
+      if (deleted !== undefined) {
+        data = data.filter((appointment) => appointment.id !== deleted);
+        //this.props.deleteAppointment(deleted);
+        debugger;
+      }
+      return { data };
+    });
   };
   render() {
     const { classes } = this.props;
@@ -109,7 +135,7 @@ class BookGeneral extends Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="xl" className={classes.container}>
-            <Scheduler data={schedulerData} height={755}>
+            <Scheduler data={this.state.data} height={755}>
               <ViewState defaultCurrentDate="2018-05-30" />
               <EditingState onCommitChanges={this.onCommitChanges} />
               <GroupingState grouping={grouping} />

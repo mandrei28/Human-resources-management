@@ -25,18 +25,18 @@ namespace HRDesk.Infrastructure.Repositories
         {
             return dbSet;
         }
-        public virtual TEntity GetByID(object id)
+        public virtual async Task<TEntity> GetByIDAsync(object id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual async Task InsertAsync(TEntity entity)
         {
             if (typeof(IAuditEntity).IsAssignableFrom(typeof(TEntity)))
             {
                 ((IAuditEntity)entity).CreatedDate = DateTime.UtcNow;
             }
-            dbSet.Add(entity);
+            await dbSet.AddAsync(entity);
         }
 
         public virtual void Delete(object id)

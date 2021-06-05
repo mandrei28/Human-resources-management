@@ -33,6 +33,7 @@ namespace HRDesk
             return services
                 .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
                 .AddScoped<IUserRepository, UserRepository>();
+
             //.AddScoped<IDepartmentRepository, DepartmentRepository>()
             //.AddScoped<IUserRepository, UserRepository>()
             //.AddScoped<ISalaryRepository, SalaryRepository>();
@@ -45,7 +46,9 @@ namespace HRDesk
                     configuration.GetValue<string>("JWTSecretKey"),
                     configuration.GetValue<int>("JWTLifespan")
                 )
-            );
+            ).AddHttpContextAccessor()
+            .AddScoped<IIdentityService, IdentityService>()
+            .AddScoped<IUserService, UserService>();
         }
     }
 }

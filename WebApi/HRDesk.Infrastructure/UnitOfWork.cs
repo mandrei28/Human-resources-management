@@ -40,9 +40,9 @@ namespace HRDesk.Infrastructure
             }
         }
 
-        public void Commit()
+        public async Task CommitAsync()
         {
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
         public void Dispose()

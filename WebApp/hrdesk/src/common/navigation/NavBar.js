@@ -31,6 +31,7 @@ import {
   Comment,
   PersonAdd,
   EventBusy,
+  Business,
 } from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { styles } from "./NavBarStyles";
@@ -162,12 +163,15 @@ class NavBar extends React.Component {
           },
         },
         {
-          text: "Create pool",
-          pathname: "/pool",
-          icon: <Comment />,
+          text: "Manage organization",
+          pathname: "/organization",
+          icon: <Business />,
           onClick: () => {
-            this.setState({ selected: "Create pool", pathname: "/pool" });
-            props.history.push("/pool");
+            this.setState({
+              selected: "Manage organization",
+              pathname: "/organization",
+            });
+            props.history.push("/organization");
           },
         },
       ],

@@ -11,9 +11,9 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
     {
         void Delete(TEntity entityToDelete);
         void Delete(object id);
-        TEntity GetByID(object id);
+        Task<TEntity> GetByIDAsync(object id);
         IQueryable<TEntity> GetAll();
-        void Insert(TEntity entity);
+        Task InsertAsync(TEntity entity);
         void Update(TEntity entityToUpdate);
     }
 }

@@ -23,6 +23,7 @@ import ManageRequestsGeneral from "./common/components/ManageRequests/ManageRequ
 import MeetingsGeneral from "./common/components/Meetings/MeetingsGeneral";
 import ReportsGeneral from "./common/components/Reports/ReportsGeneral";
 import HolidayCalendarGeneral from "./common/components/HolidayCalendar/HolidayCalendarGeneral";
+import ManageOrganizationGeneral from "./common/components/ManageOrganization/ManageOrganizationGeneral";
 
 const styles = (theme) => ({
   root: {
@@ -113,6 +114,12 @@ class App extends React.Component {
           exact
           path="/holidaycalendar"
           component={HolidayCalendarGeneral}
+          isLoggedIn={this.state.isLoggedIn}
+        />
+        <PrivateRoute
+          exact
+          path="/organization"
+          component={ManageOrganizationGeneral}
           isLoggedIn={this.state.isLoggedIn}
         />{" "}
         <ReduxToastr

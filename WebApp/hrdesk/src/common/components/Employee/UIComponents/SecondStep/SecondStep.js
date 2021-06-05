@@ -24,9 +24,9 @@ export default class SecondStep extends Component {
     const isValid =
       this.props.user.team.length > 0 &&
       this.props.user.function.length > 0 &&
-      this.props.user.room.length > 0 &&
+      this.props.user.office.length > 0 &&
       this.props.user.password.length > 0 &&
-      this.props.user.workPhone.length > 0 &&
+      this.props.user.numberOfDaysoff > 0 &&
       this.props.user.salary > 0 &&
       this.props.user.workEmail.length > 0;
     return (
@@ -65,18 +65,17 @@ export default class SecondStep extends Component {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="Room"
-                name="room"
-                placeholder="Room"
-                value={this.props.user.room || ""}
-                onChange={(event) => this.props.handleChange(event, "room")}
-                margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
-                required
-              />
+              <FormControl fullWidth required margin="normal">
+                <InputLabel>Office</InputLabel>
+                <Select
+                  value={this.props.user.office}
+                  onChange={(event) => this.props.handleChange(event, "office")}
+                  name="office"
+                >
+                  <MenuItem value={"Office1"}>Office1</MenuItem>
+                  <MenuItem value={"Office2"}>Office2</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -96,12 +95,13 @@ export default class SecondStep extends Component {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                label="Work Phone"
-                name="workPhone"
-                placeholder="Your work phone number"
-                value={this.props.user.workPhone || ""}
+                label="Number of daysoff"
+                name="numberOfDaysoff"
+                placeholder="NumberOfDaysoff"
+                type="number"
+                value={this.props.user.numberOfDaysoff || ""}
                 onChange={(event) =>
-                  this.props.handleChange(event, "workPhone")
+                  this.props.handleChange(event, "numberOfDaysoff")
                 }
                 margin="normal"
                 //error={!!formErrors.email}

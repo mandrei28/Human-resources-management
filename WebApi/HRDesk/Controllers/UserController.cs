@@ -16,55 +16,36 @@ namespace HRDesk.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private IUnitOfWork _unitOfWork;
-        private IAuthService _authService;
+        private IUserService _userService;
+        private IIdentityService _identityService;
 
-        public UserController(IUnitOfWork unitOfWork, IAuthService authService)
+        public UserController(IUserService userService, IIdentityService identityService)
         {
-            _unitOfWork = unitOfWork;
-            _authService = authService;
+            _userService = userService;
+            _identityService = identityService;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult<AuthResponseModel> Post([FromBody] AuthModel model)
         {
-            var hashPassword = _authService.HashPassword(model.Password);
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            var user = _unitOfWork.Users.GetUserByEmail(model.Email);
-
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(new { email = "no user with this email" });
+                throw new Exception("Invalid model");
             }
-
-            var passwordValid = _authService.VerifyPassword(model.Password, user.Password);
-            if (!passwordValid)
-            {
-                return BadRequest(new { password = "invalid password" });
-            }
-
-            return _authService.GetAuthData(user);
+            return _userService.Login(model);
         }
 
         [Authorize]
         [HttpPost("silentLogin")]
         public ActionResult<AuthResponseModel> SilentLogin()
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            var userId = _identityService.GetUserId();
+            if (userId == null)
             {
-                IEnumerable<Claim> claims = identity.Claims;
-                var userId = claims.ElementAt(0).Value;
-                var user = _unitOfWork.Users.GetUserById(Int32.Parse(userId));
-                if (user == null)
-                {
-                    return BadRequest(new { email = "no user with this email" });
-                }
-
-                return _authService.GetAuthData(user);
+                throw new Exception("Invalid token. Please relog");
             }
-            return Unauthorized();
+            return _userService.SilentLogin(userId.Value);
         }
     }
 }

@@ -27,7 +27,7 @@ export default class FirstStep extends Component {
       this.props.user.firstName.length > 0 &&
       this.props.user.lastName.length > 0 &&
       this.props.user.email.length > 0 &&
-      this.props.user.gender.length > 0 &&
+      this.props.user.countryOfBirth.length > 0 &&
       this.props.user.phone.length > 0 &&
       this.props.user.address.length > 0 &&
       this.props.user.cnp.length > 0;
@@ -82,17 +82,20 @@ export default class FirstStep extends Component {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth required margin="normal">
-                <InputLabel>Gender</InputLabel>
-                <Select
-                  value={this.props.user.gender}
-                  onChange={(event) => this.props.handleChange(event, "gender")}
-                  name="gender"
-                >
-                  <MenuItem value={"Male"}>Male</MenuItem>
-                  <MenuItem value={"Female"}>Female</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField
+                fullWidth
+                label="Country of birth"
+                name="countryOfBirth"
+                placeholder="Your country of birth"
+                margin="normal"
+                value={this.props.user.countryOfBirth || ""}
+                onChange={(event) =>
+                  this.props.handleChange(event, "countryOfBirth")
+                }
+                //error={!!formErrors.lastName}
+                //helperText={formErrors.lastName}
+                required
+              />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
