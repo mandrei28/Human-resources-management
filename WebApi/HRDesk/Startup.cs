@@ -56,7 +56,7 @@ namespace HRDesk
                    };
                });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddDatabase(Configuration);
             services.AddRepositories();
             services.AddServices(Configuration);

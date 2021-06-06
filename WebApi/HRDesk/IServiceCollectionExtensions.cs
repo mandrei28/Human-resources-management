@@ -32,7 +32,10 @@ namespace HRDesk
         {
             return services
                 .AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>))
-                .AddScoped<IUserRepository, UserRepository>();
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IFunctionRepository, FunctionRepository>()
+                .AddScoped<ITeamRepository, TeamRepository>()
+                .AddScoped<IOfficeRepository, OfficeRepository>();
 
             //.AddScoped<IDepartmentRepository, DepartmentRepository>()
             //.AddScoped<IUserRepository, UserRepository>()
@@ -48,7 +51,10 @@ namespace HRDesk
                 )
             ).AddHttpContextAccessor()
             .AddScoped<IIdentityService, IdentityService>()
-            .AddScoped<IUserService, UserService>();
+            .AddScoped<IUserService, UserService>()
+            .AddScoped<IFunctionService, FunctionService>()
+            .AddScoped<ITeamService, TeamService>()
+            .AddScoped<IOfficeService, OfficeService>();
         }
     }
 }

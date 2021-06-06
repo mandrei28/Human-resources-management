@@ -22,12 +22,12 @@ export default class SecondStep extends Component {
     console.info(this.props);
     debugger;
     const isValid =
-      this.props.user.team.length > 0 &&
-      this.props.user.function.length > 0 &&
-      this.props.user.office.length > 0 &&
+      this.props.user.teamId !== 0 &&
+      this.props.user.functionId !== null &&
+      this.props.user.officeId !== null &&
       this.props.user.password.length > 0 &&
       this.props.user.numberOfDaysoff > 0 &&
-      this.props.user.salary > 0 &&
+      this.props.user.salary !== null &&
       this.props.user.workEmail.length > 0;
     return (
       <React.Fragment>
@@ -37,12 +37,15 @@ export default class SecondStep extends Component {
               <FormControl fullWidth required margin="normal">
                 <InputLabel>Team</InputLabel>
                 <Select
-                  value={this.props.user.team}
-                  onChange={(event) => this.props.handleChange(event, "team")}
-                  name="team"
+                  value={this.props.user.teamId || 0}
+                  onChange={(event) => this.props.handleChange(event, "teamId")}
+                  name="teamId"
                 >
-                  <MenuItem value={"Team1"}>Team1</MenuItem>
-                  <MenuItem value={"Team2"}>Team2</MenuItem>
+                  {this.props.teams.map((team) => (
+                    <MenuItem value={team.id} key={team.id}>
+                      {team.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -50,16 +53,17 @@ export default class SecondStep extends Component {
               <FormControl fullWidth required margin="normal">
                 <InputLabel>Function</InputLabel>
                 <Select
-                  value={this.props.user.function}
+                  value={this.props.user.functionId || 0}
                   onChange={(event) =>
-                    this.props.handleChange(event, "function")
+                    this.props.handleChange(event, "functionId")
                   }
-                  name="function"
+                  name="functionId"
                 >
-                  <MenuItem value={"Developer"}>Developer</MenuItem>
-                  <MenuItem value={"Quality Assurance"}>
-                    Quality Assurance
-                  </MenuItem>
+                  {this.props.functions.map((userFunction) => (
+                    <MenuItem value={userFunction.id} key={userFunction.id}>
+                      {userFunction.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -68,12 +72,17 @@ export default class SecondStep extends Component {
               <FormControl fullWidth required margin="normal">
                 <InputLabel>Office</InputLabel>
                 <Select
-                  value={this.props.user.office}
-                  onChange={(event) => this.props.handleChange(event, "office")}
-                  name="office"
+                  value={this.props.user.officeId || 0}
+                  onChange={(event) =>
+                    this.props.handleChange(event, "officeId")
+                  }
+                  name="officeId"
                 >
-                  <MenuItem value={"Office1"}>Office1</MenuItem>
-                  <MenuItem value={"Office2"}>Office2</MenuItem>
+                  {this.props.offices.map((office) => (
+                    <MenuItem value={office.id} key={office.id}>
+                      {office.name}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -99,7 +108,7 @@ export default class SecondStep extends Component {
                 name="numberOfDaysoff"
                 placeholder="NumberOfDaysoff"
                 type="number"
-                value={this.props.user.numberOfDaysoff || ""}
+                value={this.props.user.numberOfDaysoff || 0}
                 onChange={(event) =>
                   this.props.handleChange(event, "numberOfDaysoff")
                 }
@@ -116,7 +125,7 @@ export default class SecondStep extends Component {
                 name="salary"
                 placeholder="Salary"
                 type="number"
-                value={this.props.user.salary || ""}
+                value={this.props.user.salary || 0}
                 onChange={(event) => this.props.handleChange(event, "salary")}
                 margin="normal"
                 //error={!!formErrors.email}
@@ -141,24 +150,26 @@ export default class SecondStep extends Component {
                 required
               /> */}{" "}
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="dateOfEmployment"
-                  label="Date of employment"
-                  //error={this.state.dayoff.startDate === null}
-                  fullWidth
-                  required
-                  value={this.props.user.dateOfEmployment || ""}
-                  onChange={(event) =>
-                    this.props.handleDateChange(event, "dateOfEmployment")
-                  }
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />{" "}
+                <React.Fragment>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="dateOfEmployment"
+                    label="Date of employment"
+                    //error={this.state.dayoff.startDate === null}
+                    fullWidth
+                    required
+                    value={this.props.user.dateOfEmployment || ""}
+                    onChange={(event) =>
+                      this.props.handleDateChange(event, "dateOfEmployment")
+                    }
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />{" "}
+                </React.Fragment>
               </MuiPickersUtilsProvider>
             </Grid>
             <Grid item xs={12} sm={6}>

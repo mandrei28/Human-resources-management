@@ -15,6 +15,10 @@ namespace HRDesk.Infrastructure
 
         private HRDeskDbContext _dbContext;
         private UserRepository _users;
+        private FunctionRepository _functions;
+        private TeamRepository _teams;
+        private OfficeRepository _offices;
+        private UserPermissionRepository _userPermissions;
         //private BaseRepository<Order> _orders;
 
         public UnitOfWork(HRDeskDbContext dbContext)
@@ -38,6 +42,55 @@ namespace HRDesk.Infrastructure
                 return _users ??
                     (_users = new UserRepository(_dbContext));
             }
+        }
+
+        public IFunctionRepository Functions
+        {
+            get
+            {
+                return _functions ??
+                    (_functions = new FunctionRepository(_dbContext));
+            }
+        }
+
+        public ITeamRepository Teams
+        {
+            get
+            {
+                return _teams ??
+                    (_teams = new TeamRepository(_dbContext));
+            }
+        }
+        public IOfficeRepository Office
+        {
+            get
+            {
+                return _offices ??
+                    (_offices = new OfficeRepository(_dbContext));
+            }
+        }
+        public IUserPermissionRepository UserPermission
+        {
+            get
+            {
+                return _userPermissions ??
+                    (_userPermissions = new UserPermissionRepository(_dbContext));
+            }
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            await _dbContext.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            await _dbContext.Database.CommitTransactionAsync();
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            await _dbContext.Database.RollbackTransactionAsync();
         }
 
         public async Task CommitAsync()

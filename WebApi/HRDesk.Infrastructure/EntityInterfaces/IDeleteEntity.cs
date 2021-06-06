@@ -9,7 +9,7 @@ namespace HRDesk.Infrastructure.EntityInterfaces
     {
         bool IsDeleted { get; set; }
     }
-    public interface IDeleteEntity<TKey> : IDeleteEntity, IEntityBase<TKey>
+    public interface IDeleteEntity<TKey> : IDeleteEntity, IAuditEntity<TKey>
     {
     }
 }

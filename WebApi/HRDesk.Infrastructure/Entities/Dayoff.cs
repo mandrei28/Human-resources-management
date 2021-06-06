@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HRDesk.Infrastructure.Entities
 {
-    public class Dayoff : AuditEntity<int>
+    public class Dayoff : DeleteEntity<int>
     {
         public string Description { get; set; }
         public DateTime StartDate { get; set; }

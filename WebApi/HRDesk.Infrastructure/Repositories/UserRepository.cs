@@ -14,12 +14,17 @@ namespace HRDesk.Infrastructure.Repositories
         }
         public bool EmailAlreadyInUse(string email)
         {
-            return GetAll().Any(u => u.Email == email);
+            return GetAll().Any(u => u.WorkEmail == email);
         }
 
         public User GetUserByEmail(string email)
         {
-            return GetAll().Where(u => u.Email == email).FirstOrDefault();
+            return GetAll().Where(u => u.WorkEmail == email).FirstOrDefault();
+        }
+
+        public bool CheckIfEmailIsInUse(string email)
+        {
+            return GetAll().Any(u => u.WorkEmail == email);
         }
 
         public User GetUserById(int id)

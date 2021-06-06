@@ -6,10 +6,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        rest.isLoggedIn ? (
-          <Component {...props} />
-        ) : (
+        !rest.isLoggedIn ? (
           <Redirect to={{ pathname: "/login" }} />
+        ) : !rest.hasPermission ? (
+          <Redirect to={{ pathname: "/accessdenied" }} />
+        ) : (
+          <Component {...props} />
         )
       }
     />

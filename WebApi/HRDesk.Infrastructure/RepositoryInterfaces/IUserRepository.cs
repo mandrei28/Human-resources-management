@@ -10,5 +10,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
         bool EmailAlreadyInUse(string email);
         User GetUserById(int id);
         User GetUserByEmail(string email);
+        bool CheckIfEmailIsInUse(string email);
     }
 }

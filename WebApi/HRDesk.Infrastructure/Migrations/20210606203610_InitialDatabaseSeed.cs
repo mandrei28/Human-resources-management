@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HRDesk.Infrastructure.Migrations
 {
-    public partial class InitialDatabaseConfiguration : Migration
+    public partial class InitialDatabaseSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,6 @@ namespace HRDesk.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -34,7 +33,6 @@ namespace HRDesk.Infrastructure.Migrations
                     Number = table.Column<int>(type: "int", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Capacity = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -52,7 +50,6 @@ namespace HRDesk.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -70,7 +67,7 @@ namespace HRDesk.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Number = table.Column<int>(type: "int", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Capacity = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -99,7 +96,6 @@ namespace HRDesk.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -121,9 +117,9 @@ namespace HRDesk.Infrastructure.Migrations
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MeetingRoomId = table.Column<int>(type: "int", nullable: true),
                     TeamId = table.Column<int>(type: "int", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,7 +149,7 @@ namespace HRDesk.Infrastructure.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountryOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CNP = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WorkEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -164,9 +160,9 @@ namespace HRDesk.Infrastructure.Migrations
                     TeamId = table.Column<int>(type: "int", nullable: true),
                     FunctionId = table.Column<int>(type: "int", nullable: true),
                     OfficeId = table.Column<int>(type: "int", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,9 +199,9 @@ namespace HRDesk.Infrastructure.Migrations
                     UserId = table.Column<int>(type: "int", nullable: true),
                     AdminId = table.Column<int>(type: "int", nullable: true),
                     Approved = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -237,9 +233,9 @@ namespace HRDesk.Infrastructure.Migrations
                     UserId = table.Column<int>(type: "int", nullable: true),
                     AdminId = table.Column<int>(type: "int", nullable: true),
                     Approved = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -266,7 +262,6 @@ namespace HRDesk.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     PermissionId = table.Column<int>(type: "int", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -289,23 +284,67 @@ namespace HRDesk.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Functions",
-                columns: new[] { "Id", "CreatedDate", "Description", "IsDeleted", "Name", "UpdatedDate" },
-                values: new object[] { 1, new DateTime(2021, 6, 5, 13, 55, 44, 512, DateTimeKind.Local).AddTicks(9791), "Management function", false, "Company manager", new DateTime(2021, 6, 5, 13, 55, 44, 515, DateTimeKind.Local).AddTicks(7526) });
+                columns: new[] { "Id", "CreatedDate", "Description", "Name", "UpdatedDate" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Management function", "Company manager", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Board employee", "Board", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Human resource employee", "Human resource", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Project manager employee", "Project manager", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Developer employee", "Developer", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Quality assurance employee", "Quality assurance", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                });
 
             migrationBuilder.InsertData(
                 table: "Offices",
-                columns: new[] { "Id", "CreatedDate", "IsDeleted", "Location", "Name", "Number", "UpdatedDate" },
-                values: new object[] { 1, new DateTime(2021, 6, 5, 13, 55, 44, 516, DateTimeKind.Local).AddTicks(9678), false, "First floor", "Management office", 1, new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(485) });
+                columns: new[] { "Id", "Capacity", "CreatedDate", "Location", "Name", "Number", "UpdatedDate" },
+                values: new object[] { 1, 0, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "First floor", "Management office", 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
+                table: "Permissions",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 10, "Manage holidays" },
+                    { 9, "Manage employees" },
+                    { 8, "Book room" },
+                    { 7, "Holiday calendar" },
+                    { 6, "Team" },
+                    { 3, "Daysoff requests" },
+                    { 4, "Reports" },
+                    { 11, "Manage organization" },
+                    { 2, "Leave requests" },
+                    { 1, "Dashboard" },
+                    { 5, "Meetings" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Teams",
-                columns: new[] { "Id", "CreatedDate", "Description", "IsDeleted", "Name", "UpdatedDate" },
-                values: new object[] { 1, new DateTime(2021, 6, 5, 13, 55, 44, 516, DateTimeKind.Local).AddTicks(8393), "Management team", false, "Managers", new DateTime(2021, 6, 5, 13, 55, 44, 516, DateTimeKind.Local).AddTicks(9077) });
+                columns: new[] { "Id", "CreatedDate", "Description", "Name", "UpdatedDate" },
+                values: new object[] { 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Management team", "Management team", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Adress", "CNP", "CountryOfBirth", "CreatedDate", "DateOfBirth", "DateOfEmployment", "Email", "FirstName", "FunctionId", "IsDeleted", "LastName", "NumberOfDaysoff", "OfficeId", "Password", "Phone", "Salary", "TeamId", "UpdatedDate", "WorkEmail" },
-                values: new object[] { 1, "Company address", "1980528111111", "Romania", new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(1064), new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(2170), "administrator@admin.com", "Andrei Cristian", 1, false, "Marcu", 20, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", "0749206007", 5000, 1, new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(5228), "administrator@company.com" });
+                columns: new[] { "Id", "Address", "CNP", "CountryOfBirth", "CreatedDate", "DateOfBirth", "DateOfEmployment", "Email", "FirstName", "FunctionId", "IsDeleted", "LastName", "NumberOfDaysoff", "OfficeId", "Password", "Phone", "Salary", "TeamId", "UpdatedDate", "WorkEmail" },
+                values: new object[] { 1, "Company address", "1980528111111", "Romania", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@admin.com", "Andrei Cristian", 1, false, "Marcu", 20, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", "0749206007", 5000, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@company.com" });
+
+            migrationBuilder.InsertData(
+                table: "UserPermissions",
+                columns: new[] { "Id", "CreatedDate", "PermissionId", "UpdatedDate", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, 1 },
+                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1 },
+                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, null, 1 },
+                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, null, 1 },
+                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, null, 1 },
+                    { 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, null, 1 },
+                    { 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 7, null, 1 },
+                    { 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 8, null, 1 },
+                    { 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 9, null, 1 },
+                    { 10, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 10, null, 1 },
+                    { 11, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 11, null, 1 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Daysoff_AdminId",

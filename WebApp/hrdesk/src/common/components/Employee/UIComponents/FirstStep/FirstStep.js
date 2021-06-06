@@ -144,24 +144,26 @@ export default class FirstStep extends Component {
                 required
               /> */}
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="dateOfBirth"
-                  label="Date of birth"
-                  //error={this.state.dayoff.startDate === null}
-                  fullWidth
-                  required
-                  value={this.props.user.dateOfBirth || ""}
-                  onChange={(event) =>
-                    this.props.handleDateChange(event, "dateOfBirth")
-                  }
-                  KeyboardButtonProps={{
-                    "aria-label": "change date",
-                  }}
-                />{" "}
+                <React.Fragment>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="dateOfBirth"
+                    label="Date of birth"
+                    //error={this.state.dayoff.startDate === null}
+                    fullWidth
+                    required
+                    value={this.props.user.dateOfBirth || ""}
+                    onChange={(event) =>
+                      this.props.handleDateChange(event, "dateOfBirth")
+                    }
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />{" "}
+                </React.Fragment>
               </MuiPickersUtilsProvider>
             </Grid>
             <Grid item xs={12} sm={6}>

@@ -18,3 +18,8 @@ export const isTokenValid = () => {
   }
   return true;
 };
+
+export const userHasPermission = (permissions, permission) => {
+  debugger;
+  return permissions.includes(permission);
+};

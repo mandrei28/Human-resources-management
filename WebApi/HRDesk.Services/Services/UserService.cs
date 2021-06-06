@@ -1,10 +1,13 @@
-﻿using HRDesk.Infrastructure.RepositoryInterfaces;
+﻿using HRDesk.Infrastructure.Entities;
+using HRDesk.Infrastructure.RepositoryInterfaces;
+using HRDesk.Services.Mappers;
 using HRDesk.Services.Models;
 using HRDesk.Services.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HRDesk.Services.Services
 {
@@ -33,7 +36,9 @@ namespace HRDesk.Services.Services
                 throw new Exception("Invalid password");
             }
 
-            return _authService.GetAuthData(user);
+            var authData = _authService.GetAuthData(user);
+            authData.UserModel.Permissions = GetUserPermissions(user.Id);
+            return authData;
         }
 
         public AuthResponseModel SilentLogin(int userId)
@@ -44,7 +49,43 @@ namespace HRDesk.Services.Services
                 throw new Exception("User not found");
             }
 
-            return _authService.GetAuthData(user);
+            var authData = _authService.GetAuthData(user);
+            authData.UserModel.Permissions = GetUserPermissions(user.Id);
+
+            return authData;
+        }
+
+        public async Task<UserModel> RegisterUser(UserModel userModel)
+        {
+            var emailAlreadyInUse = _unitOfWork.Users.CheckIfEmailIsInUse(userModel.WorkEmail);
+            if (emailAlreadyInUse)
+            {
+                throw new Exception("Work email already in use");
+            }
+            await _unitOfWork.BeginTransactionAsync();
+            try
+            {
+                var user = UserMapper.ToUser(userModel);
+                await _unitOfWork.Users.InsertAsync(user);
+                await _unitOfWork.CommitAsync();
+                foreach (int permissionId in userModel.Permissions)
+                {
+                    await _unitOfWork.UserPermission.InsertAsync(new UserPermission
+                    {
+                        PermissionId = permissionId,
+                        UserId = user.Id,
+                    });
+                }
+                await _unitOfWork.CommitAsync();
+                await _unitOfWork.CommitTransactionAsync();
+                userModel.Id = user.Id;
+                return userModel;
+            }
+            catch
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                throw new Exception("Register failed with unknown reason");
+            }
         }
 
         public Dictionary<string, int> UserStatistics()
@@ -52,6 +93,17 @@ namespace HRDesk.Services.Services
             var statistics = new Dictionary<string, int>();
             statistics.Add("total", _unitOfWork.Users.GetAll().Count());
             return statistics;
+        }
+
+        private List<int> GetUserPermissions(int userId)
+        {
+            var permissions = new List<int>();
+            var userPermissions = _unitOfWork.UserPermission.GetAllByUserId(userId);
+            foreach (UserPermission userPermission in userPermissions)
+            {
+                permissions.Add(userPermission.PermissionId.Value);
+            }
+            return permissions;
         }
     }
 }

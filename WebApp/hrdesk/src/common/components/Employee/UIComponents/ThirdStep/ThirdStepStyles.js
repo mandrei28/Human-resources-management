@@ -3,7 +3,7 @@ const styles = (theme) => ({
     margin: "auto",
   },
   paper: {
-    width: 200,
+    width: 250,
     height: 320,
     overflow: "auto",
   },

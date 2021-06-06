@@ -47,5 +47,12 @@ namespace HRDesk.Controllers
             }
             return _userService.SilentLogin(userId.Value);
         }
+
+        [Authorize]
+        [HttpPost("register")]
+        public async Task<UserModel> Register([FromBody] UserModel model)
+        {
+            return await _userService.RegisterUser(model);
+        }
     }
 }

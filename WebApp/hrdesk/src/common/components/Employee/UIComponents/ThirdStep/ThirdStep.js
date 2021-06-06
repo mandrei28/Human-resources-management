@@ -11,6 +11,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import { Paper, Container, CssBaseline } from "@material-ui/core";
+import { PermissionsNames } from "../../../../../utils/constants";
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -34,7 +35,10 @@ class ThirdStep extends Component {
 
   componentDidMount() {
     debugger;
-    this.setState({ left: this.props.user.left, right: this.props.user.right });
+    this.setState({
+      left: this.props.user.allPermissions,
+      right: this.props.user.permissions,
+    });
   }
 
   handleToggle = (value) => () => {
@@ -119,7 +123,7 @@ class ThirdStep extends Component {
                   inputProps={{ "aria-labelledby": labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+              <ListItemText id={labelId} primary={PermissionsNames[value]} />
             </ListItem>
           );
         })}
@@ -209,7 +213,7 @@ class ThirdStep extends Component {
             <Button
               variant="contained"
               color="secondary"
-              //onClick={handleSubmit}
+              onClick={this.props.handleSubmit}
             >
               Save
             </Button>

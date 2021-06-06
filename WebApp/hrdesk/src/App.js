@@ -2,7 +2,6 @@ import "./App.css";
 import LoginContainer from "./common/components/Login/LoginContainer";
 import HomeGeneral from "./common/components/Home/HomeGeneral";
 import DaysoffGeneral from "./common/components/Daysoff/DaysoffGeneral";
-import NavBar from "./common/navigation/NavBar";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import PrivateRoute from "./services/PrivateRoute";
@@ -18,12 +17,16 @@ import { withRouter } from "react-router-dom";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import React from "react";
 import EmployeesGeneral from "./common/components/Employees/EmployeesGeneral";
-import EmployeeGeneral from "./common/components/Employee/EmployeeGeneral";
 import ManageRequestsGeneral from "./common/components/ManageRequests/ManageRequestsGeneral";
 import MeetingsGeneral from "./common/components/Meetings/MeetingsGeneral";
 import ReportsGeneral from "./common/components/Reports/ReportsGeneral";
 import HolidayCalendarGeneral from "./common/components/HolidayCalendar/HolidayCalendarGeneral";
 import ManageOrganizationGeneral from "./common/components/ManageOrganization/ManageOrganizationGeneral";
+import EmployeeContainer from "./common/components/Employee/EmployeeContainer";
+import NavBarContainer from "./common/navigation/NavBarContainer";
+import { userHasPermission } from "./services/authService";
+import { Permissions } from "./utils/constants";
+import AccessDeniedGeneral from "./common/components/AccessDenied/AccessDeniedGeneral";
 
 const styles = (theme) => ({
   root: {
@@ -34,106 +37,171 @@ const styles = (theme) => ({
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: isTokenValid() };
+    this.state = { isLoggedIn: isTokenValid(), setupComplete: false };
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (this.state.isLoggedIn) {
-      this.props.onSilentLogin();
+      await this.props.onSilentLogin();
     }
   }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user !== undefined) {
+      return { setupComplete: true };
+    }
+    return null;
+  }
+
   logout = () => {
     this.setState({ isLoggedIn: false });
   };
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        {this.state.isLoggedIn && <NavBar logout={this.logout} />}
-        <Route path="/login" component={LoginContainer} exact={true} />
-        <PrivateRoute
-          exact
-          path="/"
-          component={HomeGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/daysoff"
-          component={DaysoffGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/leaverequest"
-          component={LeaveRequestGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/team"
-          component={TeamGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/employees"
-          component={EmployeesGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/book"
-          component={BookGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/employees/:id"
-          component={EmployeeGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/holidays"
-          component={ManageRequestsGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/meetings"
-          component={MeetingsGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/reports"
-          component={ReportsGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/holidaycalendar"
-          component={HolidayCalendarGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />
-        <PrivateRoute
-          exact
-          path="/organization"
-          component={ManageOrganizationGeneral}
-          isLoggedIn={this.state.isLoggedIn}
-        />{" "}
-        <ReduxToastr
-          timeOut={4000}
-          newestOnTop={false}
-          preventDuplicates
-          position="bottom-right"
-          getState={(state) => state.toastr}
-          transitionIn="fadeIn"
-          transitionOut="fadeOut"
-          progressBar
-          closeOnToastrClick
-        />
-      </div>
+      <React.Fragment>
+        {this.state.setupComplete && (
+          <div className={classes.root}>
+            {this.state.isLoggedIn && <NavBarContainer logout={this.logout} />}
+            <Route path="/login" component={LoginContainer} exact={true} />
+            <Route
+              path="/accessdenied"
+              component={AccessDeniedGeneral}
+              exact={true}
+            />
+            <PrivateRoute
+              exact
+              path="/"
+              component={HomeGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.Dashboard
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/daysoff"
+              component={DaysoffGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.DaysoffRequests
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/leaverequest"
+              component={LeaveRequestGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.LeaveRequests
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/team"
+              component={TeamGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.Team
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/employees"
+              component={EmployeesGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.ManageEmployees
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/book"
+              component={BookGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.BookRoom
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/employees/:id"
+              component={EmployeeContainer}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.ManageEmployees
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/holidays"
+              component={ManageRequestsGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.ManageHolidays
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/meetings"
+              component={MeetingsGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.Meetings
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/reports"
+              component={ReportsGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.Reports
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/holidaycalendar"
+              component={HolidayCalendarGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.HolidayCalendar
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/organization"
+              component={ManageOrganizationGeneral}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.props.user.permissions,
+                Permissions.ManageOrganization
+              )}
+            />{" "}
+            <ReduxToastr
+              timeOut={4000}
+              newestOnTop={false}
+              preventDuplicates
+              position="bottom-right"
+              getState={(state) => state.toastr}
+              transitionIn="fadeIn"
+              transitionOut="fadeOut"
+              progressBar
+              closeOnToastrClick
+            />
+          </div>
+        )}
+      </React.Fragment>
     );
   }
 }

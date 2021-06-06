@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HRDesk.Infrastructure.Entities
 {
-    public class Meeting : AuditEntity<int>
+    public class Meeting : DeleteEntity<int>
     {
         public string Title { get; set; }
         public bool AllDay { get; set; }

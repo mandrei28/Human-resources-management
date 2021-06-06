@@ -35,6 +35,7 @@ import {
 } from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { styles } from "./NavBarStyles";
+import { userHasPermission } from "../../services/authService";
 
 function Copyright(props) {
   return (
@@ -58,6 +59,7 @@ class NavBar extends React.Component {
         {
           text: "Dashboard",
           pathname: "/",
+          id: 1,
           icon: <Dashboard />,
           onClick: () => {
             this.setState({ selected: "Dashboard", pathname: "/" });
@@ -67,6 +69,7 @@ class NavBar extends React.Component {
         {
           text: "Leave requests",
           pathname: "/leaverequest",
+          id: 2,
           icon: <Home />,
           onClick: () => {
             this.setState({
@@ -79,6 +82,7 @@ class NavBar extends React.Component {
         {
           text: "Daysoff requests",
           pathname: "/daysoff",
+          id: 3,
           icon: <WorkOutline />,
           onClick: () => {
             this.setState({
@@ -91,6 +95,7 @@ class NavBar extends React.Component {
         {
           text: "Reports",
           pathname: "/reports",
+          id: 4,
           icon: <Equalizer />,
           onClick: () => {
             this.setState({ selected: "Reports", pathname: "/reports" });
@@ -100,6 +105,7 @@ class NavBar extends React.Component {
         {
           text: "Meetings",
           pathname: "/meetings",
+          id: 5,
           icon: <CalendarToday />,
           onClick: () => {
             this.setState({ selected: "Meetings", pathname: "/meetings" });
@@ -109,6 +115,7 @@ class NavBar extends React.Component {
         {
           text: "Team",
           pathname: "/team",
+          id: 6,
           icon: <People />,
           onClick: () => {
             this.setState({ selected: "Team", pathname: "/team" });
@@ -117,6 +124,7 @@ class NavBar extends React.Component {
         },
         {
           text: "Holiday calendar",
+          id: 7,
           pathname: "/holidaycalendar",
           icon: <EventBusy />,
           onClick: () => {
@@ -132,6 +140,7 @@ class NavBar extends React.Component {
         {
           text: "Book room",
           pathname: "/book",
+          id: 8,
           icon: <Schedule />,
           onClick: () => {
             this.setState({ selected: "Book room", pathname: "/book" });
@@ -141,6 +150,7 @@ class NavBar extends React.Component {
         {
           text: "Manage employees",
           pathname: "/employees",
+          id: 9,
           icon: <PersonAdd />,
           onClick: () => {
             this.setState({
@@ -153,6 +163,7 @@ class NavBar extends React.Component {
         {
           text: "Manage holidays",
           pathname: "/holidays",
+          id: 10,
           icon: <HowToReg />,
           onClick: () => {
             this.setState({
@@ -165,6 +176,7 @@ class NavBar extends React.Component {
         {
           text: "Manage organization",
           pathname: "/organization",
+          id: 11,
           icon: <Business />,
           onClick: () => {
             this.setState({
@@ -179,6 +191,8 @@ class NavBar extends React.Component {
   }
 
   componentDidMount() {
+    console.info(this.props);
+    debugger;
     this.checkCurrentPath();
   }
 
@@ -290,17 +304,20 @@ class NavBar extends React.Component {
           <Divider />
           <List>
             {this.state.itemsList.map((item, index) => {
-              const { text, icon, onClick } = item;
+              const { text, icon, onClick, id } = item;
+              var user = this.props.user;
               return (
-                <ListItem
-                  button
-                  key={text}
-                  onClick={onClick}
-                  selected={this.state.selected === text}
-                >
-                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                  <ListItemText primary={text} />
-                </ListItem>
+                <div hidden={!userHasPermission(user.permissions, id)}>
+                  <ListItem
+                    button
+                    key={text}
+                    onClick={onClick}
+                    selected={this.state.selected === text}
+                  >
+                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                    <ListItemText primary={text} />
+                  </ListItem>
+                </div>
               );
             })}
           </List>
@@ -308,17 +325,20 @@ class NavBar extends React.Component {
           <List>
             <ListSubheader inset>Admin</ListSubheader>
             {this.state.adminItemsList.map((item, index) => {
-              const { text, icon, onClick } = item;
+              const { text, icon, onClick, id } = item;
+              var user = this.props.user;
               return (
-                <ListItem
-                  button
-                  key={text}
-                  onClick={onClick}
-                  selected={this.state.selected === text}
-                >
-                  {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                  <ListItemText primary={text} />
-                </ListItem>
+                <div hidden={!userHasPermission(user.permissions, id)}>
+                  <ListItem
+                    button
+                    key={text}
+                    onClick={onClick}
+                    selected={this.state.selected === text}
+                  >
+                    {icon && <ListItemIcon>{icon}</ListItemIcon>}
+                    <ListItemText primary={text} />
+                  </ListItem>
+                </div>
               );
             })}
           </List>

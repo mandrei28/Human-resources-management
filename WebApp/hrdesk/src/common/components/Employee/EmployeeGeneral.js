@@ -28,27 +28,44 @@ class EmployeeGeneral extends Component {
         address: "",
         dateOfBirth: new Date(),
         cnp: "",
-        team: "",
-        function: "",
-        office: "",
+        teamId: null,
+        functionId: null,
+        officeId: null,
         password: "",
         numberOfDaysoff: 0,
         salary: 0,
         dateOfEmployment: new Date(),
         workEmail: "",
-        left: [1, 2],
-        right: [3, 4],
+        allPermissions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        permissions: [1, 2, 3],
       },
     };
   }
-  componentDidMount() {
-    console.info(this.props);
+  async componentDidMount() {
+    const offices = await this.props.onGetOffices();
+    const functions = await this.props.onGetFunctions();
+    const teams = await this.props.onGetTeams();
+    await this.setState({ offices, functions, teams });
+    debugger;
     if (this.props.match.params.id === "new") {
       this.setState({ isNew: true });
     } else {
       this.setState({ isNew: false, id: this.props.match.params.id });
     }
   }
+
+  mapExistentUserPermissions = (permissions) => {
+    this.setState((prevState) => {
+      var { user } = prevState;
+      var { allPermissions } = user;
+      permissions.forEach((permission) => {
+        const permissionIndex = allPermissions.indexOf(permission);
+        allPermissions.splice(permissionIndex, 1);
+      });
+      user.allPermissions = allPermissions;
+      return { user };
+    });
+  };
 
   handleFieldChange = async (event, field) => {
     debugger;
@@ -79,6 +96,14 @@ class EmployeeGeneral extends Component {
     });
   };
 
+  handleSubmit = async () => {
+    if (this.state.isNew) {
+      await this.props.onAddUser(this.state.user, this.props.history);
+    } else {
+      await this.props.onUpdateUser(this.state.user, this.props.history);
+    }
+  };
+
   handleNext = () => this.setState({ step: this.state.step + 1 });
   handleBack = () => this.setState({ step: this.state.step - 1 });
 
@@ -103,6 +128,9 @@ class EmployeeGeneral extends Component {
             handleChange={this.handleFieldChange}
             handleDateChange={this.handleDayoffDateFieldChange}
             user={this.state.user}
+            offices={this.state.offices}
+            teams={this.state.teams}
+            functions={this.state.functions}
             //formErrors={formErrors}
           />
         );
@@ -112,6 +140,7 @@ class EmployeeGeneral extends Component {
             handleNext={this.handleNext}
             handleBack={this.handleBack}
             handleChange={this.handlePermissionChange}
+            handleSubmit={this.handleSubmit}
             user={this.state.user}
           />
         );

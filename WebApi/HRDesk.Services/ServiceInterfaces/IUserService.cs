@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HRDesk.Services.ServiceInterfaces
 {
@@ -9,5 +10,6 @@ namespace HRDesk.Services.ServiceInterfaces
     {
         AuthResponseModel Login(AuthModel model);
         AuthResponseModel SilentLogin(int userId);
+        Task<UserModel> RegisterUser(UserModel userModel);
     }
 }

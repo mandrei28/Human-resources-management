@@ -5,14 +5,14 @@ using System.Text;
 
 namespace HRDesk.Infrastructure.Entities
 {
-    public class User : AuditEntity<int>
+    public class User : DeleteEntity<int>
     {
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CountryOfBirth { get; set; }
         public string Phone { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string CNP { get; set; }
         public string WorkEmail { get; set; }

@@ -75,9 +75,6 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -92,11 +89,50 @@ namespace HRDesk.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 512, DateTimeKind.Local).AddTicks(9791),
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Management function",
-                            IsDeleted = false,
                             Name = "Company manager",
-                            UpdatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 515, DateTimeKind.Local).AddTicks(7526)
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Board employee",
+                            Name = "Board",
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Human resource employee",
+                            Name = "Human resource",
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Project manager employee",
+                            Name = "Project manager",
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Developer employee",
+                            Name = "Developer",
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Quality assurance employee",
+                            Name = "Quality assurance",
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -205,9 +241,6 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
@@ -241,9 +274,6 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -262,11 +292,11 @@ namespace HRDesk.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
@@ -288,12 +318,12 @@ namespace HRDesk.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 516, DateTimeKind.Local).AddTicks(9678),
-                            IsDeleted = false,
+                            Capacity = 0,
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "First floor",
                             Name = "Management office",
                             Number = 1,
-                            UpdatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(485)
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -308,6 +338,63 @@ namespace HRDesk.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dashboard"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Leave requests"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Daysoff requests"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Reports"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Meetings"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Team"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Holiday calendar"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Book room"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Manage employees"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Manage holidays"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Manage organization"
+                        });
                 });
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.Team", b =>
@@ -323,9 +410,6 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -340,11 +424,10 @@ namespace HRDesk.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 516, DateTimeKind.Local).AddTicks(8393),
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Management team",
-                            IsDeleted = false,
-                            Name = "Managers",
-                            UpdatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 516, DateTimeKind.Local).AddTicks(9077)
+                            Name = "Management team",
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -355,7 +438,7 @@ namespace HRDesk.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CNP")
@@ -426,12 +509,12 @@ namespace HRDesk.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Adress = "Company address",
+                            Address = "Company address",
                             CNP = "1980528111111",
                             CountryOfBirth = "Romania",
-                            CreatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(1064),
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateOfBirth = new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfEmployment = new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(2170),
+                            DateOfEmployment = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "administrator@admin.com",
                             FirstName = "Andrei Cristian",
                             FunctionId = 1,
@@ -443,7 +526,7 @@ namespace HRDesk.Infrastructure.Migrations
                             Phone = "0749206007",
                             Salary = 5000,
                             TeamId = 1,
-                            UpdatedDate = new DateTime(2021, 6, 5, 13, 55, 44, 517, DateTimeKind.Local).AddTicks(5228),
+                            UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             WorkEmail = "administrator@company.com"
                         });
                 });
@@ -457,9 +540,6 @@ namespace HRDesk.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("PermissionId")
                         .HasColumnType("int");
@@ -477,6 +557,85 @@ namespace HRDesk.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserPermissions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 2,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 3,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 4,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 5,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 6,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 7,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 8,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 9,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 10,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 11,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.Dayoff", b =>
