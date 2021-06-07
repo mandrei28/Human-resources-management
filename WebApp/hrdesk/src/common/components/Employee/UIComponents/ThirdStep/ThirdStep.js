@@ -36,7 +36,7 @@ class ThirdStep extends Component {
   componentDidMount() {
     debugger;
     this.setState({
-      left: this.props.user.allPermissions,
+      left: this.props.allPermissions,
       right: this.props.user.permissions,
     });
   }

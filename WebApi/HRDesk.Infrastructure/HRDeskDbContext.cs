@@ -28,6 +28,7 @@ namespace HRDesk.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Seed
             modelBuilder.Entity<Function>().HasData(new Function
             {
                 Id = 1,
@@ -252,6 +253,7 @@ namespace HRDesk.Infrastructure
                 UserId = 1,
                 PermissionId = 11
             });
+            #endregion
         }
     }
 }

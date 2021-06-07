@@ -16,7 +16,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import React from "react";
-import EmployeesGeneral from "./common/components/Employees/EmployeesGeneral";
 import ManageRequestsGeneral from "./common/components/ManageRequests/ManageRequestsGeneral";
 import MeetingsGeneral from "./common/components/Meetings/MeetingsGeneral";
 import ReportsGeneral from "./common/components/Reports/ReportsGeneral";
@@ -27,6 +26,7 @@ import NavBarContainer from "./common/navigation/NavBarContainer";
 import { userHasPermission } from "./services/authService";
 import { Permissions } from "./utils/constants";
 import AccessDeniedGeneral from "./common/components/AccessDenied/AccessDeniedGeneral";
+import EmployeesContainer from "./common/components/Employees/EmployeesContainer";
 
 const styles = (theme) => ({
   root: {
@@ -37,17 +37,25 @@ const styles = (theme) => ({
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: isTokenValid(), setupComplete: false };
+    this.state = {
+      isLoggedIn: isTokenValid(),
+      setupComplete: false,
+      user: {
+        permissions: [],
+      },
+    };
   }
   async componentDidMount() {
     if (this.state.isLoggedIn) {
       await this.props.onSilentLogin();
+    } else {
+      this.setState({ setupComplete: true });
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.user !== undefined) {
-      return { setupComplete: true };
+      return { setupComplete: true, user: nextProps.user };
     }
     return null;
   }
@@ -55,6 +63,7 @@ class App extends React.Component {
   logout = () => {
     this.setState({ isLoggedIn: false });
   };
+
   render() {
     const { classes } = this.props;
     return (
@@ -74,7 +83,7 @@ class App extends React.Component {
               component={HomeGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.Dashboard
               )}
             />
@@ -84,7 +93,7 @@ class App extends React.Component {
               component={DaysoffGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.DaysoffRequests
               )}
             />
@@ -94,7 +103,7 @@ class App extends React.Component {
               component={LeaveRequestGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.LeaveRequests
               )}
             />
@@ -104,17 +113,17 @@ class App extends React.Component {
               component={TeamGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.Team
               )}
             />
             <PrivateRoute
               exact
               path="/employees"
-              component={EmployeesGeneral}
+              component={EmployeesContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.ManageEmployees
               )}
             />
@@ -124,7 +133,7 @@ class App extends React.Component {
               component={BookGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.BookRoom
               )}
             />
@@ -134,7 +143,7 @@ class App extends React.Component {
               component={EmployeeContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.ManageEmployees
               )}
             />
@@ -144,7 +153,7 @@ class App extends React.Component {
               component={ManageRequestsGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.ManageHolidays
               )}
             />
@@ -154,7 +163,7 @@ class App extends React.Component {
               component={MeetingsGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.Meetings
               )}
             />
@@ -164,7 +173,7 @@ class App extends React.Component {
               component={ReportsGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.Reports
               )}
             />
@@ -174,7 +183,7 @@ class App extends React.Component {
               component={HolidayCalendarGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.HolidayCalendar
               )}
             />
@@ -184,7 +193,7 @@ class App extends React.Component {
               component={ManageOrganizationGeneral}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
-                this.props.user.permissions,
+                this.state.user.permissions,
                 Permissions.ManageOrganization
               )}
             />{" "}

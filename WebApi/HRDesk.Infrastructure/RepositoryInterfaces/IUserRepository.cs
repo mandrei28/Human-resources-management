@@ -1,6 +1,7 @@
 ﻿using HRDesk.Infrastructure.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HRDesk.Infrastructure.RepositoryInterfaces
@@ -11,5 +12,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
         User GetUserById(int id);
         User GetUserByEmail(string email);
         bool CheckIfEmailIsInUse(string email);
+        IQueryable<User> GetUsers();
     }
 }

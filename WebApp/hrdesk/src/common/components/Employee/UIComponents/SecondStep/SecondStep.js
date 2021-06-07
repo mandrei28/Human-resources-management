@@ -21,14 +21,16 @@ export default class SecondStep extends Component {
   render() {
     console.info(this.props);
     debugger;
-    const isValid =
+    var isValid =
       this.props.user.teamId !== 0 &&
       this.props.user.functionId !== null &&
       this.props.user.officeId !== null &&
-      this.props.user.password.length > 0 &&
       this.props.user.numberOfDaysoff > 0 &&
       this.props.user.salary !== null &&
       this.props.user.workEmail.length > 0;
+    if (this.props.isNew && isValid) {
+      isValid = this.props.user.password.length > 0;
+    }
     return (
       <React.Fragment>
         <Container maxWidth="md">

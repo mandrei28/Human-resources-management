@@ -24,19 +24,28 @@ function CustomToolbar() {
 class EmployeesGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { setupComplete: false, users: [] };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "firstName", headerName: "First Name", width: 240 },
       {
-        field: "startDate",
-        type: "date",
-        headerName: "Start date",
-        width: 210,
+        field: "lastName",
+        headerName: "Last name",
+        width: 150,
       },
-      { field: "endDate", type: "date", headerName: "End date", width: 210 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 180 },
+      { field: "workEmail", headerName: "Work email", width: 250 },
+      {
+        field: "team",
+        headerName: "Team",
+        width: 180,
+        valueFormatter: ({ value }) => value.name,
+      },
+      {
+        field: "office",
+        headerName: "Office",
+        width: 180,
+        valueFormatter: ({ value }) => value.name,
+      },
       {
         field: "",
         width: 100,
@@ -68,8 +77,7 @@ class EmployeesGeneral extends Component {
             fields.forEach((f) => {
               thisRow[f] = params.getValue(f);
             });
-
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.props.history.push(`/employees/${thisRow.id}`);
           };
           const onDelete = () => {
             const api = params.api;
@@ -82,20 +90,19 @@ class EmployeesGeneral extends Component {
             fields.forEach((f) => {
               thisRow[f] = params.getValue(f);
             });
-            debugger;
-            return console.info(JSON.stringify(thisRow, null, 4));
+            this.deleteUser(thisRow.id);
           };
 
           return (
             <React.Fragment>
               <div
-                hidden={params.row.id === 1}
+                //hidden={params.row.id === 1}
                 style={{ paddingTop: "10px", cursor: "pointer" }}
               >
                 <EditIcon onClick={onClick} />
               </div>
               <div
-                hidden={params.row.id === 1}
+                //hidden={params.row.id === 1}
                 style={{
                   paddingTop: "10px",
                   paddingLeft: "5px",
@@ -109,164 +116,59 @@ class EmployeesGeneral extends Component {
         },
       },
     ];
+  }
 
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Stark",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: null,
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Targaryen",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Melisandre",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: "Admin",
-      },
-      {
-        id: 7,
-        description: "Clifford",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Frances",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 12,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 13,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 14,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 15,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
+  async componentDidMount() {
+    var users = await this.props.onGetUsers();
+    this.setState({ users, setupComplete: true });
+    console.info(users);
+    debugger;
   }
 
   createNewUser = () => {
     this.props.history.push("/employees/new");
   };
 
+  deleteUser = async (userId) => {
+    this.props.onDeleteUser(userId);
+    this.setState({
+      users: this.state.users.filter((user, _) => user.id !== userId),
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12} lg={12}>
-                <Paper className={classes.paper}>
-                  <div style={{ height: 760, width: "100%" }}>
-                    <DataGrid
-                      rows={this.rows}
-                      columns={this.columns}
-                      pageSize={15}
-                      rowHeight={43}
-                      disableSelectionOnClick={true}
-                      components={{
-                        Toolbar: CustomToolbar,
-                      }}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-            </Grid>{" "}
-          </Container>
-        </main>
-      </div>
+      <React.Fragment>
+        {this.state.setupComplete && (
+          <div className={classes.root}>
+            <CssBaseline />
+            <main className={classes.content}>
+              <div className={classes.appBarSpacer} />
+              <Container maxWidth="lg" className={classes.container}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Paper className={classes.paper}>
+                      <div style={{ height: 760, width: "100%" }}>
+                        <DataGrid
+                          rows={this.state.users}
+                          columns={this.columns}
+                          pageSize={15}
+                          rowHeight={43}
+                          disableSelectionOnClick={true}
+                          components={{
+                            Toolbar: CustomToolbar,
+                          }}
+                        />
+                      </div>
+                    </Paper>
+                  </Grid>
+                </Grid>{" "}
+              </Container>
+            </main>
+          </div>
+        )}
+      </React.Fragment>
     );
   }
 }

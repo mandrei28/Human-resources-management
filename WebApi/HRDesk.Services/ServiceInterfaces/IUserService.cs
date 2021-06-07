@@ -11,5 +11,8 @@ namespace HRDesk.Services.ServiceInterfaces
         AuthResponseModel Login(AuthModel model);
         AuthResponseModel SilentLogin(int userId);
         Task<UserModel> RegisterUser(UserModel userModel);
+        List<UserModel> GetUsers();
+        Task<UserModel> GetUserById(int userId);
+        Task DeleteUser(int userId);
     }
 }

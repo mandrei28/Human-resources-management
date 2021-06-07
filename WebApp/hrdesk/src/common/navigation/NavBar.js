@@ -307,10 +307,9 @@ class NavBar extends React.Component {
               const { text, icon, onClick, id } = item;
               var user = this.props.user;
               return (
-                <div hidden={!userHasPermission(user.permissions, id)}>
+                <div key={id} hidden={!userHasPermission(user.permissions, id)}>
                   <ListItem
                     button
-                    key={text}
                     onClick={onClick}
                     selected={this.state.selected === text}
                   >
@@ -328,10 +327,9 @@ class NavBar extends React.Component {
               const { text, icon, onClick, id } = item;
               var user = this.props.user;
               return (
-                <div hidden={!userHasPermission(user.permissions, id)}>
+                <div key={id} hidden={!userHasPermission(user.permissions, id)}>
                   <ListItem
                     button
-                    key={text}
                     onClick={onClick}
                     selected={this.state.selected === text}
                   >

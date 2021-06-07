@@ -28,6 +28,10 @@ namespace HRDesk.Services.Mappers
                 Phone = user.Phone,
                 Salary = user.Salary,
                 TeamId = user.TeamId.Value,
+                Office = user.Office != null ? OfficeMapper.ToOfficeModel(user.Office) : null,
+                Team = user.Team != null ? TeamMapper.ToTeamModel(user.Team) : null,
+                Function = user.Function != null ? FunctionMapper.ToFunctionModel(user.Function) : null,
+                Password = null,
             };
         }
 

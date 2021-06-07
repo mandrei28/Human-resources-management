@@ -36,9 +36,9 @@ class EmployeeGeneral extends Component {
         salary: 0,
         dateOfEmployment: new Date(),
         workEmail: "",
-        allPermissions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-        permissions: [1, 2, 3],
+        permissions: [],
       },
+      allPermissions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     };
   }
   async componentDidMount() {
@@ -50,25 +50,28 @@ class EmployeeGeneral extends Component {
     if (this.props.match.params.id === "new") {
       this.setState({ isNew: true });
     } else {
-      this.setState({ isNew: false, id: this.props.match.params.id });
+      const user = await this.props.onGetUser(this.props.match.params.id);
+      await this.setState({
+        isNew: false,
+        id: this.props.match.params.id,
+        user,
+      });
+      this.mapExistentUserPermissions(user.permissions);
     }
   }
 
   mapExistentUserPermissions = (permissions) => {
     this.setState((prevState) => {
-      var { user } = prevState;
-      var { allPermissions } = user;
+      var { allPermissions } = prevState;
       permissions.forEach((permission) => {
         const permissionIndex = allPermissions.indexOf(permission);
         allPermissions.splice(permissionIndex, 1);
       });
-      user.allPermissions = allPermissions;
-      return { user };
+      return { allPermissions };
     });
   };
 
   handleFieldChange = async (event, field) => {
-    debugger;
     await this.setState((prevState) => {
       const { user } = prevState;
       user[field] = event.target.value;
@@ -77,13 +80,12 @@ class EmployeeGeneral extends Component {
   };
 
   handlePermissionChange = async (left, right) => {
-    debugger;
-    debugger;
     await this.setState((prevState) => {
       const { user } = prevState;
-      user.left = left;
-      user.right = right;
-      return { user };
+      var { allPermissions } = prevState;
+      allPermissions = left;
+      user.permissions = right;
+      return { user, allPermissions };
     });
     console.info(this.state);
   };
@@ -131,6 +133,7 @@ class EmployeeGeneral extends Component {
             offices={this.state.offices}
             teams={this.state.teams}
             functions={this.state.functions}
+            isNew={this.state.isNew}
             //formErrors={formErrors}
           />
         );
@@ -142,6 +145,7 @@ class EmployeeGeneral extends Component {
             handleChange={this.handlePermissionChange}
             handleSubmit={this.handleSubmit}
             user={this.state.user}
+            allPermissions={this.state.allPermissions}
           />
         );
       default:

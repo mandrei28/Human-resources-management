@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.userReducer.user,
+    logout: ownProps.logout,
   };
 };
 

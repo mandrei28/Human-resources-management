@@ -37,6 +37,28 @@ namespace HRDesk.Controllers
         }
 
         [Authorize]
+        [HttpGet("users")]
+        public List<UserModel> GetUsers()
+        {
+            return _userService.GetUsers();
+        }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<UserModel> GetUser(int id)
+        {
+            return await _userService.GetUserById(id);
+        }
+
+        [Authorize]
+        [HttpPost("deleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            await _userService.DeleteUser(id);
+            return Ok();
+        }
+
+        [Authorize]
         [HttpPost("silentLogin")]
         public ActionResult<AuthResponseModel> SilentLogin()
         {

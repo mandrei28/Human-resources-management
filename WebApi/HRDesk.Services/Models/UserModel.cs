@@ -24,5 +24,8 @@ namespace HRDesk.Services.Models
         public DateTime DateOfEmployment { get; set; }
         public string WorkEmail { get; set; }
         public List<int> Permissions { get; set; }
+        public FunctionModel Function { get; set; }
+        public OfficeModel Office { get; set; }
+        public TeamModel Team { get; set; }
     }
 }

@@ -66,6 +66,7 @@ namespace HRDesk.Services.Services
             try
             {
                 var user = UserMapper.ToUser(userModel);
+                user.Password = _authService.HashPassword(userModel.Password);
                 await _unitOfWork.Users.InsertAsync(user);
                 await _unitOfWork.CommitAsync();
                 foreach (int permissionId in userModel.Permissions)
@@ -86,6 +87,36 @@ namespace HRDesk.Services.Services
                 await _unitOfWork.RollbackTransactionAsync();
                 throw new Exception("Register failed with unknown reason");
             }
+        }
+
+        public List<UserModel> GetUsers()
+        {
+            var users = _unitOfWork.Users.GetUsers();
+            var userModels = users.Select(user => UserMapper.ToUserModel(user)).ToList();
+            return userModels;
+        }
+
+        public async Task<UserModel> GetUserById(int userId)
+        {
+            var user = await _unitOfWork.Users.GetByIDAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            var userModel = UserMapper.ToUserModel(user);
+            userModel.Permissions = GetUserPermissions(userId);
+            return userModel;
+        }
+
+        public async Task DeleteUser(int userId)
+        {
+            var user = await _unitOfWork.Users.GetByIDAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+            _unitOfWork.Users.Delete(user);
+            await _unitOfWork.CommitAsync();
         }
 
         public Dictionary<string, int> UserStatistics()
