@@ -38,6 +38,9 @@ const mergeProps = (stateProps, dispatchProps) => {
     onGetUser: async (userId) => {
       return await dispatch(userActions.getUser(userId));
     },
+    onUpdateUser: async (userModel, history) => {
+      return await dispatch(userActions.updateUser(userModel, history));
+    },
   };
 };
 

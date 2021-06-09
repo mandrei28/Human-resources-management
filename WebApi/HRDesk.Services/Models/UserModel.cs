@@ -19,6 +19,9 @@ namespace HRDesk.Services.Models
         public int FunctionId { get; set; }
         public int OfficeId { get; set; }
         public string Password { get; set; }
+        public string OfficeName { get; set; }
+        public string TeamName { get; set; }
+        public string FunctionName { get; set; }
         public int NumberOfDaysoff { get; set; }
         public int Salary { get; set; }
         public DateTime DateOfEmployment { get; set; }

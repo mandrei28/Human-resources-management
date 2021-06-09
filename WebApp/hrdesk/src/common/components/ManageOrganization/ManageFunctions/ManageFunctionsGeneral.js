@@ -17,19 +17,20 @@ import FunctionDialog from "./UIElements/FunctionDialog";
 class ManageFunctionsGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = { showFunctionDialog: false };
+    this.state = {
+      showFunctionDialog: false,
+      functions: [],
+      functionModel: null,
+    };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "name", headerName: "Name", width: 220 },
+      { field: "description", headerName: "Description", width: 600 },
       {
-        field: "startDate",
-        type: "date",
-        headerName: "Start date",
+        field: "creationDate",
+        headerName: "Creation date",
         width: 210,
       },
-      { field: "endDate", type: "date", headerName: "End date", width: 210 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 180 },
       {
         field: "",
         width: 100,
@@ -62,7 +63,7 @@ class ManageFunctionsGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.editFunction(thisRow);
           };
           const onDelete = () => {
             const api = params.api;
@@ -75,20 +76,16 @@ class ManageFunctionsGeneral extends Component {
             fields.forEach((f) => {
               thisRow[f] = params.getValue(f);
             });
-            debugger;
-            return console.info(JSON.stringify(thisRow, null, 4));
+
+            this.deleteFunction(thisRow.id);
           };
 
           return (
             <React.Fragment>
-              <div
-                hidden={params.row.id === 1}
-                style={{ paddingTop: "10px", cursor: "pointer" }}
-              >
+              <div style={{ paddingTop: "10px", cursor: "pointer" }}>
                 <EditIcon onClick={onClick} />
               </div>
               <div
-                hidden={params.row.id === 1}
                 style={{
                   paddingTop: "10px",
                   paddingLeft: "5px",
@@ -102,129 +99,12 @@ class ManageFunctionsGeneral extends Component {
         },
       },
     ];
+  }
 
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Stark",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: null,
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Targaryen",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Melisandre",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: "Admin",
-      },
-      {
-        id: 7,
-        description: "Clifford",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Frances",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 12,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 13,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 14,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 15,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
+  async componentDidMount() {
+    const functions = await this.props.onGetFunctions();
+    this.setState({ functions });
+    debugger;
   }
 
   openFunctionDialog = () => {
@@ -235,7 +115,46 @@ class ManageFunctionsGeneral extends Component {
     this.setState({ showFunctionDialog: false });
   };
 
-  addFunction = () => {};
+  deleteFunction = async (functionId) => {
+    await this.props.onDeleteFunction(functionId);
+    this.setState({
+      functions: this.state.functions.filter(
+        (functionModel, _) => functionModel.id !== functionId
+      ),
+    });
+  };
+
+  editFunction = async (functionModel) => {
+    debugger;
+    await this.setState({ functionModel: functionModel });
+    this.openFunctionDialog();
+  };
+
+  addOrUpdateFunction = async (functionModel) => {
+    console.info(this.state);
+    debugger;
+    if (this.state.functionModel === null) {
+      var newFunction = await this.props.onAddFunction(functionModel);
+      await this.setState({
+        functions: [...this.state.functions, newFunction],
+      });
+    } else {
+      await this.props.onUpdateFunction(functionModel);
+      var index = this.state.functions.findIndex(
+        (f) => f.id === functionModel.id
+      );
+      debugger;
+      await this.setState((prevState) => {
+        let functions = [...prevState.functions];
+        functions[index] = functionModel;
+        return {
+          functions,
+          functionModel: null,
+        };
+      });
+    }
+    this.closeFunctionDialog();
+  };
 
   render() {
     const { classes } = this.props;
@@ -245,7 +164,7 @@ class ManageFunctionsGeneral extends Component {
           <Paper className={classes.paper}>
             <div style={{ height: 560, width: "100%" }}>
               <DataGrid
-                rows={this.rows}
+                rows={this.state.functions}
                 columns={this.columns}
                 pageSize={10}
                 rowHeight={45}
@@ -257,7 +176,8 @@ class ManageFunctionsGeneral extends Component {
         {this.state.showFunctionDialog && (
           <FunctionDialog
             onClose={this.closeFunctionDialog}
-            onAdd={this.addFunction}
+            functionModel={this.state.functionModel}
+            onAddOrUpdate={this.addOrUpdateFunction}
           />
         )}
       </React.Fragment>

@@ -27,24 +27,37 @@ class EmployeesGeneral extends Component {
     this.state = { setupComplete: false, users: [] };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "firstName", headerName: "First Name", width: 240 },
+      { field: "firstName", headerName: "First Name", flex: 1 },
       {
         field: "lastName",
         headerName: "Last name",
-        width: 150,
+        flex: 0.7,
       },
-      { field: "workEmail", headerName: "Work email", width: 250 },
+      { field: "workEmail", headerName: "Work email", width: 240 },
       {
-        field: "team",
+        field: "teamName",
         headerName: "Team",
         width: 180,
-        valueFormatter: ({ value }) => value.name,
       },
       {
-        field: "office",
+        field: "officeName",
         headerName: "Office",
         width: 180,
-        valueFormatter: ({ value }) => value.name,
+      },
+      {
+        field: "functionName",
+        headerName: "Function",
+        width: 200,
+      },
+      {
+        field: "salary",
+        headerName: "Salary",
+        flex: 0.5,
+      },
+      {
+        field: "phone",
+        headerName: "Phone",
+        flex: 0.7,
       },
       {
         field: "",
@@ -145,7 +158,7 @@ class EmployeesGeneral extends Component {
             <CssBaseline />
             <main className={classes.content}>
               <div className={classes.appBarSpacer} />
-              <Container maxWidth="lg" className={classes.container}>
+              <Container maxWidth="xl" className={classes.container}>
                 <Grid container spacing={3}>
                   <Grid item xs={12} md={12} lg={12}>
                     <Paper className={classes.paper}>

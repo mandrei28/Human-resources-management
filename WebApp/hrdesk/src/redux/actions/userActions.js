@@ -5,6 +5,8 @@ export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 export const USER_REGISTER_SUCCESS = "USER_REGISTER_SUCCESS";
 export const USER_REGISTER_ERROR = "USER_REGISTER_ERROR";
+export const USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
+export const USER_UPDATE_ERROR = "USER_UPDATE_ERROR";
 export const GET_USERS_SUCCESS = "GET_USERS_SUCCESS";
 export const GET_USERS_ERROR = "GET_USERS_ERROR";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
@@ -51,6 +53,20 @@ export const userRegisterSuccess = (user) => {
 export const userRegisterError = (error) => {
   return {
     type: USER_REGISTER_ERROR,
+    error: error,
+  };
+};
+
+export const userUpdateSuccess = (user) => {
+  return {
+    type: USER_UPDATE_SUCCESS,
+    payload: user,
+  };
+};
+
+export const userUpdateError = (error) => {
+  return {
+    type: USER_UPDATE_ERROR,
     error: error,
   };
 };
@@ -132,6 +148,24 @@ export const registerUser = (userModel, history) => {
       .catch((error) => {
         toastr.error("Error", error.response.data.Message);
         dispatch(userRegisterError(error));
+        throw error;
+      });
+  };
+};
+
+export const updateUser = (userModel, history) => {
+  debugger;
+  return (dispatch) => {
+    return apiClient
+      .put("user/update", userModel)
+      .then((response) => {
+        dispatch(userUpdateSuccess(response.data));
+        toastr.success("Update", "User updated");
+        history.push("/employees");
+      })
+      .catch((error) => {
+        toastr.error("Error", error.response.data.Message);
+        dispatch(userUpdateError(error));
         throw error;
       });
   };

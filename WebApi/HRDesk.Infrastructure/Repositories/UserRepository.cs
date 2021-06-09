@@ -30,7 +30,7 @@ namespace HRDesk.Infrastructure.Repositories
 
         public User GetUserById(int id)
         {
-            return GetAll().Where(u => u.Id == id && !u.IsDeleted).FirstOrDefault();
+            return GetAll().Include(u => u.Team).Include(u => u.Function).Include(u => u.Office).Where(u => u.Id == id && !u.IsDeleted).FirstOrDefault();
         }
 
         public IQueryable<User> GetUsers()

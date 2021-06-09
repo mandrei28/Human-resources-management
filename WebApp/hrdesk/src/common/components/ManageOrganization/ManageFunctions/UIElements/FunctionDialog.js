@@ -24,10 +24,18 @@ export default class FunctionDialog extends Component {
     super(props);
     this.state = {
       userFunction: {
+        id: 0,
         description: "",
         name: "",
       },
     };
+  }
+
+  async componentDidMount() {
+    if (this.props.functionModel) {
+      debugger;
+      await this.setState({ userFunction: this.props.functionModel });
+    }
   }
 
   handleFunctionFieldChange = (event, field) => {
@@ -36,6 +44,10 @@ export default class FunctionDialog extends Component {
       userFunction[field] = event.target.value;
       return { userFunction };
     });
+  };
+
+  addOrUpdateFunction = async () => {
+    await this.props.onAddOrUpdate(this.state.userFunction);
   };
 
   render() {
@@ -48,7 +60,11 @@ export default class FunctionDialog extends Component {
           fullWidth
           maxWidth="xs"
         >
-          <DialogTitle id="form-dialog-title">Create new function</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {this.props.functionModel !== null
+              ? "Update function"
+              : "Create new function"}
+          </DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
                 </DialogContentText> */}
@@ -84,8 +100,8 @@ export default class FunctionDialog extends Component {
             <Button onClick={this.props.onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.props.onAdd} color="primary">
-              Add
+            <Button onClick={this.addOrUpdateFunction} color="primary">
+              {this.props.functionModel !== null ? "Update" : "Add"}
             </Button>
           </DialogActions>
         </Dialog>

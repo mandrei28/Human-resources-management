@@ -28,9 +28,12 @@ namespace HRDesk.Services.Mappers
                 Phone = user.Phone,
                 Salary = user.Salary,
                 TeamId = user.TeamId.Value,
-                Office = user.Office != null ? OfficeMapper.ToOfficeModel(user.Office) : null,
-                Team = user.Team != null ? TeamMapper.ToTeamModel(user.Team) : null,
-                Function = user.Function != null ? FunctionMapper.ToFunctionModel(user.Function) : null,
+                Office = OfficeMapper.ToOfficeModel(user.Office),
+                OfficeName = user.Office.Name,
+                Team = TeamMapper.ToTeamModel(user.Team),
+                TeamName = user.Team.Name,
+                Function = FunctionMapper.ToFunctionModel(user.Function),
+                FunctionName = user.Function.Name,
                 Password = null,
             };
         }
@@ -56,6 +59,26 @@ namespace HRDesk.Services.Mappers
                 Salary = userModel.Salary,
                 TeamId = userModel.TeamId,
             };
+        }
+
+        public static User UpdateUser(User user, UserModel userModel)
+        {
+            user.FirstName = userModel.FirstName;
+            user.Address = userModel.Address;
+            user.CNP = userModel.Cnp;
+            user.CountryOfBirth = userModel.CountryOfBirth;
+            user.DateOfBirth = userModel.DateOfBirth;
+            user.DateOfEmployment = userModel.DateOfEmployment;
+            user.Email = userModel.Email;
+            user.WorkEmail = userModel.WorkEmail;
+            user.FunctionId = userModel.FunctionId;
+            user.LastName = userModel.LastName;
+            user.NumberOfDaysoff = userModel.NumberOfDaysoff;
+            user.OfficeId = userModel.OfficeId;
+            user.Phone = userModel.Phone;
+            user.Salary = userModel.Salary;
+            user.TeamId = userModel.TeamId;
+            return user;
         }
     }
 }

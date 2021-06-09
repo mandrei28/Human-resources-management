@@ -3,6 +3,8 @@ import {
   USER_LOGIN_SUCCESS,
   USER_REGISTER_ERROR,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_ERROR,
+  USER_UPDATE_SUCCESS,
   GET_USERS_SUCCESS,
   GET_USERS_ERROR,
   GET_USER_SUCCESS,
@@ -19,6 +21,10 @@ export const userReducer = (state = initialState, action) => {
     case USER_REGISTER_SUCCESS:
       return { ...state, error: null };
     case USER_REGISTER_ERROR:
+      return { ...state, error: action.payload };
+    case USER_UPDATE_SUCCESS:
+      return { ...state, error: null };
+    case USER_UPDATE_ERROR:
       return { ...state, error: action.payload };
     case GET_USERS_SUCCESS:
       return { ...state, error: null };

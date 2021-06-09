@@ -5,9 +5,9 @@ import { withRouter } from "react-router-dom";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { styles } from "./ManageOrganizationStyles";
-import ManageFunctionsGeneral from "./ManageFunctions/ManageFunctionsGeneral";
 import ManageTeamsGeneral from "./ManageTeams/ManageTeamsGeneral";
 import ManageRoomsGeneral from "./ManageRooms/ManageRoomsGeneral";
+import ManageFunctionsContainer from "./ManageFunctions/ManageFunctionsContainer";
 
 class ManageOrganizationGeneral extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class ManageOrganizationGeneral extends Component {
           </Paper>
           <Container maxWidth="lg" className={classes.container}>
             {this.state.value === 0 && <ManageTeamsGeneral />}
-            {this.state.value === 1 && <ManageFunctionsGeneral />}
+            {this.state.value === 1 && <ManageFunctionsContainer />}
             {this.state.value === 2 && <ManageRoomsGeneral />}
           </Container>
         </main>

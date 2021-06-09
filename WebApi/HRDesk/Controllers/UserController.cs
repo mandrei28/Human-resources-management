@@ -45,9 +45,9 @@ namespace HRDesk.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<UserModel> GetUser(int id)
+        public UserModel GetUser(int id)
         {
-            return await _userService.GetUserById(id);
+            return _userService.GetUserById(id);
         }
 
         [Authorize]
@@ -75,6 +75,13 @@ namespace HRDesk.Controllers
         public async Task<UserModel> Register([FromBody] UserModel model)
         {
             return await _userService.RegisterUser(model);
+        }
+
+        [Authorize]
+        [HttpPut("update")]
+        public async Task Update([FromBody] UserModel model)
+        {
+            await _userService.UpdateUser(model);
         }
     }
 }
