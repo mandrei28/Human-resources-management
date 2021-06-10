@@ -17,19 +17,16 @@ import TeamDialog from "./UIElements/TeamDialog";
 class ManageTeamsGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = { showTeamDialog: false };
+    this.state = { showTeamDialog: false, teams: [], team: null };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "name", headerName: "Name", width: 220 },
+      { field: "description", headerName: "Description", width: 600 },
       {
-        field: "startDate",
-        type: "date",
-        headerName: "Start date",
+        field: "creationDate",
+        headerName: "Creation date",
         width: 210,
       },
-      { field: "endDate", type: "date", headerName: "End date", width: 210 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 180 },
       {
         field: "",
         width: 100,
@@ -62,7 +59,7 @@ class ManageTeamsGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.editTeam(thisRow);
           };
           const onDelete = () => {
             const api = params.api;
@@ -75,20 +72,16 @@ class ManageTeamsGeneral extends Component {
             fields.forEach((f) => {
               thisRow[f] = params.getValue(f);
             });
-            debugger;
-            return console.info(JSON.stringify(thisRow, null, 4));
+
+            this.deleteTeam(thisRow.id);
           };
 
           return (
             <React.Fragment>
-              <div
-                hidden={params.row.id === 1}
-                style={{ paddingTop: "10px", cursor: "pointer" }}
-              >
+              <div style={{ paddingTop: "10px", cursor: "pointer" }}>
                 <EditIcon onClick={onClick} />
               </div>
               <div
-                hidden={params.row.id === 1}
                 style={{
                   paddingTop: "10px",
                   paddingLeft: "5px",
@@ -102,129 +95,13 @@ class ManageTeamsGeneral extends Component {
         },
       },
     ];
+  }
 
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Stark",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: null,
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Targaryen",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Melisandre",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: "Admin",
-      },
-      {
-        id: 7,
-        description: "Clifford",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Frances",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 12,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 13,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 14,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 15,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
+  async componentDidMount() {
+    const teams = await this.props.onGetTeams();
+    debugger;
+    this.setState({ teams });
+    debugger;
   }
 
   openTeamDialog = () => {
@@ -232,10 +109,42 @@ class ManageTeamsGeneral extends Component {
   };
 
   closeTeamDialog = () => {
-    this.setState({ showTeamDialog: false });
+    this.setState({ showTeamDialog: false, team: null });
   };
 
-  addTeam = () => {};
+  deleteTeam = async (teamId) => {
+    await this.props.onDeleteTeam(teamId);
+    this.setState({
+      teams: this.state.teams.filter((team, _) => team.id !== teamId),
+    });
+  };
+
+  editTeam = async (team) => {
+    await this.setState({ team: team });
+    this.openTeamDialog();
+  };
+
+  addOrUpdateTeam = async (team) => {
+    if (this.state.team === null) {
+      var newTeam = await this.props.onAddTeam(team);
+      await this.setState({
+        teams: [...this.state.teams, newTeam],
+      });
+    } else {
+      await this.props.onUpdateTeam(team);
+      var index = this.state.teams.findIndex((f) => f.id === team.id);
+      debugger;
+      await this.setState((prevState) => {
+        let teams = [...prevState.teams];
+        teams[index] = team;
+        return {
+          teams,
+          team: null,
+        };
+      });
+    }
+    this.closeTeamDialog();
+  };
 
   render() {
     const { classes } = this.props;
@@ -245,7 +154,7 @@ class ManageTeamsGeneral extends Component {
           <Paper className={classes.paper}>
             <div style={{ height: 560, width: "100%" }}>
               <DataGrid
-                rows={this.rows}
+                rows={this.state.teams}
                 columns={this.columns}
                 pageSize={10}
                 rowHeight={45}
@@ -255,7 +164,11 @@ class ManageTeamsGeneral extends Component {
           </Paper>
         </Grid>
         {this.state.showTeamDialog && (
-          <TeamDialog onClose={this.closeTeamDialog} onAdd={this.addTeam} />
+          <TeamDialog
+            onClose={this.closeTeamDialog}
+            team={this.state.team}
+            onAddOrUpdate={this.addOrUpdateTeam}
+          />
         )}
       </React.Fragment>
     );

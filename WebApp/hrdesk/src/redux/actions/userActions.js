@@ -109,7 +109,9 @@ export const login = (user) => {
         window.location = "/";
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(userLoginError(error));
         throw error;
       });
@@ -121,14 +123,14 @@ export const silentLogin = () => {
     return apiClient
       .post("user/silentLogin")
       .then((response) => {
-        debugger;
         dispatch(userLoginSuccess(response.data.userModel));
         toastr.success("Login", "Logged in succesfully");
         return response.data.userModel;
       })
       .catch((error) => {
-        debugger;
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(userLoginError(error));
         throw error;
       });
@@ -146,7 +148,9 @@ export const registerUser = (userModel, history) => {
         history.push("/employees");
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(userRegisterError(error));
         throw error;
       });
@@ -164,7 +168,9 @@ export const updateUser = (userModel, history) => {
         history.push("/employees");
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(userUpdateError(error));
         throw error;
       });
@@ -182,7 +188,9 @@ export const getUsers = () => {
         return response.data;
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(getUsersError(error));
         throw error;
       });
@@ -200,7 +208,9 @@ export const getUser = (userId) => {
         return response.data;
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(getUserError(error));
         throw error;
       });
@@ -216,7 +226,9 @@ export const deleteUser = (userId) => {
         toastr.success("Employee", "User deleted");
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(deleteUserError(error));
         throw error;
       });

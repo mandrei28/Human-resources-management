@@ -25,5 +25,27 @@ namespace HRDesk.Controllers
         {
             return _teamService.GetAllTeams();
         }
+
+        [Authorize]
+        [HttpPost("addTeam")]
+        public async Task<TeamModel> AddFunction([FromBody] TeamModel teamModel)
+        {
+            return await _teamService.AddTeam(teamModel);
+        }
+
+        [Authorize]
+        [HttpPost("deleteTeam/{id}")]
+        public async Task<IActionResult> DeleteTeam(int id)
+        {
+            await _teamService.DeleteTeam(id);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPut("update")]
+        public async Task UpdateTeam([FromBody] TeamModel teamModel)
+        {
+            await _teamService.UpdateTeam(teamModel);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace HRDesk.Services.Mappers
                 Id = team.Id,
                 Name = team.Name,
                 Description = team.Description,
+                CreationDate = team.CreatedDate.Date.ToString("dd/MM/yyyy"),
             };
         }
 
@@ -26,6 +27,13 @@ namespace HRDesk.Services.Mappers
                 Name = teamModel.Name,
                 Description = teamModel.Description,
             };
+        }
+
+        public static Team UpdateTeam(Team team, TeamModel teamModel)
+        {
+            team.Name = teamModel.Name;
+            team.Description = teamModel.Description;
+            return team;
         }
     }
 }

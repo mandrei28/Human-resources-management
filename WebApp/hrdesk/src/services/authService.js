@@ -20,6 +20,5 @@ export const isTokenValid = () => {
 };
 
 export const userHasPermission = (permissions, permission) => {
-  debugger;
   return permissions.includes(permission);
 };

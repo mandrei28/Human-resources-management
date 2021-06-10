@@ -112,7 +112,7 @@ class ManageFunctionsGeneral extends Component {
   };
 
   closeFunctionDialog = () => {
-    this.setState({ showFunctionDialog: false });
+    this.setState({ showFunctionDialog: false, functionModel: null });
   };
 
   deleteFunction = async (functionId) => {

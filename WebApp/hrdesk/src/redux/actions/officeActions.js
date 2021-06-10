@@ -29,7 +29,9 @@ export const getAllOffices = () => {
         return response.data;
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(getOfficesError(error));
         throw error;
       });

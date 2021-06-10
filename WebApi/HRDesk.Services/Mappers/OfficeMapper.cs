@@ -16,7 +16,8 @@ namespace HRDesk.Services.Mappers
                 Name = office.Name,
                 Capacity = office.Capacity,
                 Location = office.Location,
-                Number = office.Number
+                Number = office.Number,
+                CreationDate = office.CreatedDate.Date.ToString("dd/MM/yyyy"),
             };
         }
 
@@ -30,6 +31,15 @@ namespace HRDesk.Services.Mappers
                 Location = officeModel.Location,
                 Number = officeModel.Number
             };
+        }
+
+        public static Office UpdateOffice(Office office, OfficeModel officeModel)
+        {
+            office.Name = officeModel.Name;
+            office.Capacity = officeModel.Capacity;
+            office.Location = officeModel.Location;
+            office.Number = officeModel.Number;
+            return office;
         }
     }
 }

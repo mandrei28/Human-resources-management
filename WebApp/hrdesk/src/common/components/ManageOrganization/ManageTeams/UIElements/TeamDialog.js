@@ -24,10 +24,18 @@ export default class TeamDialog extends Component {
     super(props);
     this.state = {
       team: {
+        id: 0,
         name: "",
         description: "",
       },
     };
+  }
+
+  async componentDidMount() {
+    if (this.props.team) {
+      debugger;
+      await this.setState({ team: this.props.team });
+    }
   }
 
   handleTeamFieldChange = (event, field) => {
@@ -36,6 +44,10 @@ export default class TeamDialog extends Component {
       team[field] = event.target.value;
       return { team };
     });
+  };
+
+  addOrUpdateTeam = async () => {
+    await this.props.onAddOrUpdate(this.state.team);
   };
 
   render() {
@@ -48,7 +60,10 @@ export default class TeamDialog extends Component {
           fullWidth
           maxWidth="xs"
         >
-          <DialogTitle id="form-dialog-title">Create new team</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {" "}
+            {this.props.team !== null ? "Update team" : "Create new team"}
+          </DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
                 </DialogContentText> */}
@@ -82,8 +97,8 @@ export default class TeamDialog extends Component {
             <Button onClick={this.props.onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.props.onAdd} color="primary">
-              Add
+            <Button onClick={this.addOrUpdateTeam} color="primary">
+              {this.props.team !== null ? "Update" : "Add"}
             </Button>
           </DialogActions>
         </Dialog>

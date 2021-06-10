@@ -74,7 +74,9 @@ export const getAllFunctions = () => {
         return response.data;
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(getFunctionsError(error));
         throw error;
       });
@@ -92,7 +94,9 @@ export const addFunction = (functionModel) => {
         return response.data;
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(addFunctionError(error));
         throw error;
       });
@@ -110,7 +114,9 @@ export const deleteFunction = (functionId) => {
         return response.data;
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(deleteFunctionError(error));
         throw error;
       });
@@ -128,7 +134,9 @@ export const updateFunction = (functionModel) => {
         return response.data;
       })
       .catch((error) => {
-        toastr.error("Error", error.response.data.Message);
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
         dispatch(updateFunctionError(error));
         throw error;
       });

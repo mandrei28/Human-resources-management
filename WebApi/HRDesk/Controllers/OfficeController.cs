@@ -25,5 +25,27 @@ namespace HRDesk.Controllers
         {
             return _officeService.GetAllOffices();
         }
+
+        [Authorize]
+        [HttpPost("addOffice")]
+        public async Task<OfficeModel> AddOffice([FromBody] OfficeModel officeModel)
+        {
+            return await _officeService.AddOffice(officeModel);
+        }
+
+        [Authorize]
+        [HttpPost("deleteOffice/{id}")]
+        public async Task<IActionResult> DeleteOffice(int id)
+        {
+            await _officeService.DeleteOffice(id);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPut("update")]
+        public async Task UpdateOffice([FromBody] OfficeModel OfficeModel)
+        {
+            await _officeService.UpdateOffice(OfficeModel);
+        }
     }
 }
