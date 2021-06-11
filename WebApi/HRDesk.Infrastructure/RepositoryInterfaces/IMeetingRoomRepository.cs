@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HRDesk.Infrastructure.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HRDesk.Infrastructure.RepositoryInterfaces
 {
-    public interface IMeetingRoomRepository
+    public interface IMeetingRoomRepository : IBaseRepository<MeetingRoom>
     {
     }
 }

@@ -35,7 +35,9 @@ namespace HRDesk
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IFunctionRepository, FunctionRepository>()
                 .AddScoped<ITeamRepository, TeamRepository>()
-                .AddScoped<IOfficeRepository, OfficeRepository>();
+                .AddScoped<IOfficeRepository, OfficeRepository>()
+                .AddScoped<IMeetingRoomRepository, MeetingRoomRepository>()
+                .AddScoped<INationalDayRepository, NationalDayRepository>();
 
             //.AddScoped<IDepartmentRepository, DepartmentRepository>()
             //.AddScoped<IUserRepository, UserRepository>()
@@ -54,7 +56,9 @@ namespace HRDesk
             .AddScoped<IUserService, UserService>()
             .AddScoped<IFunctionService, FunctionService>()
             .AddScoped<ITeamService, TeamService>()
-            .AddScoped<IOfficeService, OfficeService>();
+            .AddScoped<IOfficeService, OfficeService>()
+            .AddScoped<IMeetingRoomService, MeetingRoomService>()
+            .AddScoped<INationalDayService, NationalDayService>();
         }
     }
 }

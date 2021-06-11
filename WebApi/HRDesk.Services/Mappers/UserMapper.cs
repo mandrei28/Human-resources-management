@@ -42,7 +42,7 @@ namespace HRDesk.Services.Mappers
         {
             return new User()
             {
-                Id = userModel.Id,
+                // Id = userModel.Id,
                 FirstName = userModel.FirstName,
                 Address = userModel.Address,
                 CNP = userModel.Cnp,

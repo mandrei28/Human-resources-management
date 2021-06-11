@@ -24,12 +24,20 @@ export default class OfficeDialog extends Component {
     super(props);
     this.state = {
       office: {
+        id: 0,
         name: "",
-        number: null,
+        number: 0,
         location: "",
-        capacity: null,
+        capacity: 0,
       },
     };
+  }
+
+  async componentDidMount() {
+    if (this.props.office) {
+      debugger;
+      await this.setState({ office: this.props.office });
+    }
   }
 
   handleOfficeFieldChange = (event, field) => {
@@ -40,15 +48,9 @@ export default class OfficeDialog extends Component {
     });
   };
 
-  handleOfficeDateFieldChange = (value, field) => {
-    this.setState((prevState) => {
-      const { office } = prevState;
-      office[field] = value;
-      return { office };
-    });
+  addOrUpdateOffice = async () => {
+    await this.props.onAddOrUpdate(this.state.office);
   };
-
-  addOffice = () => {};
 
   render() {
     return (
@@ -60,7 +62,9 @@ export default class OfficeDialog extends Component {
           fullWidth
           maxWidth="xs"
         >
-          <DialogTitle id="form-dialog-title">Create new office</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {this.props.office !== null ? "Update office" : "Create new office"}
+          </DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
                 </DialogContentText> */}
@@ -73,9 +77,7 @@ export default class OfficeDialog extends Component {
               type="text"
               fullWidth
               required
-              onChange={(event) =>
-                this.handleMeetingRoomFieldChange(event, "name")
-              }
+              onChange={(event) => this.handleOfficeFieldChange(event, "name")}
               value={this.state.office.name}
             />
             <TextField
@@ -87,7 +89,7 @@ export default class OfficeDialog extends Component {
               fullWidth
               required
               onChange={(event) =>
-                this.handleMeetingRoomFieldChange(event, "number")
+                this.handleOfficeFieldChange(event, "number")
               }
               value={this.state.office.number}
             />
@@ -100,7 +102,7 @@ export default class OfficeDialog extends Component {
               fullWidth
               required
               onChange={(event) =>
-                this.handleMeetingRoomFieldChange(event, "location")
+                this.handleOfficeFieldChange(event, "location")
               }
               value={this.state.office.location}
             />
@@ -113,7 +115,7 @@ export default class OfficeDialog extends Component {
               fullWidth
               required
               onChange={(event) =>
-                this.handleMeetingRoomFieldChange(event, "capacity")
+                this.handleOfficeFieldChange(event, "capacity")
               }
               value={this.state.office.capacity}
             />
@@ -122,8 +124,8 @@ export default class OfficeDialog extends Component {
             <Button onClick={this.props.onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.props.onAdd} color="primary">
-              Add
+            <Button onClick={this.addOrUpdateOffice} color="primary">
+              {this.props.office !== null ? "Update" : "Add"}
             </Button>
           </DialogActions>
         </Dialog>

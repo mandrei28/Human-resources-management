@@ -18,19 +18,30 @@ import OfficeDialog from "./UIElements/OfficeDialog";
 class ManageRoomsGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = { showMeetingRoomDialog: false, showOfficeDialog: false };
+    this.state = {
+      showMeetingRoomDialog: false,
+      showOfficeDialog: false,
+      offices: [],
+      meetingRooms: [],
+      office: null,
+      meetingRoom: null,
+    };
     this.officeColumns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "name", headerName: "Office Name", width: 250 },
       {
-        field: "startDate",
-        type: "date",
-        headerName: "Start date",
+        field: "capacity",
+        headerName: "Capacity",
         width: 210,
       },
-      { field: "endDate", type: "date", headerName: "End date", width: 210 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 180 },
+      { field: "location", headerName: "Location", width: 210 },
+      { field: "number", headerName: "Number", width: 150 },
+      {
+        field: "creationDate",
+        headerName: "Creation date",
+        width: 210,
+        valueFormatter: (params) => params.value.split("T")[0],
+      },
       {
         field: "",
         width: 100,
@@ -63,7 +74,7 @@ class ManageRoomsGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.editOffice(thisRow);
           };
           const onDelete = () => {
             const api = params.api;
@@ -76,8 +87,8 @@ class ManageRoomsGeneral extends Component {
             fields.forEach((f) => {
               thisRow[f] = params.getValue(f);
             });
-            debugger;
-            return console.info(JSON.stringify(thisRow, null, 4));
+
+            this.deleteOffice(thisRow.id);
           };
 
           return (
@@ -106,16 +117,20 @@ class ManageRoomsGeneral extends Component {
 
     this.meetingRoomColumns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "name", headerName: "Meeting Room Name", width: 250 },
       {
-        field: "startDate",
-        type: "date",
-        headerName: "Start date",
+        field: "capacity",
+        headerName: "Capacity",
         width: 210,
       },
-      { field: "endDate", type: "date", headerName: "End date", width: 210 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 180 },
+      { field: "location", headerName: "Location", width: 210 },
+      { field: "number", headerName: "Number", width: 150 },
+      {
+        field: "creationDate",
+        headerName: "Creation date",
+        width: 210,
+        valueFormatter: (params) => params.value.split("T")[0],
+      },
       {
         field: "",
         width: 100,
@@ -148,7 +163,7 @@ class ManageRoomsGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.editMeetingRoom(thisRow);
           };
           const onDelete = () => {
             const api = params.api;
@@ -161,8 +176,8 @@ class ManageRoomsGeneral extends Component {
             fields.forEach((f) => {
               thisRow[f] = params.getValue(f);
             });
-            debugger;
-            return console.info(JSON.stringify(thisRow, null, 4));
+
+            this.deleteMeetingRoom(thisRow.id);
           };
 
           return (
@@ -188,129 +203,14 @@ class ManageRoomsGeneral extends Component {
         },
       },
     ];
+  }
 
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Stark",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: null,
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Targaryen",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Melisandre",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: "Admin",
-      },
-      {
-        id: 7,
-        description: "Clifford",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Frances",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 12,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 13,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 14,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 15,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
+  async componentDidMount() {
+    const offices = await this.props.onGetOffices();
+    const meetingRooms = await this.props.onGetMeetingRooms();
+    debugger;
+    this.setState({ offices, meetingRooms });
+    debugger;
   }
 
   openMeetingRoomDialog = () => {
@@ -318,20 +218,90 @@ class ManageRoomsGeneral extends Component {
   };
 
   closeMeetingRoomDialog = () => {
-    this.setState({ showMeetingRoomDialog: false });
+    this.setState({ showMeetingRoomDialog: false, meetingRoom: null });
   };
 
-  addMeetingRoom = () => {};
+  deleteMeetingRoom = async (meetingRoomId) => {
+    await this.props.onDeleteMeetingRoom(meetingRoomId);
+    this.setState({
+      meetingRooms: this.state.meetingRooms.filter(
+        (meetingRoom, _) => meetingRoom.id !== meetingRoomId
+      ),
+    });
+  };
+
+  editMeetingRoom = async (meetingRoom) => {
+    debugger;
+    await this.setState({ meetingRoom: meetingRoom });
+    this.openMeetingRoomDialog();
+  };
+
+  addOrUpdateMeetingRoom = async (meetingRoom) => {
+    if (this.state.meetingRoom === null) {
+      var newMeetingRoom = await this.props.onAddMeetingRoom(meetingRoom);
+      await this.setState({
+        meetingRooms: [...this.state.meetingRooms, newMeetingRoom],
+      });
+    } else {
+      await this.props.onUpdateMeetingRoom(meetingRoom);
+      var index = this.state.meetingRooms.findIndex(
+        (f) => f.id === meetingRoom.id
+      );
+      debugger;
+      await this.setState((prevState) => {
+        let meetingRooms = [...prevState.meetingRooms];
+        meetingRooms[index] = meetingRoom;
+        return {
+          meetingRooms,
+          meetingRoom: null,
+        };
+      });
+    }
+    this.closeMeetingRoomDialog();
+  };
 
   openOfficeDialog = () => {
     this.setState({ showOfficeDialog: true });
   };
 
   closeOfficeDialog = () => {
-    this.setState({ showOfficeDialog: false });
+    this.setState({ showOfficeDialog: false, office: null });
   };
 
-  addOffice = () => {};
+  deleteOffice = async (officeId) => {
+    await this.props.onDeleteOffice(officeId);
+    this.setState({
+      offices: this.state.offices.filter((office, _) => office.id !== officeId),
+    });
+  };
+
+  editOffice = async (office) => {
+    debugger;
+    await this.setState({ office: office });
+    this.openOfficeDialog();
+  };
+
+  addOrUpdateOffice = async (office) => {
+    if (this.state.office === null) {
+      var newOffice = await this.props.onAddOffice(office);
+      await this.setState({
+        offices: [...this.state.offices, newOffice],
+      });
+    } else {
+      await this.props.onUpdateOffice(office);
+      var index = this.state.offices.findIndex((f) => f.id === office.id);
+      debugger;
+      await this.setState((prevState) => {
+        let offices = [...prevState.offices];
+        offices[index] = office;
+        return {
+          offices,
+          office: null,
+        };
+      });
+    }
+    this.closeOfficeDialog();
+  };
 
   render() {
     const { classes } = this.props;
@@ -341,7 +311,7 @@ class ManageRoomsGeneral extends Component {
           <Paper className={classes.paper}>
             <div style={{ height: 355, width: "100%" }}>
               <DataGrid
-                rows={this.rows}
+                rows={this.state.meetingRooms}
                 columns={this.meetingRoomColumns}
                 pageSize={7}
                 rowHeight={35}
@@ -354,7 +324,7 @@ class ManageRoomsGeneral extends Component {
           <Paper className={classes.paper}>
             <div style={{ height: 355, width: "100%" }}>
               <DataGrid
-                rows={this.rows}
+                rows={this.state.offices}
                 columns={this.officeColumns}
                 pageSize={7}
                 rowHeight={35}
@@ -366,13 +336,15 @@ class ManageRoomsGeneral extends Component {
         {this.state.showMeetingRoomDialog && (
           <MeetingRoomDialog
             onClose={this.closeMeetingRoomDialog}
-            onAdd={this.addMeetingRoom}
+            meetingRoom={this.state.meetingRoom}
+            onAddOrUpdate={this.addOrUpdateMeetingRoom}
           />
         )}
         {this.state.showOfficeDialog && (
           <OfficeDialog
             onClose={this.closeOfficeDialog}
-            onAdd={this.addOffice}
+            office={this.state.office}
+            onAddOrUpdate={this.addOrUpdateOffice}
           />
         )}
       </React.Fragment>

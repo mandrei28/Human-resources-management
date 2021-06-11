@@ -15,7 +15,7 @@ namespace HRDesk.Services.Mappers
                 Id = function.Id,
                 Name = function.Name,
                 Description = function.Description,
-                CreationDate = function.CreatedDate.Date.ToString("dd/MM/yyyy"),
+                CreationDate = function.CreatedDate,
             };
         }
 
@@ -23,7 +23,7 @@ namespace HRDesk.Services.Mappers
         {
             return new Function()
             {
-                Id = functionModel.Id,
+                // Id = functionModel.Id,
                 Name = functionModel.Name,
                 Description = functionModel.Description,
             };

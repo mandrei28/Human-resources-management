@@ -30,7 +30,7 @@ namespace HRDesk.Services.Services
             await _unitOfWork.Office.InsertAsync(office);
             await _unitOfWork.CommitAsync();
             officeModel.Id = office.Id;
-            officeModel.CreationDate = office.CreatedDate.Date.ToString("dd/MM/yyyy");
+            officeModel.CreationDate = office.CreatedDate;
             return officeModel;
         }
 

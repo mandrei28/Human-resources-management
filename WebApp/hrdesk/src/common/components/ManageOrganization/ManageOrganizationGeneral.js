@@ -6,8 +6,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { styles } from "./ManageOrganizationStyles";
 import ManageTeamsContainer from "./ManageTeams/ManageTeamsContainer";
-import ManageRoomsGeneral from "./ManageRooms/ManageRoomsGeneral";
 import ManageFunctionsContainer from "./ManageFunctions/ManageFunctionsContainer";
+import ManageRoomsContainer from "./ManageRooms/ManageRoomsContainer";
 
 class ManageOrganizationGeneral extends Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class ManageOrganizationGeneral extends Component {
           <Container maxWidth="lg" className={classes.container}>
             {this.state.value === 0 && <ManageTeamsContainer />}
             {this.state.value === 1 && <ManageFunctionsContainer />}
-            {this.state.value === 2 && <ManageRoomsGeneral />}
+            {this.state.value === 2 && <ManageRoomsContainer />}
           </Container>
         </main>
       </div>

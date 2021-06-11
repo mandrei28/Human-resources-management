@@ -32,7 +32,7 @@ namespace HRDesk.Services.Services
             await _unitOfWork.Teams.InsertAsync(team);
             await _unitOfWork.CommitAsync();
             teamModel.Id = team.Id;
-            teamModel.CreationDate = team.CreatedDate.Date.ToString("dd/MM/yyyy");
+            teamModel.CreationDate = team.CreatedDate;
             return teamModel;
         }
 

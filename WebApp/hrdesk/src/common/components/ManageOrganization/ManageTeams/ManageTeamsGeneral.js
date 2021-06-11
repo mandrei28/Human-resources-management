@@ -26,6 +26,7 @@ class ManageTeamsGeneral extends Component {
         field: "creationDate",
         headerName: "Creation date",
         width: 210,
+        valueFormatter: (params) => params.value.split("T")[0],
       },
       {
         field: "",

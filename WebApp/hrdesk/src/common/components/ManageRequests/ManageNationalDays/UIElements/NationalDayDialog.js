@@ -24,11 +24,19 @@ export default class NationalDayDialog extends Component {
     super(props);
     this.state = {
       nationalDay: {
+        id: 0,
         description: "",
         startDate: null,
         endDate: null,
       },
     };
+  }
+
+  async componentDidMount() {
+    if (this.props.nationalDay) {
+      debugger;
+      await this.setState({ nationalDay: this.props.nationalDay });
+    }
   }
 
   handleNationalDayFieldChange = (event, field) => {
@@ -47,6 +55,10 @@ export default class NationalDayDialog extends Component {
     });
   };
 
+  addOrUpdateNationalDay = async () => {
+    await this.props.onAddOrUpdate(this.state.nationalDay);
+  };
+
   render() {
     return (
       <div>
@@ -58,7 +70,9 @@ export default class NationalDayDialog extends Component {
           maxWidth="xs"
         >
           <DialogTitle id="form-dialog-title">
-            Create new national dayoff
+            {this.props.nationalDay !== null
+              ? "Update national dayoff"
+              : "Create new national dayoff"}
           </DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
@@ -120,8 +134,8 @@ export default class NationalDayDialog extends Component {
             <Button onClick={this.props.onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.props.onAdd} color="primary">
-              Add
+            <Button onClick={this.addOrUpdateNationalDay} color="primary">
+              {this.props.nationalDay !== null ? "Update" : "Add"}
             </Button>
           </DialogActions>
         </Dialog>

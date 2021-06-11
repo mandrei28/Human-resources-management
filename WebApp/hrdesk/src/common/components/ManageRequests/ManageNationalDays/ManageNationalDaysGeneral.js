@@ -17,19 +17,34 @@ import NationalDayDialog from "./UIElements/NationalDayDialog";
 class ManageNationalDaysGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = { showNationalDayDialog: false };
+    this.state = {
+      showNationalDayDialog: false,
+      nationalDays: [],
+      nationalDay: null,
+    };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "description", headerName: "Description", width: 450 },
       {
         field: "startDate",
         type: "date",
         headerName: "Start date",
-        width: 210,
+        width: 220,
+        valueFormatter: (params) => params.value.split("T")[0],
       },
-      { field: "endDate", type: "date", headerName: "End date", width: 210 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 180 },
+      {
+        field: "endDate",
+        type: "date",
+        headerName: "End date",
+        width: 220,
+        valueFormatter: (params) => params.value.split("T")[0],
+      },
+      {
+        field: "creationDate",
+        headerName: "CreationDate",
+        width: 150,
+        valueFormatter: (params) => params.value.split("T")[0],
+      },
       {
         field: "",
         width: 100,
@@ -62,7 +77,7 @@ class ManageNationalDaysGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.editNationalDay(thisRow);
           };
           const onDelete = () => {
             const api = params.api;
@@ -75,20 +90,16 @@ class ManageNationalDaysGeneral extends Component {
             fields.forEach((f) => {
               thisRow[f] = params.getValue(f);
             });
-            debugger;
-            return console.info(JSON.stringify(thisRow, null, 4));
+
+            this.deleteNationalDay(thisRow.id);
           };
 
           return (
             <React.Fragment>
-              <div
-                hidden={params.row.id === 1}
-                style={{ paddingTop: "10px", cursor: "pointer" }}
-              >
+              <div style={{ paddingTop: "10px", cursor: "pointer" }}>
                 <EditIcon onClick={onClick} />
               </div>
               <div
-                hidden={params.row.id === 1}
                 style={{
                   paddingTop: "10px",
                   paddingLeft: "5px",
@@ -102,129 +113,14 @@ class ManageNationalDaysGeneral extends Component {
         },
       },
     ];
+  }
 
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Stark",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: null,
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Targaryen",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Melisandre",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: "Admin",
-      },
-      {
-        id: 7,
-        description: "Clifford",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Frances",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 12,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 13,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 14,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 15,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
+  async componentDidMount() {
+    const nationalDays = await this.props.onGetNationalDays();
+    debugger;
+    debugger;
+    this.setState({ nationalDays });
+    debugger;
   }
 
   openNationalDayDialog = () => {
@@ -232,10 +128,49 @@ class ManageNationalDaysGeneral extends Component {
   };
 
   closeNationalDayDialog = () => {
-    this.setState({ showNationalDayDialog: false });
+    this.setState({ showNationalDayDialog: false, nationalDay: null });
   };
 
-  addNationalDay = () => {};
+  deleteNationalDay = async (nationalDayId) => {
+    await this.props.onDeleteNationalDay(nationalDayId);
+    this.setState({
+      nationalDays: this.state.nationalDays.filter(
+        (nationalDay, _) => nationalDay.id !== nationalDayId
+      ),
+    });
+  };
+
+  editNationalDay = async (nationalDay) => {
+    await this.setState({ nationalDay: nationalDay });
+    this.openNationalDayDialog();
+  };
+
+  addOrUpdateNationalDay = async (nationalDay) => {
+    if (this.state.nationalDay === null) {
+      var newNationalDay = await this.props.onAddNationalDay(nationalDay);
+      await this.setState({
+        nationalDays: [...this.state.nationalDays, newNationalDay],
+      });
+    } else {
+      var updatedNationalDay = await this.props.onUpdateNationalDay(
+        nationalDay
+      );
+      debugger;
+      var index = this.state.nationalDays.findIndex(
+        (f) => f.id === nationalDay.id
+      );
+      debugger;
+      await this.setState((prevState) => {
+        let nationalDays = [...prevState.nationalDays];
+        nationalDays[index] = updatedNationalDay;
+        return {
+          nationalDays,
+          nationalDay: null,
+        };
+      });
+    }
+    this.closeNationalDayDialog();
+  };
 
   render() {
     const { classes } = this.props;
@@ -245,7 +180,7 @@ class ManageNationalDaysGeneral extends Component {
           <Paper className={classes.paper}>
             <div style={{ height: 560, width: "100%" }}>
               <DataGrid
-                rows={this.rows}
+                rows={this.state.nationalDays}
                 columns={this.columns}
                 pageSize={10}
                 rowHeight={45}
@@ -257,7 +192,8 @@ class ManageNationalDaysGeneral extends Component {
         {this.state.showNationalDayDialog && (
           <NationalDayDialog
             onClose={this.closeNationalDayDialog}
-            onAdd={this.addNationalDay}
+            nationalDay={this.state.nationalDay}
+            onAddOrUpdate={this.addOrUpdateNationalDay}
           />
         )}
       </React.Fragment>

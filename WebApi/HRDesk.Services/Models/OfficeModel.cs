@@ -11,6 +11,6 @@ namespace HRDesk.Services.Models
         public string Location { get; set; }
         public int Number { get; set; }
         public int Capacity { get; set; }
-        public string CreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace HRDesk.Services.Services
             await _unitOfWork.Functions.InsertAsync(function);
             await _unitOfWork.CommitAsync();
             functionModel.Id = function.Id;
-            functionModel.CreationDate = function.CreatedDate.Date.ToString("dd/MM/yyyy");
+            functionModel.CreationDate = function.CreatedDate;
             return functionModel;
         }
 

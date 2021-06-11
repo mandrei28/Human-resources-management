@@ -19,6 +19,8 @@ namespace HRDesk.Infrastructure
         private TeamRepository _teams;
         private OfficeRepository _offices;
         private UserPermissionRepository _userPermissions;
+        private MeetingRoomRepository _meetingRooms;
+        private NationalDayRepository _nationalDays;
         //private BaseRepository<Order> _orders;
 
         public UnitOfWork(HRDeskDbContext dbContext)
@@ -75,6 +77,24 @@ namespace HRDesk.Infrastructure
             {
                 return _userPermissions ??
                     (_userPermissions = new UserPermissionRepository(_dbContext));
+            }
+        }
+
+        public IMeetingRoomRepository MeetingRoom
+        {
+            get
+            {
+                return _meetingRooms ??
+                    (_meetingRooms = new MeetingRoomRepository(_dbContext));
+            }
+        }
+
+        public INationalDayRepository NationalDays
+        {
+            get
+            {
+                return _nationalDays ??
+                    (_nationalDays = new NationalDayRepository(_dbContext));
             }
         }
 

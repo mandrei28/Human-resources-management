@@ -24,12 +24,20 @@ export default class MeetingRoomDialog extends Component {
     super(props);
     this.state = {
       meetingRoom: {
+        id: 0,
         name: "",
-        number: null,
+        number: 0,
         location: "",
-        capacity: null,
+        capacity: 0,
       },
     };
+  }
+
+  async componentDidMount() {
+    if (this.props.meetingRoom) {
+      debugger;
+      await this.setState({ meetingRoom: this.props.meetingRoom });
+    }
   }
 
   handleMeetingRoomFieldChange = (event, field) => {
@@ -38,6 +46,10 @@ export default class MeetingRoomDialog extends Component {
       meetingRoom[field] = event.target.value;
       return { meetingRoom };
     });
+  };
+
+  addOrUpdateMeetingRoom = async () => {
+    await this.props.onAddOrUpdate(this.state.meetingRoom);
   };
 
   render() {
@@ -51,7 +63,9 @@ export default class MeetingRoomDialog extends Component {
           maxWidth="xs"
         >
           <DialogTitle id="form-dialog-title">
-            Create new meeting room
+            {this.props.meetingRoom !== null
+              ? "Update meeting room"
+              : "Create new meeting room"}
           </DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
@@ -115,8 +129,8 @@ export default class MeetingRoomDialog extends Component {
             <Button onClick={this.props.onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.props.onAdd} color="primary">
-              Add
+            <Button onClick={this.addOrUpdateMeetingRoom} color="primary">
+              {this.props.meetingRoom !== null ? "Update" : "Add"}
             </Button>
           </DialogActions>
         </Dialog>
