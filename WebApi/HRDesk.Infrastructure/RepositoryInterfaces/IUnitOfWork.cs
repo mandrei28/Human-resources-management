@@ -10,11 +10,12 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
         IUserRepository Users { get; }
         IFunctionRepository Functions { get; }
         ITeamRepository Teams { get; }
-
+        ILeaveRequestRepository LeaveRequests { get; }
         IOfficeRepository Office { get; }
         INationalDayRepository NationalDays { get; }
         IMeetingRoomRepository MeetingRoom { get; }
         IUserPermissionRepository UserPermission { get; }
+        IDayoffRepository Daysoff { get; }
         Task CommitAsync();
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();

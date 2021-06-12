@@ -183,6 +183,11 @@ class LeaveRequestGeneral extends Component {
       },
     ];
   }
+
+  handleHourChange = (event) => {
+    debugger;
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -236,7 +241,9 @@ class LeaveRequestGeneral extends Component {
                     label="Start Hour"
                     fullWidth
                     //value={selectedDate}
-                    //onChange={handleDateChange}
+                    onChange={(event) =>
+                      this.handleHourChange(event, "startHour")
+                    }
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -249,7 +256,9 @@ class LeaveRequestGeneral extends Component {
                     label="End hour"
                     fullWidth
                     //value={selectedDate}
-                    //onChange={handleDateChange}
+                    onChange={(event) =>
+                      this.handleHourChange(event, "endHour")
+                    }
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}

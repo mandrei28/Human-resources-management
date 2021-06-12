@@ -2,32 +2,63 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import { styles } from "./ManageLeaveRequestsStyles";
-import { DataGrid } from "@material-ui/data-grid";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@material-ui/data-grid";
 import { Paper, Grid, Container, CssBaseline, Button } from "@material-ui/core";
+import { RequestStatuses } from "../../../../utils/constants";
 import "../ManageRequestsStyles.css";
+
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
 
 class ManageLeaveRequestsGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { leaveRequests: [] };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
       { field: "description", headerName: "Description", width: 200 },
       {
-        field: "date",
+        field: "startDate",
         type: "date",
         headerName: "Date",
-        width: 160,
+        width: 120,
+        valueFormatter: (params) => params.value.split("T")[0],
       },
       {
         field: "startHour",
         type: "string",
         headerName: "Start hour",
-        width: 155,
+        width: 140,
+        valueFormatter: (params) => params.value.split("T")[1].split(".")[0],
       },
-      { field: "endHour", type: "string", headerName: "End hour", width: 155 },
-      { field: "status", headerName: "Status", width: 120 },
-      { field: "verified", headerName: "Verified By", width: 150 },
+      {
+        field: "endHour",
+        type: "string",
+        headerName: "End hour",
+        width: 135,
+        valueFormatter: (params) => params.value.split("T")[1].split(".")[0],
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 120,
+        valueFormatter: (params) =>
+          params.value === 0
+            ? "Waiting"
+            : params.value === 1
+            ? "Refused"
+            : "Approved",
+      },
+      { field: "verifiedBy", headerName: "Verified By", width: 230 },
       {
         field: "",
         width: 100,
@@ -47,12 +78,12 @@ class ManageLeaveRequestsGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.approveLeaveRequest(thisRow.id, RequestStatuses.Approve);
           };
 
           return (
             <React.Fragment>
-              <div hidden={params.row.id === 1}>
+              <div hidden={params.row.status === 2}>
                 <Button
                   variant="contained"
                   className="approveButton"
@@ -84,12 +115,12 @@ class ManageLeaveRequestsGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.approveLeaveRequest(thisRow.id, RequestStatuses.Decline);
           };
 
           return (
             <React.Fragment>
-              <div hidden={params.row.id === 1}>
+              <div hidden={params.row.status === 1}>
                 <Button
                   variant="contained"
                   className="declineButton"
@@ -103,109 +134,32 @@ class ManageLeaveRequestsGeneral extends Component {
         },
       },
     ];
-
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        date: new Date(),
-        startHour: "22:40:10",
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 7,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
   }
+
+  async componentDidMount() {
+    const leaveRequests = await this.props.onGetLeaveRequests();
+    debugger;
+    this.setState({ leaveRequests });
+  }
+
+  approveLeaveRequest = async (leaveRequestId, newStatus) => {
+    debugger;
+    var leaveRequest = await this.props.onApproveLeaveRequest(
+      leaveRequestId,
+      newStatus
+    );
+    var index = this.state.leaveRequests.findIndex(
+      (f) => f.id === leaveRequest.id
+    );
+    await this.setState((prevState) => {
+      let leaveRequests = [...prevState.leaveRequests];
+      leaveRequests[index] = leaveRequest;
+      return {
+        leaveRequests,
+      };
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -213,11 +167,14 @@ class ManageLeaveRequestsGeneral extends Component {
         <Paper className={classes.paper}>
           <div style={{ height: 560, width: "100%" }}>
             <DataGrid
-              rows={this.rows}
+              rows={this.state.leaveRequests}
               columns={this.columns}
               pageSize={10}
               rowHeight={45}
               disableSelectionOnClick={true}
+              components={{
+                Toolbar: CustomToolbar,
+              }}
             />
           </div>
         </Paper>

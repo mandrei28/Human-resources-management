@@ -37,7 +37,9 @@ namespace HRDesk
                 .AddScoped<ITeamRepository, TeamRepository>()
                 .AddScoped<IOfficeRepository, OfficeRepository>()
                 .AddScoped<IMeetingRoomRepository, MeetingRoomRepository>()
-                .AddScoped<INationalDayRepository, NationalDayRepository>();
+                .AddScoped<INationalDayRepository, NationalDayRepository>()
+                .AddScoped<ILeaveRequestRepository, LeaveRequestRepository>()
+                .AddScoped<IDayoffRepository, DayoffRepository>();
 
             //.AddScoped<IDepartmentRepository, DepartmentRepository>()
             //.AddScoped<IUserRepository, UserRepository>()
@@ -58,7 +60,9 @@ namespace HRDesk
             .AddScoped<ITeamService, TeamService>()
             .AddScoped<IOfficeService, OfficeService>()
             .AddScoped<IMeetingRoomService, MeetingRoomService>()
-            .AddScoped<INationalDayService, NationalDayService>();
+            .AddScoped<INationalDayService, NationalDayService>()
+            .AddScoped<ILeaveRequestService, LeaveRequestService>()
+            .AddScoped<IDayoffService, DayoffService>();
         }
     }
 }

@@ -5,9 +5,9 @@ import { withRouter } from "react-router-dom";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { styles } from "./ManageRequestsStyles";
-import ManageLeaveRequestsGeneral from "./ManageLeaveRequests/ManageLeaveRequestsGeneral";
-import ManageDaysoffRequestsGeneral from "./ManageDaysoffRequests/ManageDaysoffRequestsGeneral";
 import ManageNationalDaysContainer from "./ManageNationalDays/ManageNationalDaysContainer";
+import ManageLeaveRequestsContainer from "./ManageLeaveRequests/ManageLeaveRequestsContainer";
+import ManageDaysoffRequestsContainer from "./ManageDaysoffRequests/ManageDaysoffRequestsContainer";
 
 class ManageRequestsGeneral extends Component {
   constructor(props) {
@@ -41,8 +41,8 @@ class ManageRequestsGeneral extends Component {
             </Tabs>
           </Paper>
           <Container maxWidth="lg" className={classes.container}>
-            {this.state.value === 0 && <ManageLeaveRequestsGeneral />}
-            {this.state.value === 1 && <ManageDaysoffRequestsGeneral />}
+            {this.state.value === 0 && <ManageLeaveRequestsContainer />}
+            {this.state.value === 1 && <ManageDaysoffRequestsContainer />}
             {this.state.value === 2 && <ManageNationalDaysContainer />}
           </Container>
         </main>

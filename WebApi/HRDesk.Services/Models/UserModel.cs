@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HRDesk.Infrastructure.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

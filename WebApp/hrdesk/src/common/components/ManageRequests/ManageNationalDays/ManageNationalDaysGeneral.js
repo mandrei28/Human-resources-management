@@ -14,6 +14,14 @@ import { styles } from "./ManageNationalDaysStyles";
 import EditIcon from "@material-ui/icons/Edit";
 import NationalDayDialog from "./UIElements/NationalDayDialog";
 
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
+
 class ManageNationalDaysGeneral extends Component {
   constructor(props) {
     super(props);
@@ -118,9 +126,7 @@ class ManageNationalDaysGeneral extends Component {
   async componentDidMount() {
     const nationalDays = await this.props.onGetNationalDays();
     debugger;
-    debugger;
     this.setState({ nationalDays });
-    debugger;
   }
 
   openNationalDayDialog = () => {
@@ -185,6 +191,9 @@ class ManageNationalDaysGeneral extends Component {
                 pageSize={10}
                 rowHeight={45}
                 disableSelectionOnClick={true}
+                components={{
+                  Toolbar: CustomToolbar,
+                }}
               />
             </div>
           </Paper>

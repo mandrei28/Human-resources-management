@@ -25,3 +25,8 @@ export const PermissionsNames = {
   10: "ManageHolidays",
   11: "ManageOrganization",
 };
+
+export const RequestStatuses = {
+  Decline: 1,
+  Approve: 2,
+};
