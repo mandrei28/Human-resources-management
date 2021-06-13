@@ -7,10 +7,8 @@ import { connect } from "react-redux";
 import PrivateRoute from "./services/PrivateRoute";
 import * as userActions from "./redux/actions/userActions";
 import { isTokenValid } from "./services/authService";
-import { makeStyles } from "@material-ui/core/styles";
 import LeaveRequestGeneral from "./common/components/LeaveRequest/LeaveRequestGeneral";
 import TeamGeneral from "./common/components/Team/TeamGeneral";
-import BookGeneral from "./common/components/Book/BookGeneral";
 import ReduxToastr from "react-redux-toastr";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
@@ -27,6 +25,7 @@ import { userHasPermission } from "./services/authService";
 import { Permissions } from "./utils/constants";
 import AccessDeniedGeneral from "./common/components/AccessDenied/AccessDeniedGeneral";
 import EmployeesContainer from "./common/components/Employees/EmployeesContainer";
+import BookContainer from "./common/components/Book/BookContainer";
 
 const styles = (theme) => ({
   root: {
@@ -130,7 +129,7 @@ class App extends React.Component {
             <PrivateRoute
               exact
               path="/book"
-              component={BookGeneral}
+              component={BookContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
                 this.state.user.permissions,

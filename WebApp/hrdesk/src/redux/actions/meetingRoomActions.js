@@ -2,6 +2,8 @@ import axiosWrapper from "../../api/axiosWrapper";
 import { toastr } from "react-redux-toastr";
 export const GET_MEETINGROOMS_SUCCESS = "GET_MEETINGROOMS_SUCCESS";
 export const GET_MEETINGROOMS_ERROR = "GET_MEETINGROOMS_ERROR";
+export const GET_BOOKING_MEETINGROOMS_SUCCESS = "GET_MEETINGROOMS_SUCCESS";
+export const GET_BOOKING_MEETINGROOMS_ERROR = "GET_MEETINGROOMS_ERROR";
 export const ADD_MEETINGROOM_SUCCESS = "ADD_MEETINGROOM_SUCCESS";
 export const ADD_MEETINGROOM_ERROR = "ADD_MEETINGROOM_ERROR";
 export const DELETE_MEETINGROOM_SUCCESS = "DELETE_MEETINGROOM_SUCCESS";
@@ -21,6 +23,20 @@ export const getMeetingRoomsSuccess = (meetingrooms) => {
 export const getMeetingRoomsError = (error) => {
   return {
     type: GET_MEETINGROOMS_ERROR,
+    error: error,
+  };
+};
+
+export const getBookingMeetingRoomsSuccess = (meetingrooms) => {
+  return {
+    type: GET_BOOKING_MEETINGROOMS_SUCCESS,
+    payload: meetingrooms,
+  };
+};
+
+export const getBookingMeetingRoomsError = (error) => {
+  return {
+    type: GET_BOOKING_MEETINGROOMS_ERROR,
     error: error,
   };
 };
@@ -79,6 +95,25 @@ export const getAllMeetingRooms = () => {
           toastr.error("Error", error.response.data.Message);
         }
         dispatch(getMeetingRoomsError(error));
+        throw error;
+      });
+  };
+};
+
+export const getAllBookingMeetingRooms = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("meetingRoom/getAllBookingMeetingRooms")
+      .then((response) => {
+        dispatch(getBookingMeetingRoomsSuccess(response.data));
+        toastr.success("MeetingRoom", "Data fetched with success");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getBookingMeetingRoomsError(error));
         throw error;
       });
   };

@@ -23,21 +23,12 @@ namespace HRDesk.Infrastructure
         private NationalDayRepository _nationalDays;
         private LeaveRequestRepository _leaveRequests;
         private DayoffRepository _daysoff;
-        //private BaseRepository<Order> _orders;
+        private MeetingRepository _meetings;
 
         public UnitOfWork(HRDeskDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-
-        //public IRepository<Customer> Customers
-        //{
-        //    get
-        //    {
-        //        return _customers ??
-        //            (_customers = new BaseRepository<Customer>(_dbContext));
-        //    }
-        //}
 
         public IUserRepository Users
         {
@@ -115,6 +106,15 @@ namespace HRDesk.Infrastructure
             {
                 return _daysoff ??
                     (_daysoff = new DayoffRepository(_dbContext));
+            }
+        }
+
+        public IMeetingRepository Meetings
+        {
+            get
+            {
+                return _meetings ??
+                    (_meetings = new MeetingRepository(_dbContext));
             }
         }
 

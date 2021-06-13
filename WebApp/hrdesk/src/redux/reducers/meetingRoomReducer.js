@@ -1,6 +1,8 @@
 import {
   GET_MEETINGROOMS_ERROR,
   GET_MEETINGROOMS_SUCCESS,
+  GET_BOOKING_MEETINGROOMS_ERROR,
+  GET_BOOKING_MEETINGROOMS_SUCCESS,
   ADD_MEETINGROOM_SUCCESS,
   ADD_MEETINGROOM_ERROR,
   UPDATE_MEETINGROOM_SUCCESS,
@@ -15,6 +17,10 @@ export const meetingRoomReducer = (state = initialState, action) => {
     case GET_MEETINGROOMS_SUCCESS:
       return { ...state, meetingRooms: action.payload, error: null };
     case GET_MEETINGROOMS_ERROR:
+      return { ...state, error: action.payload };
+    case GET_BOOKING_MEETINGROOMS_SUCCESS:
+      return { ...state, bookingMeetingRooms: action.payload, error: null };
+    case GET_BOOKING_MEETINGROOMS_ERROR:
       return { ...state, error: action.payload };
     case ADD_MEETINGROOM_SUCCESS:
       return { ...state, meetingRoom: action.payload, error: null };

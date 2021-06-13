@@ -27,6 +27,13 @@ namespace HRDesk.Controllers
         }
 
         [Authorize]
+        [HttpGet("getAllBookingTeams")]
+        public ActionResult<List<MeetingComponentModel>> GetAllBookingTeams()
+        {
+            return _teamService.GetBookingTeams();
+        }
+
+        [Authorize]
         [HttpPost("addTeam")]
         public async Task<TeamModel> AddFunction([FromBody] TeamModel teamModel)
         {

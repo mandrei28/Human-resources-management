@@ -24,6 +24,19 @@ namespace HRDesk.Services.Services
             var meetingRoomModels = meetingRooms.Select(meetingRoom => MeetingRoomMapper.ToMeetingRoomModel(meetingRoom)).ToList();
             return meetingRoomModels;
         }
+
+        public List<MeetingComponentModel> GetBookingMeetingRooms()
+        {
+            var meetingRooms = _unitOfWork.MeetingRoom.GetAll();
+            var meetingComponentModels = meetingRooms.Select(meetingRoom => new MeetingComponentModel
+            {
+                Id = meetingRoom.Id,
+                Color = meetingRoom.Id % 2 == 0 ? "orange" : "blue",
+                Text = meetingRoom.Name,
+            }).ToList();
+            return meetingComponentModels;
+        }
+
         public async Task<MeetingRoomModel> AddMeetingRoom(MeetingRoomModel meetingRoomModel)
         {
             var meetingRoom = MeetingRoomMapper.ToMeetingRoom(meetingRoomModel);

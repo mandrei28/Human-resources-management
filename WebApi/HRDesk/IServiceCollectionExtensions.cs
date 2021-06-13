@@ -17,7 +17,6 @@ namespace HRDesk
     {
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            // Configure DbContext with Scoped lifetime   
             services.AddDbContext<HRDeskDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
@@ -39,11 +38,8 @@ namespace HRDesk
                 .AddScoped<IMeetingRoomRepository, MeetingRoomRepository>()
                 .AddScoped<INationalDayRepository, NationalDayRepository>()
                 .AddScoped<ILeaveRequestRepository, LeaveRequestRepository>()
-                .AddScoped<IDayoffRepository, DayoffRepository>();
-
-            //.AddScoped<IDepartmentRepository, DepartmentRepository>()
-            //.AddScoped<IUserRepository, UserRepository>()
-            //.AddScoped<ISalaryRepository, SalaryRepository>();
+                .AddScoped<IDayoffRepository, DayoffRepository>()
+                .AddScoped<IMeetingRepository, MeetingRepository>();
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
@@ -62,7 +58,8 @@ namespace HRDesk
             .AddScoped<IMeetingRoomService, MeetingRoomService>()
             .AddScoped<INationalDayService, NationalDayService>()
             .AddScoped<ILeaveRequestService, LeaveRequestService>()
-            .AddScoped<IDayoffService, DayoffService>();
+            .AddScoped<IDayoffService, DayoffService>()
+            .AddScoped<IMeetingService, MeetingService>();
         }
     }
 }

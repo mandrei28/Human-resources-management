@@ -187,6 +187,16 @@ namespace HRDesk.Infrastructure
                 Name = "Manage organization"
             });
 
+            modelBuilder.Entity<MeetingRoom>().HasData(new MeetingRoom
+            {
+                Id = 1,
+                Capacity = 5,
+                CreatedDate = new DateTime(2021, 6, 5),
+                Location = "Floor1",
+                Number = 1,
+                Name = "Main Meeting Room",
+            });
+
             modelBuilder.Entity<UserPermission>().HasData(new UserPermission
             {
                 Id = 1,

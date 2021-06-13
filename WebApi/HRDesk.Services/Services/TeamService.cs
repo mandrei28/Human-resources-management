@@ -26,6 +26,18 @@ namespace HRDesk.Services.Services
             return teamModels;
         }
 
+        public List<MeetingComponentModel> GetBookingTeams()
+        {
+            var teams = _unitOfWork.Teams.GetAll();
+            var meetingComponentModels = teams.Select(meetingRoom => new MeetingComponentModel
+            {
+                Id = meetingRoom.Id,
+                Color = meetingRoom.Id % 2 == 0 ? "orange" : "blue",
+                Text = meetingRoom.Name,
+            }).ToList();
+            return meetingComponentModels;
+        }
+
         public async Task<TeamModel> AddTeam(TeamModel teamModel)
         {
             var team = TeamMapper.ToTeam(teamModel);

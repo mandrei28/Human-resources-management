@@ -30,42 +30,9 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import cloneDeep from "lodash/cloneDeep";
 
-const currentDate = "2018-11-01";
-const resources = [
-  {
-    fieldName: "roomId",
-    title: "Room",
-    instances: [
-      { text: "Room A", id: 1, color: blue },
-      { text: "Room B", id: 2, color: orange },
-      { text: "Room C", id: 3, color: orange },
-      { text: "Room D", id: 4, color: orange },
-      { text: "Room E", id: 5, color: orange },
-      { text: "Room E", id: 6, color: orange },
-      { text: "Room E", id: 7, color: orange },
-      { text: "Room E", id: 8, color: orange },
-      { text: "Room E", id: 9, color: orange },
-      { text: "Room E", id: 10, color: orange },
-    ],
-  },
-  {
-    fieldName: "teamId",
-    title: "Team",
-    instances: [
-      { text: "Team A", id: 1, color: blue },
-      { text: "Team B", id: 2, color: orange },
-      { text: "Team C", id: 3, color: orange },
-      { text: "Team D", id: 4, color: orange },
-      { text: "Team E", id: 5, color: orange },
-      { text: "Team E", id: 6, color: orange },
-      { text: "Team E", id: 7, color: orange },
-      { text: "Team E", id: 8, color: orange },
-      { text: "Team E", id: 9, color: orange },
-      { text: "Team E", id: 10, color: orange },
-    ],
-  },
-];
+const currentDate = new Date();
 const grouping = [
   {
     resourceName: "roomId",
@@ -76,87 +43,116 @@ class BookGeneral extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
+      setupComplete: false,
+      data: [],
+      resources: [
         {
-          startDate: new Date(2018, 4, 30, 9, 0),
-          endDate: new Date(2018, 4, 30, 11, 0),
-          title: "Meeting1",
-          roomId: 4,
-          allDay: false,
-          teamId: 4,
-          id: 1,
+          fieldName: "roomId",
+          title: "Room",
+          instances: [],
         },
         {
-          startDate: new Date(2018, 4, 30, 9, 0),
-          endDate: new Date(2018, 4, 30, 11, 0),
-          title: "Meeting2",
-          roomId: 5,
-          allDay: false,
-          teamId: 1,
-          id: 3,
+          fieldName: "teamId",
+          title: "Team",
+          instances: [],
         },
       ],
     };
   }
-  onCommitChanges = ({ added, changed, deleted }) => {
-    this.setState((state) => {
+
+  async componentDidMount() {
+    const teams = await this.props.onGetTeams();
+    const meetingRooms = await this.props.onGetMeetingRooms();
+    var meetings = await this.props.onGetMeetings();
+    meetings = this.mapMeetingsDates(meetings);
+    debugger;
+    await this.setState((prevState) => {
+      const { resources } = prevState;
+      resources[0].instances = meetingRooms;
+      resources[1].instances = teams;
+      return { resources, data: meetings, setupComplete: true };
+    });
+  }
+
+  mapMeetingsDates = (meetings) => {
+    meetings.forEach((meeting) => {
+      meeting.startDate = new Date(meeting.startDate);
+      meeting.endDate = new Date(meeting.endDate);
+    });
+    return meetings;
+  };
+
+  onCommitChanges = async ({ added, changed, deleted }) => {
+    var meeting = null;
+    var index = null;
+    if (added) {
+      meeting = await this.props.onAddMeeting(added);
+    }
+    if (deleted) {
+      await this.props.onDeleteMeeting(deleted);
+    }
+    await this.setState((state) => {
       let { data } = state;
       if (added) {
-        const startingAddedId =
-          data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
-        //this.props.addNewAppointment(data[startingAddedId]);
-        debugger;
+        data = [...data, meeting];
       }
       if (changed) {
-        var appointmentIndex = data.findIndex(
-          (appointment) => changed[appointment.id]
-        );
+        console.info(this.state.data);
+        debugger;
         data = data.map((appointment) =>
           changed[appointment.id]
             ? { ...appointment, ...changed[appointment.id] }
             : appointment
         );
-        //this.props.updateAppointment(data[appointmentIndex]);
       }
       if (deleted !== undefined) {
         data = data.filter((appointment) => appointment.id !== deleted);
-        //this.props.deleteAppointment(deleted);
-        debugger;
       }
       return { data };
     });
+    if (changed) {
+      index = this.state.data.findIndex(
+        (appointment) => changed[appointment.id]
+      );
+      await this.props.onUpdateMeeting(this.state.data[index]);
+    }
   };
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="xl" className={classes.container}>
-            <Scheduler data={this.state.data} height={755}>
-              <ViewState defaultCurrentDate="2018-05-30" />
-              <EditingState onCommitChanges={this.onCommitChanges} />
-              <GroupingState grouping={grouping} />
-              <DayView startDayHour={8} endDayHour={20} cellDuration={60} />
-              <Appointments />
-              <Resources data={resources} mainResourceName="roomId" />
+      <React.Fragment>
+        {this.state.setupComplete && (
+          <div className={classes.root}>
+            <CssBaseline />
+            <main className={classes.content}>
+              <div className={classes.appBarSpacer} />
+              <Container maxWidth="xl" className={classes.container}>
+                <Scheduler data={this.state.data} height={755}>
+                  <ViewState defaultCurrentDate={currentDate} />
+                  <EditingState onCommitChanges={this.onCommitChanges} />
+                  <GroupingState grouping={grouping} />
+                  <DayView startDayHour={8} endDayHour={20} cellDuration={60} />
+                  <Appointments />
+                  <Resources
+                    data={this.state.resources}
+                    mainResourceName="roomId"
+                  />
 
-              <IntegratedGrouping />
-              <IntegratedEditing />
-              <AppointmentTooltip />
-              <AppointmentForm />
+                  <IntegratedGrouping />
+                  <IntegratedEditing />
+                  <AppointmentTooltip />
+                  <AppointmentForm />
 
-              <GroupingPanel />
-              <Toolbar />
-              {/* <ViewSwitcher /> */}
-              <DragDropProvider />
-              <DateNavigator />
-            </Scheduler>
-          </Container>
-        </main>
-      </div>
+                  <GroupingPanel />
+                  <Toolbar />
+                  <DragDropProvider />
+                  <DateNavigator />
+                </Scheduler>
+              </Container>
+            </main>
+          </div>
+        )}
+      </React.Fragment>
     );
   }
 }

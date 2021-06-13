@@ -9,6 +9,7 @@ namespace HRDesk.Services.ServiceInterfaces
     public interface ITeamService
     {
         List<TeamModel> GetAllTeams();
+        List<MeetingComponentModel> GetBookingTeams();
         Task<TeamModel> AddTeam(TeamModel teamModel);
         Task DeleteTeam(int teamId);
         Task UpdateTeam(TeamModel teamModel);

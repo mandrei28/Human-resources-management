@@ -196,7 +196,7 @@ namespace HRDesk.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -204,11 +204,14 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<int?>("MeetingRoomId")
                         .HasColumnType("int");
 
-                    b.Property<string>("RecurenceRule")
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecurrenceRule")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
@@ -256,6 +259,17 @@ namespace HRDesk.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MeetingRooms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Capacity = 5,
+                            CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Floor1",
+                            Name = "Main Meeting Room",
+                            Number = 1
+                        });
                 });
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.NationalDay", b =>

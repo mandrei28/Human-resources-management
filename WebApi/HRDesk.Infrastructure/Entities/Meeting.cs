@@ -9,10 +9,9 @@ namespace HRDesk.Infrastructure.Entities
     {
         public string Title { get; set; }
         public bool AllDay { get; set; }
-        public string RecurenceRule { get; set; }
-        [Column(TypeName = "date")]
+        public string Notes { get; set; }
+        public string RecurrenceRule { get; set; }
         public DateTime StartDate { get; set; }
-        [Column(TypeName = "date")]
         public DateTime EndDate { get; set; }
         public int? MeetingRoomId { get; set; }
 

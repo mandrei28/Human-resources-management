@@ -16,6 +16,7 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
         IMeetingRoomRepository MeetingRoom { get; }
         IUserPermissionRepository UserPermission { get; }
         IDayoffRepository Daysoff { get; }
+        IMeetingRepository Meetings { get; }
         Task CommitAsync();
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();

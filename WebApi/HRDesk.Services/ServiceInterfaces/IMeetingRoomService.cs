@@ -10,6 +10,7 @@ namespace HRDesk.Services.ServiceInterfaces
     {
         List<MeetingRoomModel> GetAllMeetingRooms();
         Task<MeetingRoomModel> AddMeetingRoom(MeetingRoomModel meetingRoomModel);
+        List<MeetingComponentModel> GetBookingMeetingRooms();
         Task DeleteMeetingRoom(int meetingRoomId);
         Task UpdateMeetingRoom(MeetingRoomModel meetingRoomModel);
     }

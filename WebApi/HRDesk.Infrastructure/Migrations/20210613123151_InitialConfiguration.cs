@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HRDesk.Infrastructure.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialConfiguration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -112,9 +112,10 @@ namespace HRDesk.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AllDay = table.Column<bool>(type: "bit", nullable: false),
-                    RecurenceRule = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "date", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "date", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecurrenceRule = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MeetingRoomId = table.Column<int>(type: "int", nullable: true),
                     TeamId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -296,6 +297,11 @@ namespace HRDesk.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "MeetingRooms",
+                columns: new[] { "Id", "Capacity", "CreatedDate", "Location", "Name", "Number", "UpdatedDate" },
+                values: new object[] { 1, 5, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Floor1", "Main Meeting Room", 1, null });
+
+            migrationBuilder.InsertData(
                 table: "Offices",
                 columns: new[] { "Id", "Capacity", "CreatedDate", "Location", "Name", "Number", "UpdatedDate" },
                 values: new object[] { 1, 0, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "First floor", "Management office", 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) });
@@ -310,10 +316,10 @@ namespace HRDesk.Infrastructure.Migrations
                     { 8, "Book room" },
                     { 7, "Holiday calendar" },
                     { 6, "Team" },
-                    { 3, "Daysoff requests" },
-                    { 4, "Reports" },
-                    { 11, "Manage organization" },
                     { 2, "Leave requests" },
+                    { 4, "Reports" },
+                    { 3, "Daysoff requests" },
+                    { 11, "Manage organization" },
                     { 1, "Dashboard" },
                     { 5, "Meetings" }
                 });

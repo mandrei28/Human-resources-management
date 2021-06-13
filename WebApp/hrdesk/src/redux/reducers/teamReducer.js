@@ -1,6 +1,8 @@
 import {
   GET_TEAMS_ERROR,
   GET_TEAMS_SUCCESS,
+  GET_BOOKING_TEAMS_ERROR,
+  GET_BOOKING_TEAMS_SUCCESS,
   ADD_TEAM_SUCCESS,
   ADD_TEAM_ERROR,
   UPDATE_TEAM_SUCCESS,
@@ -15,6 +17,10 @@ export const teamReducer = (state = initialState, action) => {
     case GET_TEAMS_SUCCESS:
       return { ...state, teams: action.payload, error: null };
     case GET_TEAMS_ERROR:
+      return { ...state, error: action.payload };
+    case GET_BOOKING_TEAMS_SUCCESS:
+      return { ...state, bookingTeams: action.payload, error: null };
+    case GET_BOOKING_TEAMS_ERROR:
       return { ...state, error: action.payload };
     case ADD_TEAM_SUCCESS:
       return { ...state, functionModel: action.payload, error: null };

@@ -2,6 +2,8 @@ import axiosWrapper from "../../api/axiosWrapper";
 import { toastr } from "react-redux-toastr";
 export const GET_TEAMS_SUCCESS = "GET_TEAMS_SUCCESS";
 export const GET_TEAMS_ERROR = "GET_TEAMS_ERROR";
+export const GET_BOOKING_TEAMS_SUCCESS = "GET_TEAMS_SUCCESS";
+export const GET_BOOKING_TEAMS_ERROR = "GET_TEAMS_ERROR";
 export const ADD_TEAM_SUCCESS = "ADD_TEAM_SUCCESS";
 export const ADD_TEAM_ERROR = "ADD_TEAM_ERROR";
 export const DELETE_TEAM_SUCCESS = "DELETE_TEAM_SUCCESS";
@@ -21,6 +23,20 @@ export const getTeamsSuccess = (teams) => {
 export const getTeamsError = (error) => {
   return {
     type: GET_TEAMS_ERROR,
+    error: error,
+  };
+};
+
+export const getBookingTeamsSuccess = (teams) => {
+  return {
+    type: GET_BOOKING_TEAMS_SUCCESS,
+    payload: teams,
+  };
+};
+
+export const getBookingTeamsError = (error) => {
+  return {
+    type: GET_BOOKING_TEAMS_ERROR,
     error: error,
   };
 };
@@ -80,6 +96,26 @@ export const getAllTeams = () => {
           toastr.error("Error", error.response.data.Message);
         }
         dispatch(getTeamsError(error));
+        throw error;
+      });
+  };
+};
+
+export const getAllBookingTeams = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("team/getAllBookingTeams")
+      .then((response) => {
+        debugger;
+        dispatch(getBookingTeamsSuccess(response.data));
+        toastr.success("Team", "Data fetched with success");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getBookingTeamsError(error));
         throw error;
       });
   };

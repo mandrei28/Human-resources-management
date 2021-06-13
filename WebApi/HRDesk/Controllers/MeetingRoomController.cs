@@ -27,6 +27,13 @@ namespace HRDesk.Controllers
         }
 
         [Authorize]
+        [HttpGet("getAllBookingMeetingRooms")]
+        public ActionResult<List<MeetingComponentModel>> GetAllBookingMeetingRooms()
+        {
+            return _meetingRoomService.GetBookingMeetingRooms();
+        }
+
+        [Authorize]
         [HttpPost("addMeetingRoom")]
         public async Task<MeetingRoomModel> AddMeetingRoom([FromBody] MeetingRoomModel meetingRoomModel)
         {
