@@ -17,5 +17,13 @@ namespace HRDesk.Infrastructure.Repositories
         {
             return GetAll().Where(a => !a.IsDeleted);
         }
+
+        public IQueryable<Meeting> GetAllMeetingsBetweenRange(DateTime startDate, DateTime endDate, int teamId)
+        {
+            return GetAll().Where(a => !a.IsDeleted &&
+            startDate.Year <= a.StartDate.Year && startDate.Month <= a.StartDate.Month && startDate.Day <= a.StartDate.Day &&
+            endDate.Year >= a.EndDate.Year && endDate.Month >= a.EndDate.Month && endDate.Day >= a.EndDate.Day && a.TeamId == teamId
+            );
+        }
     }
 }

@@ -26,6 +26,14 @@ namespace HRDesk.Services.Services
             return meetingModels;
         }
 
+        public List<MeetingModel> GetAllMeetingsBetweenRange(MeetingRangeRequest meetingRangeRequest, int userId)
+        {
+            var user = _unitOfWork.Users.GetUserById(userId);
+            var meetings = _unitOfWork.Meetings.GetAllMeetingsBetweenRange(meetingRangeRequest.StartDate, meetingRangeRequest.EndDate, user.TeamId.Value);
+            var meetingModels = meetings.Select(meeting => MeetingMapper.ToMeetingModel(meeting)).ToList();
+            return meetingModels;
+        }
+
         public async Task<MeetingModel> AddMeeting(MeetingModel meetingModel)
         {
             var meeting = MeetingMapper.ToMeeting(meetingModel);

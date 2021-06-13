@@ -65,17 +65,17 @@ class CustomCard extends Component {
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Typography component="h6" variant="h6">
-                {this.props.user.name}
+                {this.props.user.lastName + " " + this.props.user.firstName}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {this.props.user.room}
+                {this.props.user.officeName}
               </Typography>
               <Typography
                 className={classes.bottomText}
                 variant="subtitle1"
                 color="textSecondary"
               >
-                {this.props.user.function}
+                {this.props.user.functionName}
               </Typography>
             </CardContent>
           </div>

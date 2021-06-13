@@ -9,5 +9,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
     public interface IMeetingRepository : IBaseRepository<Meeting>
     {
         IQueryable<Meeting> GetAllMeetings();
+        IQueryable<Meeting> GetAllMeetingsBetweenRange(DateTime startDate, DateTime endDate, int teamId);
     }
 }

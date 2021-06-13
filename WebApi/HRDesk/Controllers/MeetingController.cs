@@ -14,9 +14,11 @@ namespace HRDesk.Controllers
     public class MeetingController : Controller
     {
         private IMeetingService _meetingService;
-        public MeetingController(IMeetingService meetingService)
+        private IIdentityService _identityService;
+        public MeetingController(IMeetingService meetingService, IIdentityService identityService)
         {
             _meetingService = meetingService;
+            _identityService = identityService;
         }
 
         [Authorize]
@@ -24,6 +26,14 @@ namespace HRDesk.Controllers
         public ActionResult<List<MeetingModel>> GetAllMeetings()
         {
             return _meetingService.GetAllMeetings();
+        }
+
+        [Authorize]
+        [HttpGet("getAllMeetingsBetweenRange")]
+        public ActionResult<List<MeetingModel>> GetAllMeetingsBetweenRange([FromBody] MeetingRangeRequest meetingRangeRequest)
+        {
+            var userId = _identityService.GetUserId();
+            return _meetingService.GetAllMeetingsBetweenRange(meetingRangeRequest, userId.Value);
         }
 
         [Authorize]

@@ -8,7 +8,6 @@ import PrivateRoute from "./services/PrivateRoute";
 import * as userActions from "./redux/actions/userActions";
 import { isTokenValid } from "./services/authService";
 import LeaveRequestGeneral from "./common/components/LeaveRequest/LeaveRequestGeneral";
-import TeamGeneral from "./common/components/Team/TeamGeneral";
 import ReduxToastr from "react-redux-toastr";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
@@ -26,6 +25,7 @@ import { Permissions } from "./utils/constants";
 import AccessDeniedGeneral from "./common/components/AccessDenied/AccessDeniedGeneral";
 import EmployeesContainer from "./common/components/Employees/EmployeesContainer";
 import BookContainer from "./common/components/Book/BookContainer";
+import TeamContainer from "./common/components/Team/TeamContainer";
 
 const styles = (theme) => ({
   root: {
@@ -109,7 +109,7 @@ class App extends React.Component {
             <PrivateRoute
               exact
               path="/team"
-              component={TeamGeneral}
+              component={TeamContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
                 this.state.user.permissions,

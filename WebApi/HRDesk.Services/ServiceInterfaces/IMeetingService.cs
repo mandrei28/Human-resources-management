@@ -12,5 +12,6 @@ namespace HRDesk.Services.ServiceInterfaces
         Task<MeetingModel> AddMeeting(MeetingModel meetingModel);
         Task DeleteMeeting(int meetingId);
         Task<MeetingModel> UpdateMeeting(MeetingModel meetingModel);
+        List<MeetingModel> GetAllMeetingsBetweenRange(MeetingRangeRequest meetingRangeRequest, int userId);
     }
 }

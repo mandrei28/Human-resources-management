@@ -58,7 +58,9 @@ class PersonDialog extends Component {
                 <TextField
                   id="outlined-read-only-input"
                   label="Name"
-                  value={this.props.user.name}
+                  value={
+                    this.props.user.lastName + " " + this.props.user.firstName
+                  }
                   InputProps={{
                     readOnly: true,
                   }}
@@ -70,7 +72,7 @@ class PersonDialog extends Component {
                 <TextField
                   id="outlined-read-only-input"
                   label="Function"
-                  value={this.props.user.function}
+                  value={this.props.user.functionName}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -82,7 +84,7 @@ class PersonDialog extends Component {
                 <TextField
                   id="outlined-read-only-input"
                   label="Room"
-                  value={this.props.user.room}
+                  value={this.props.user.officeName}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -95,7 +97,7 @@ class PersonDialog extends Component {
                   id="outlined-read-only-input"
                   label="Birth Date"
                   value={
-                    this.props.user.birthDate.toLocaleString().split(",")[0]
+                    this.props.user.dateOfBirth.toLocaleString().split("T")[0]
                   }
                   InputProps={{
                     readOnly: true,
@@ -108,7 +110,11 @@ class PersonDialog extends Component {
                 <TextField
                   id="outlined-read-only-input"
                   label="Since"
-                  value={this.props.user.since.toLocaleString().split(",")[0]}
+                  value={
+                    this.props.user.dateOfEmployment
+                      .toLocaleString()
+                      .split("T")[0]
+                  }
                   InputProps={{
                     readOnly: true,
                   }}
@@ -120,7 +126,7 @@ class PersonDialog extends Component {
                 <TextField
                   id="outlined-read-only-input"
                   label="Email"
-                  value={this.props.user.email}
+                  value={this.props.user.workEmail}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -132,7 +138,7 @@ class PersonDialog extends Component {
                 <TextField
                   id="outlined-read-only-input"
                   label="Phone number"
-                  value={this.props.user.phoneNumber}
+                  value={this.props.user.phone}
                   InputProps={{
                     readOnly: true,
                   }}
@@ -144,7 +150,7 @@ class PersonDialog extends Component {
                 <TextField
                   id="outlined-read-only-input"
                   label="Team"
-                  value={this.props.user.team}
+                  value={this.props.user.teamName}
                   InputProps={{
                     readOnly: true,
                   }}
