@@ -10,6 +10,8 @@ namespace HRDesk.Services.ServiceInterfaces
     {
         List<MeetingModel> GetAllMeetings();
         Task<MeetingModel> AddMeeting(MeetingModel meetingModel);
+
+        List<MeetingModel> GetUpcoming10Meetings(int userId);
         Task DeleteMeeting(int meetingId);
         Task<MeetingModel> UpdateMeeting(MeetingModel meetingModel);
         List<MeetingModel> GetAllMeetingsBetweenRange(MeetingRangeRequest meetingRangeRequest, int userId);

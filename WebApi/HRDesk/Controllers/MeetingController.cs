@@ -29,11 +29,19 @@ namespace HRDesk.Controllers
         }
 
         [Authorize]
-        [HttpGet("getAllMeetingsBetweenRange")]
+        [HttpPost("getAllMeetingsBetweenRange")]
         public ActionResult<List<MeetingModel>> GetAllMeetingsBetweenRange([FromBody] MeetingRangeRequest meetingRangeRequest)
         {
             var userId = _identityService.GetUserId();
             return _meetingService.GetAllMeetingsBetweenRange(meetingRangeRequest, userId.Value);
+        }
+
+        [Authorize]
+        [HttpGet("getUpcomingMeetings")]
+        public ActionResult<List<MeetingModel>> GetUpcomingMeetings()
+        {
+            var userId = _identityService.GetUserId();
+            return _meetingService.GetUpcoming10Meetings(userId.Value);
         }
 
         [Authorize]

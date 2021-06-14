@@ -25,158 +25,55 @@ import { withRouter } from "react-router-dom";
 class MeetingsGeneral extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      dates: {
+        startDate: new Date(),
+        endDate: new Date(),
+      },
+      meetings: [],
+    };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "title", headerName: "Title", width: 280 },
       {
-        field: "date",
+        field: "startDate",
         type: "date",
-        headerName: "Date",
-        width: 160,
+        headerName: "Start date",
+        width: 270,
+        valueFormatter: (params) =>
+          params.value.replace("T", " ").split(".")[0],
       },
       {
-        field: "startHour",
-        type: "string",
-        headerName: "Start hour",
-        width: 155,
+        field: "endDate",
+        type: "date",
+        headerName: "End date",
+        width: 270,
+        valueFormatter: (params) =>
+          params.value.replace("T", " ").split(".")[0],
       },
-      { field: "endHour", type: "string", headerName: "End hour", width: 155 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 150 },
-      {
-        field: "",
-        width: 100,
-        disableColumnMenu: true,
-        sortable: false,
-        align: "center",
-        renderCell: (params) => {
-          const onClick = () => {
-            const api = params.api;
-            const fields = api
-              .getAllColumns()
-              .map((c) => c.field)
-              .filter((c) => c !== "__check__" && !!c);
-            const thisRow = {};
-
-            fields.forEach((f) => {
-              thisRow[f] = params.getValue(f);
-            });
-
-            return alert(JSON.stringify(thisRow, null, 4));
-          };
-
-          return (
-            <div hidden={params.row.id === 1}>
-              <DeleteIcon onClick={onClick} />
-            </div>
-          );
-        },
-      },
-    ];
-
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        date: new Date(),
-        startHour: "22:40:10",
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 7,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
+      { field: "roomName", headerName: "Room", width: 260 },
     ];
   }
+
+  async componentDidMount() {
+    console.info(this.state);
+    var meetings = await this.props.onGetMeetings(this.state.dates);
+    await this.setState({ meetings });
+  }
+
+  fetchData = async () => {
+    var meetings = await this.props.onGetMeetings(this.state.dates);
+    await this.setState({ meetings });
+  };
+
+  handleDateFieldChange = (value, field) => {
+    this.setState((prevState) => {
+      const { dates } = prevState;
+      dates[field] = value;
+      return { dates };
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -195,12 +92,11 @@ class MeetingsGeneral extends Component {
                     margin="normal"
                     id="date"
                     label="Start date"
-                    //error={this.state.dayoff.startDate === null}
                     fullWidth
                     required
-                    //value={this.state.dayoff.startDate}
+                    value={this.state.dates.startDate}
                     onChange={(event) =>
-                      this.handleDayoffDateFieldChange(event, "startDate")
+                      this.handleDateFieldChange(event, "startDate")
                     }
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -215,12 +111,11 @@ class MeetingsGeneral extends Component {
                     margin="normal"
                     id="date"
                     label="End date"
-                    //error={this.state.dayoff.startDate === null}
                     fullWidth
                     required
-                    //value={this.state.dayoff.startDate}
+                    value={this.state.dates.endDate}
                     onChange={(event) =>
-                      this.handleDayoffDateFieldChange(event, "startDate")
+                      this.handleDateFieldChange(event, "endDate")
                     }
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -239,6 +134,7 @@ class MeetingsGeneral extends Component {
                     variant="contained"
                     color="primary"
                     endIcon={<SearchIcon />}
+                    onClick={this.fetchData}
                   >
                     Search
                   </Button>
@@ -253,7 +149,7 @@ class MeetingsGeneral extends Component {
                   <Paper className={classes.paper}>
                     <div style={{ height: 560, width: "100%" }}>
                       <DataGrid
-                        rows={this.rows}
+                        rows={this.state.meetings}
                         columns={this.columns}
                         pageSize={10}
                         rowHeight={45}

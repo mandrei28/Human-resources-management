@@ -14,6 +14,7 @@ namespace HRDesk.Services.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int? RoomId { get; set; }
+        public string RoomName { get; set; }
         public int? TeamId { get; set; }
     }
 }

@@ -14,7 +14,6 @@ import { withRouter } from "react-router-dom";
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import React from "react";
 import ManageRequestsGeneral from "./common/components/ManageRequests/ManageRequestsGeneral";
-import MeetingsGeneral from "./common/components/Meetings/MeetingsGeneral";
 import ReportsGeneral from "./common/components/Reports/ReportsGeneral";
 import HolidayCalendarGeneral from "./common/components/HolidayCalendar/HolidayCalendarGeneral";
 import ManageOrganizationGeneral from "./common/components/ManageOrganization/ManageOrganizationGeneral";
@@ -26,6 +25,7 @@ import AccessDeniedGeneral from "./common/components/AccessDenied/AccessDeniedGe
 import EmployeesContainer from "./common/components/Employees/EmployeesContainer";
 import BookContainer from "./common/components/Book/BookContainer";
 import TeamContainer from "./common/components/Team/TeamContainer";
+import MeetingsContainer from "./common/components/Meetings/MeetingsContainer";
 
 const styles = (theme) => ({
   root: {
@@ -159,7 +159,7 @@ class App extends React.Component {
             <PrivateRoute
               exact
               path="/meetings"
-              component={MeetingsGeneral}
+              component={MeetingsContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
                 this.state.user.permissions,

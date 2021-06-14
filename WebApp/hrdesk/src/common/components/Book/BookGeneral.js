@@ -32,7 +32,18 @@ import {
 } from "@material-ui/pickers";
 import cloneDeep from "lodash/cloneDeep";
 
+const BooleanEditor = (props) => {
+  return (
+    <AppointmentForm.BooleanEditor
+      {...props}
+      readOnly
+      style={{ display: "none" }}
+    />
+  );
+};
+
 const currentDate = new Date();
+
 const grouping = [
   {
     resourceName: "roomId",
@@ -127,7 +138,7 @@ class BookGeneral extends Component {
             <main className={classes.content}>
               <div className={classes.appBarSpacer} />
               <Container maxWidth="xl" className={classes.container}>
-                <Scheduler data={this.state.data} height={755}>
+                <Scheduler data={this.state.data} height={825}>
                   <ViewState defaultCurrentDate={currentDate} />
                   <EditingState onCommitChanges={this.onCommitChanges} />
                   <GroupingState grouping={grouping} />
@@ -141,7 +152,7 @@ class BookGeneral extends Component {
                   <IntegratedGrouping />
                   <IntegratedEditing />
                   <AppointmentTooltip />
-                  <AppointmentForm />
+                  <AppointmentForm booleanEditorComponent={BooleanEditor} />
 
                   <GroupingPanel />
                   <Toolbar />

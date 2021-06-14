@@ -19,6 +19,7 @@ namespace HRDesk.Services.Mappers
                 EndDate = meeting.EndDate,
                 TeamId = meeting.TeamId.Value,
                 RoomId = meeting.MeetingRoomId.Value,
+                RoomName = meeting.MeetingRoom.Name,
                 Notes = meeting.Notes,
             };
         }
@@ -30,8 +31,8 @@ namespace HRDesk.Services.Mappers
                 // Id = meetingModel.Id,
                 Title = meetingModel.Title,
                 RecurrenceRule = meetingModel.RRule,
-                StartDate = meetingModel.StartDate.ToLocalTime(),
-                EndDate = meetingModel.EndDate.ToLocalTime(),
+                StartDate = meetingModel.StartDate.ToLocalTime().AddSeconds(-meetingModel.StartDate.ToLocalTime().Second),
+                EndDate = meetingModel.EndDate.ToLocalTime().AddSeconds(-meetingModel.EndDate.ToLocalTime().Second),
                 TeamId = meetingModel.TeamId,
                 MeetingRoomId = meetingModel.RoomId,
                 Notes = meetingModel.Notes,

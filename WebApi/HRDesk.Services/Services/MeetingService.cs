@@ -29,7 +29,15 @@ namespace HRDesk.Services.Services
         public List<MeetingModel> GetAllMeetingsBetweenRange(MeetingRangeRequest meetingRangeRequest, int userId)
         {
             var user = _unitOfWork.Users.GetUserById(userId);
-            var meetings = _unitOfWork.Meetings.GetAllMeetingsBetweenRange(meetingRangeRequest.StartDate, meetingRangeRequest.EndDate, user.TeamId.Value);
+            var meetings = _unitOfWork.Meetings.GetAllMeetingsBetweenRange(meetingRangeRequest.StartDate.ToLocalTime(), meetingRangeRequest.EndDate.ToLocalTime(), user.TeamId.Value);
+            var meetingModels = meetings.Select(meeting => MeetingMapper.ToMeetingModel(meeting)).ToList();
+            return meetingModels;
+        }
+
+        public List<MeetingModel> GetUpcoming10Meetings(int userId)
+        {
+            var user = _unitOfWork.Users.GetUserById(userId);
+            var meetings = _unitOfWork.Meetings.GetClosest10Meetings(user.TeamId.Value);
             var meetingModels = meetings.Select(meeting => MeetingMapper.ToMeetingModel(meeting)).ToList();
             return meetingModels;
         }
