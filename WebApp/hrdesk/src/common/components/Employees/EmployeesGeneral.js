@@ -108,14 +108,11 @@ class EmployeesGeneral extends Component {
 
           return (
             <React.Fragment>
-              <div
-                //hidden={params.row.id === 1}
-                style={{ paddingTop: "10px", cursor: "pointer" }}
-              >
+              <div style={{ paddingTop: "10px", cursor: "pointer" }}>
                 <EditIcon onClick={onClick} />
               </div>
               <div
-                //hidden={params.row.id === 1}
+                hidden={params.row.predefined}
                 style={{
                   paddingTop: "10px",
                   paddingLeft: "5px",

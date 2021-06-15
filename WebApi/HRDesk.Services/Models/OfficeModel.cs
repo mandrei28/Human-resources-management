@@ -12,5 +12,6 @@ namespace HRDesk.Services.Models
         public int Number { get; set; }
         public int Capacity { get; set; }
         public DateTime CreationDate { get; set; }
+        public bool Predefined { get; set; }
     }
 }

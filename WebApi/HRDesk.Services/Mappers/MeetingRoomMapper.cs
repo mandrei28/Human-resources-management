@@ -18,6 +18,7 @@ namespace HRDesk.Services.Mappers
                 Location = meetingRoom.Location,
                 Number = meetingRoom.Number,
                 CreationDate = meetingRoom.CreatedDate,
+                Predefined = meetingRoom.Predefined,
             };
         }
 

@@ -20,5 +20,10 @@ namespace HRDesk.Infrastructure.Repositories
         {
             return GetAll().OrderByDescending(a => a.Status == RequestStatus.Waiting).Include(a => a.Admin).Include(a => a.User).Where(a => a.AdminId == adminId);
         }
+
+        public IQueryable<Dayoff> GetAllByUserTeamId(int teamId)
+        {
+            return GetAll().Include(d => d.User).Where(d => d.User.TeamId == teamId && d.Status == RequestStatus.Approved);
+        }
     }
 }

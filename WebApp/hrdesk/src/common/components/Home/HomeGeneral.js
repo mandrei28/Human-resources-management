@@ -10,12 +10,17 @@ import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
 class HomeGeneral extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { meetings: [] };
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
+
+  async componentDidMount() {
+    const meetings = await this.props.onGetUpcomingMeetings();
+    await this.setState({ meetings });
+  }
 
   render() {
     const { classes } = this.props;
@@ -46,7 +51,7 @@ class HomeGeneral extends React.Component {
               </Grid>
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
-                  <Meetings />
+                  <Meetings meetings={this.state.meetings} />
                 </Paper>
               </Grid>
             </Grid>

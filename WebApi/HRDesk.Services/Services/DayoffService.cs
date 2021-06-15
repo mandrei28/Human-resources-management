@@ -37,5 +37,25 @@ namespace HRDesk.Services.Services
             var dayoffModel = DayoffMapper.ToDayoffModel(dayoff);
             return dayoffModel;
         }
+
+        public List<HolidayCalendarComponentModel> GetHolidayCalendar(int userId)
+        {
+            var nationalDays = _unitOfWork.NationalDays.GetAll();
+            var user = _unitOfWork.Users.GetUserById(userId);
+            var daysoff = _unitOfWork.Daysoff.GetAllByUserTeamId(user.TeamId.Value);
+            var holidayCalendarComponents = nationalDays.Select(n => new HolidayCalendarComponentModel
+            {
+                Title = n.Description + " - National Day",
+                StartDate = n.StartDate,
+                EndDate = n.EndDate,
+            });
+            var holidayDayoffComponents = daysoff.Select(n => new HolidayCalendarComponentModel
+            {
+                Title = n.Description + " - " + n.User.FirstName + " " + n.User.LastName,
+                StartDate = n.StartDate,
+                EndDate = n.EndDate,
+            });
+            return holidayCalendarComponents.Concat(holidayDayoffComponents).ToList();
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace HRDesk.Services.Models
         public string Description { get; set; }
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
+        public bool Predefined { get; set; }
     }
 }

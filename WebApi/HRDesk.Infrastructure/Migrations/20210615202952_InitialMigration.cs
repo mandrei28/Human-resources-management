@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HRDesk.Infrastructure.Migrations
 {
-    public partial class InitialConfiguration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,7 @@ namespace HRDesk.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Predefined = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -33,6 +34,7 @@ namespace HRDesk.Infrastructure.Migrations
                     Number = table.Column<int>(type: "int", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Capacity = table.Column<int>(type: "int", nullable: false),
+                    Predefined = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -68,6 +70,7 @@ namespace HRDesk.Infrastructure.Migrations
                     Number = table.Column<int>(type: "int", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Capacity = table.Column<int>(type: "int", nullable: false),
+                    Predefined = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -96,6 +99,7 @@ namespace HRDesk.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Predefined = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -161,6 +165,7 @@ namespace HRDesk.Infrastructure.Migrations
                     TeamId = table.Column<int>(type: "int", nullable: true),
                     FunctionId = table.Column<int>(type: "int", nullable: true),
                     OfficeId = table.Column<int>(type: "int", nullable: true),
+                    Predefined = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -285,26 +290,26 @@ namespace HRDesk.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Functions",
-                columns: new[] { "Id", "CreatedDate", "Description", "Name", "UpdatedDate" },
+                columns: new[] { "Id", "CreatedDate", "Description", "Name", "Predefined", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Management function", "Company manager", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Board employee", "Board", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Human resource employee", "Human resource", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Project manager employee", "Project manager", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 5, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Developer employee", "Developer", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 6, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Quality assurance employee", "Quality assurance", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Management function", "Company manager", true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Board employee", "Board", true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Human resource employee", "Human resource", true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Project manager employee", "Project manager", true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Developer employee", "Developer", true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Quality assurance employee", "Quality assurance", true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
                 table: "MeetingRooms",
-                columns: new[] { "Id", "Capacity", "CreatedDate", "Location", "Name", "Number", "UpdatedDate" },
-                values: new object[] { 1, 5, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Floor1", "Main Meeting Room", 1, null });
+                columns: new[] { "Id", "Capacity", "CreatedDate", "Location", "Name", "Number", "Predefined", "UpdatedDate" },
+                values: new object[] { 1, 5, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Floor1", "Main Meeting Room", 1, true, null });
 
             migrationBuilder.InsertData(
                 table: "Offices",
-                columns: new[] { "Id", "Capacity", "CreatedDate", "Location", "Name", "Number", "UpdatedDate" },
-                values: new object[] { 1, 0, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "First floor", "Management office", 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "Id", "Capacity", "CreatedDate", "Location", "Name", "Number", "Predefined", "UpdatedDate" },
+                values: new object[] { 1, 0, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "First floor", "Management office", 1, true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Permissions",
@@ -326,13 +331,13 @@ namespace HRDesk.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Teams",
-                columns: new[] { "Id", "CreatedDate", "Description", "Name", "UpdatedDate" },
-                values: new object[] { 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Management team", "Management team", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "Id", "CreatedDate", "Description", "Name", "Predefined", "UpdatedDate" },
+                values: new object[] { 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Management team", "Management team", true, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Address", "CNP", "CountryOfBirth", "CreatedDate", "DateOfBirth", "DateOfEmployment", "Email", "FirstName", "FunctionId", "IsDeleted", "LastName", "NumberOfDaysoff", "OfficeId", "Password", "Phone", "Salary", "TeamId", "UpdatedDate", "WorkEmail" },
-                values: new object[] { 1, "Company address", "1980528111111", "Romania", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@admin.com", "Andrei Cristian", 1, false, "Marcu", 20, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", "0749206007", 5000, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@company.com" });
+                columns: new[] { "Id", "Address", "CNP", "CountryOfBirth", "CreatedDate", "DateOfBirth", "DateOfEmployment", "Email", "FirstName", "FunctionId", "IsDeleted", "LastName", "NumberOfDaysoff", "OfficeId", "Password", "Phone", "Predefined", "Salary", "TeamId", "UpdatedDate", "WorkEmail" },
+                values: new object[] { 1, "Company address", "1980528111111", "Romania", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@admin.com", "Andrei Cristian", 1, false, "Marcu", 20, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", "0749206007", true, 5000, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@company.com" });
 
             migrationBuilder.InsertData(
                 table: "UserPermissions",

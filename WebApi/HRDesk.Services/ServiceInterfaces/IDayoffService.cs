@@ -10,5 +10,6 @@ namespace HRDesk.Services.ServiceInterfaces
     {
         List<DayoffModel> GetAllAdminDaysoff(int adminId);
         Task<DayoffModel> AcceptDayoff(int dayoffId, int newStatus, int adminId);
+        List<HolidayCalendarComponentModel> GetHolidayCalendar(int userId);
     }
 }

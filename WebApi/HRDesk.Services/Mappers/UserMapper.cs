@@ -35,6 +35,7 @@ namespace HRDesk.Services.Mappers
                 Function = user.Function != null ? FunctionMapper.ToFunctionModel(user.Function) : null,
                 FunctionName = user.Function != null ? user.Function.Name : null,
                 Password = null,
+                Predefined = user.Predefined,
             };
         }
 

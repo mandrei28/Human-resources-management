@@ -16,21 +16,6 @@ function createData(id, date, start, end, room, description) {
   return { id, date, start, end, room, description };
 }
 
-const rows = [
-  createData(0, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(1, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(2, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(3, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(4, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(5, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(6, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-  createData(7, "16 Mar, 2019", "10:00", "11:00", "M1", "Refinement"),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
 const styles = (theme) => ({
   seeMore: {
     marginTop: theme.spacing(3),
@@ -52,20 +37,24 @@ class Meetings extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
-              <TableCell>Start</TableCell>
-              <TableCell>End</TableCell>
+              <TableCell>Start Date</TableCell>
+              <TableCell>End Date</TableCell>
               <TableCell>Meeting room</TableCell>
-              <TableCell align="right">Description</TableCell>
+              <TableCell align="right">Notes</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {this.props.meetings.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.start}</TableCell>
-                <TableCell>{row.end}</TableCell>
-                <TableCell>{row.room}</TableCell>
-                <TableCell align="right">{row.description}</TableCell>
+                <TableCell>{row.title}</TableCell>
+                <TableCell>
+                  {row.startDate.replace("T", " ").split(".")[0]}
+                </TableCell>
+                <TableCell>
+                  {row.endDate.replace("T", " ").split(".")[0]}
+                </TableCell>
+                <TableCell>{row.roomName}</TableCell>
+                <TableCell align="right">{row.notes}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -36,5 +36,13 @@ namespace HRDesk.Controllers
             var userId = _identityService.GetUserId();
             return await _dayoffService.AcceptDayoff(dayoffId, newStatus, userId.Value);
         }
+
+        [Authorize]
+        [HttpGet("getHolidayCalendar")]
+        public List<HolidayCalendarComponentModel> GetHolidayCalendar()
+        {
+            var userId = _identityService.GetUserId();
+            return _dayoffService.GetHolidayCalendar(userId.Value);
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace HRDesk.Services.Mappers
                 Location = office.Location,
                 Number = office.Number,
                 CreationDate = office.CreatedDate,
+                Predefined = office.Predefined,
             };
         }
 

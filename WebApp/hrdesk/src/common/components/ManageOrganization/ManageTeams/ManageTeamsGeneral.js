@@ -88,6 +88,7 @@ class ManageTeamsGeneral extends Component {
                   paddingLeft: "5px",
                   cursor: "pointer",
                 }}
+                hidden={params.row.predefined}
               >
                 <DeleteIcon onClick={onDelete} />
               </div>

@@ -16,6 +16,7 @@ namespace HRDesk.Services.Mappers
                 Name = team.Name,
                 Description = team.Description,
                 CreationDate = team.CreatedDate,
+                Predefined = team.Predefined,
             };
         }
 

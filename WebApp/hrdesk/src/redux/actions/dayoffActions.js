@@ -2,6 +2,8 @@ import axiosWrapper from "../../api/axiosWrapper";
 import { toastr } from "react-redux-toastr";
 export const GET_DAYSOFF_SUCCESS = "GET_DAYSOFF_SUCCESS";
 export const GET_DAYSOFF_ERROR = "GET_DAYSOFF_ERROR";
+export const GET_HOLIDAY_CALENDAR_SUCCESS = "GET_HOLIDAY_CALENDAR_SUCCESS";
+export const GET_HOLIDAY_CALENDAR_ERROR = "GET_HOLIDAY_CALENDAR_ERROR";
 export const DELETE_DAYOFF_SUCCESS = "DELETE_DAYOFF_SUCCESS";
 export const DELETE_DAYOFF_ERROR = "DELETE_DAYOFF_ERROR";
 export const APPROVE_DAYOFF_SUCCESS = "APPROVE_DAYOFF_SUCCESS";
@@ -19,6 +21,20 @@ export const getDaysoffSuccess = (dayoff) => {
 export const getDaysoffError = (error) => {
   return {
     type: GET_DAYSOFF_ERROR,
+    error: error,
+  };
+};
+
+export const getHolidayCalendarSuccess = (holidayCalendar) => {
+  return {
+    type: GET_HOLIDAY_CALENDAR_SUCCESS,
+    payload: holidayCalendar,
+  };
+};
+
+export const getHolidayCalendarError = (error) => {
+  return {
+    type: GET_HOLIDAY_CALENDAR_ERROR,
     error: error,
   };
 };
@@ -69,6 +85,24 @@ export const getAllDaysoff = () => {
   };
 };
 
+export const getHolidayCalendar = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("dayoff/getHolidayCalendar")
+      .then((response) => {
+        dispatch(getHolidayCalendarSuccess(response.data));
+        toastr.success("Holiday calendar", "Data fetched with success");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getHolidayCalendarError(error));
+        throw error;
+      });
+  };
+};
 // export const deleteDayoff = (dayoffId) => {
 //   debugger;
 //   return (dispatch) => {

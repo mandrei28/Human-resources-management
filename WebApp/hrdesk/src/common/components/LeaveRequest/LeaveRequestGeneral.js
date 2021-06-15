@@ -73,7 +73,7 @@ class LeaveRequestGeneral extends Component {
           };
 
           return (
-            <div hidden={params.row.id === 1}>
+            <div>
               <DeleteIcon onClick={onClick} />
             </div>
           );

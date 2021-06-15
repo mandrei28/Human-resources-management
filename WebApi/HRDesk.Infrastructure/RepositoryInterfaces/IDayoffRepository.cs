@@ -9,5 +9,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
     public interface IDayoffRepository : IBaseRepository<Dayoff>
     {
         IQueryable<Dayoff> GetAllByAdminId(int adminId);
+        IQueryable<Dayoff> GetAllByUserTeamId(int teamId);
     }
 }

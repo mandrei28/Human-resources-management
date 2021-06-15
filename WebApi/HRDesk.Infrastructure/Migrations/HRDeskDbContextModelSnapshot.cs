@@ -78,6 +78,9 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Predefined")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -92,6 +95,7 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Management function",
                             Name = "Company manager",
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -100,6 +104,7 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Board employee",
                             Name = "Board",
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -108,6 +113,7 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Human resource employee",
                             Name = "Human resource",
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -116,6 +122,7 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Project manager employee",
                             Name = "Project manager",
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -124,6 +131,7 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Developer employee",
                             Name = "Developer",
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -132,6 +140,7 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Quality assurance employee",
                             Name = "Quality assurance",
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -253,6 +262,9 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Predefined")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -268,7 +280,8 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Floor1",
                             Name = "Main Meeting Room",
-                            Number = 1
+                            Number = 1,
+                            Predefined = true
                         });
                 });
 
@@ -321,6 +334,9 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Predefined")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -337,6 +353,7 @@ namespace HRDesk.Infrastructure.Migrations
                             Location = "First floor",
                             Name = "Management office",
                             Number = 1,
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -427,6 +444,9 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Predefined")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -441,6 +461,7 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Management team",
                             Name = "Management team",
+                            Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -497,6 +518,9 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Predefined")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Salary")
                         .HasColumnType("int");
 
@@ -538,6 +562,7 @@ namespace HRDesk.Infrastructure.Migrations
                             OfficeId = 1,
                             Password = "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==",
                             Phone = "0749206007",
+                            Predefined = true,
                             Salary = 5000,
                             TeamId = 1,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),

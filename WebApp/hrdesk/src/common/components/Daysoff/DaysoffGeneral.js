@@ -66,7 +66,7 @@ class DaysoffGeneral extends React.Component {
           };
 
           return (
-            <div hidden={params.row.id === 1}>
+            <div>
               <DeleteIcon onClick={onClick} />
             </div>
           );

@@ -36,6 +36,7 @@ namespace HRDesk.Infrastructure
                 Description = "Management function",
                 Name = "Company manager",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
             modelBuilder.Entity<Function>().HasData(new Function
             {
@@ -44,6 +45,7 @@ namespace HRDesk.Infrastructure
                 Description = "Board employee",
                 Name = "Board",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
             modelBuilder.Entity<Function>().HasData(new Function
             {
@@ -52,6 +54,7 @@ namespace HRDesk.Infrastructure
                 Description = "Human resource employee",
                 Name = "Human resource",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
             modelBuilder.Entity<Function>().HasData(new Function
             {
@@ -60,6 +63,7 @@ namespace HRDesk.Infrastructure
                 Description = "Project manager employee",
                 Name = "Project manager",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
             modelBuilder.Entity<Function>().HasData(new Function
             {
@@ -68,6 +72,7 @@ namespace HRDesk.Infrastructure
                 Description = "Developer employee",
                 Name = "Developer",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
             modelBuilder.Entity<Function>().HasData(new Function
             {
@@ -76,6 +81,7 @@ namespace HRDesk.Infrastructure
                 Description = "Quality assurance employee",
                 Name = "Quality assurance",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
             modelBuilder.Entity<Office>().HasData(new Office
             {
@@ -85,6 +91,7 @@ namespace HRDesk.Infrastructure
                 Name = "Management office",
                 Number = 1,
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
 
             modelBuilder.Entity<Team>().HasData(new Team
@@ -94,6 +101,7 @@ namespace HRDesk.Infrastructure
                 Description = "Management team",
                 Name = "Management team",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
             //   "Email" : "administrator@admin.com",
             //"Password" : "administrator"
@@ -119,6 +127,7 @@ namespace HRDesk.Infrastructure
                 TeamId = 1,
                 WorkEmail = "administrator@company.com",
                 UpdatedDate = new DateTime(2021, 6, 5),
+                Predefined = true,
             });
 
             modelBuilder.Entity<Permission>().HasData(new Permission
@@ -195,6 +204,7 @@ namespace HRDesk.Infrastructure
                 Location = "Floor1",
                 Number = 1,
                 Name = "Main Meeting Room",
+                Predefined = true,
             });
 
             modelBuilder.Entity<UserPermission>().HasData(new UserPermission

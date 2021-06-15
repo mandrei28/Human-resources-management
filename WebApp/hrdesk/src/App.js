@@ -1,6 +1,5 @@
 import "./App.css";
 import LoginContainer from "./common/components/Login/LoginContainer";
-import HomeGeneral from "./common/components/Home/HomeGeneral";
 import DaysoffGeneral from "./common/components/Daysoff/DaysoffGeneral";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,7 +14,6 @@ import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import React from "react";
 import ManageRequestsGeneral from "./common/components/ManageRequests/ManageRequestsGeneral";
 import ReportsGeneral from "./common/components/Reports/ReportsGeneral";
-import HolidayCalendarGeneral from "./common/components/HolidayCalendar/HolidayCalendarGeneral";
 import ManageOrganizationGeneral from "./common/components/ManageOrganization/ManageOrganizationGeneral";
 import EmployeeContainer from "./common/components/Employee/EmployeeContainer";
 import NavBarContainer from "./common/navigation/NavBarContainer";
@@ -26,6 +24,8 @@ import EmployeesContainer from "./common/components/Employees/EmployeesContainer
 import BookContainer from "./common/components/Book/BookContainer";
 import TeamContainer from "./common/components/Team/TeamContainer";
 import MeetingsContainer from "./common/components/Meetings/MeetingsContainer";
+import HomeContainer from "./common/components/Home/HomeContainer";
+import HolidayCalendarContainer from "./common/components/HolidayCalendar/HolidayCalendarContainer";
 
 const styles = (theme) => ({
   root: {
@@ -79,7 +79,7 @@ class App extends React.Component {
             <PrivateRoute
               exact
               path="/"
-              component={HomeGeneral}
+              component={HomeContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
                 this.state.user.permissions,
@@ -179,7 +179,7 @@ class App extends React.Component {
             <PrivateRoute
               exact
               path="/holidaycalendar"
-              component={HolidayCalendarGeneral}
+              component={HolidayCalendarContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
                 this.state.user.permissions,

@@ -16,6 +16,7 @@ namespace HRDesk.Services.Mappers
                 Name = function.Name,
                 Description = function.Description,
                 CreationDate = function.CreatedDate,
+                Predefined = function.Predefined,
             };
         }
 

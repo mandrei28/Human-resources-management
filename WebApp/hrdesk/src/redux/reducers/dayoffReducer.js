@@ -1,6 +1,8 @@
 import {
   GET_DAYSOFF_ERROR,
   GET_DAYSOFF_SUCCESS,
+  GET_HOLIDAY_CALENDAR_SUCCESS,
+  GET_HOLIDAY_CALENDAR_ERROR,
   UPDATE_DAYOFF_SUCCESS,
   UPDATE_DAYOFF_ERROR,
   DELETE_DAYOFF_SUCCESS,
@@ -13,6 +15,10 @@ export const dayoffReducer = (state = initialState, action) => {
     case GET_DAYSOFF_SUCCESS:
       return { ...state, daysoff: action.payload, error: null };
     case GET_DAYSOFF_ERROR:
+      return { ...state, error: action.payload };
+    case GET_HOLIDAY_CALENDAR_SUCCESS:
+      return { ...state, holidayCalendar: action.payload, error: null };
+    case GET_HOLIDAY_CALENDAR_ERROR:
       return { ...state, error: action.payload };
     case UPDATE_DAYOFF_SUCCESS:
       return { ...state, error: null };

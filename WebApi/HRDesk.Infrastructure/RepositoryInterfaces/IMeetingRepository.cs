@@ -10,7 +10,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
     {
         IQueryable<Meeting> GetAllMeetings();
         IQueryable<Meeting> GetAllMeetingsBetweenRange(DateTime startDate, DateTime endDate, int teamId);
-
         IQueryable<Meeting> GetClosest10Meetings(int teamId);
     }
 }

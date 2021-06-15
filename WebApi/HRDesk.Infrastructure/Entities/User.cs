@@ -37,5 +37,6 @@ namespace HRDesk.Infrastructure.Entities
         [ForeignKey("OfficeId")]
         public Office Office { get; set; }
         public ICollection<UserPermission> Permissions { get; set; }
+        public bool Predefined { get; set; }
     }
 }

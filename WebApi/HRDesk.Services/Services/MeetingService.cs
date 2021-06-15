@@ -37,7 +37,7 @@ namespace HRDesk.Services.Services
         public List<MeetingModel> GetUpcoming10Meetings(int userId)
         {
             var user = _unitOfWork.Users.GetUserById(userId);
-            var meetings = _unitOfWork.Meetings.GetClosest10Meetings(user.TeamId.Value);
+            var meetings = _unitOfWork.Meetings.GetClosest10Meetings(user.TeamId.Value).ToList();
             var meetingModels = meetings.Select(meeting => MeetingMapper.ToMeetingModel(meeting)).ToList();
             return meetingModels;
         }

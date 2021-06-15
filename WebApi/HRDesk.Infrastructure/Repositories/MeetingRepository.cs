@@ -22,10 +22,10 @@ namespace HRDesk.Infrastructure.Repositories
         public IQueryable<Meeting> GetClosest10Meetings(int teamId)
         {
             var yesterday = DateTime.Today.AddDays(-1);
-            return GetAll().OrderBy(a => (a.StartDate - yesterday).Ticks).Include(a => a.MeetingRoom).Include(a => a.Team).Where(a => !a.IsDeleted &&
+            return GetAll().OrderBy(a => a.StartDate).Include(a => a.MeetingRoom).Include(a => a.Team).Where(a => !a.IsDeleted &&
             a.StartDate.Year >= yesterday.Year &&
             a.StartDate.Month >= yesterday.Month &&
-            a.StartDate.Day > yesterday.Day && a.TeamId == teamId).Take(10);
+            a.StartDate.Day > yesterday.Day && a.StartDate.Hour >= yesterday.Hour && a.TeamId == teamId).Take(10);
         }
 
         public IQueryable<Meeting> GetAllMeetingsBetweenRange(DateTime startDate, DateTime endDate, int teamId)
