@@ -25,6 +25,30 @@ namespace HRDesk.Services.Services
             var leaveRequestsModels = leaveRequests.Select(leaveRequest => LeaveRequestMapper.ToLeaveRequestModel(leaveRequest)).ToList();
             return leaveRequestsModels;
         }
+        public List<LeaveRequestModel> GetAllUserLeaveRequests(int userId)
+        {
+            var leaveRequests = _unitOfWork.LeaveRequests.GetAllByUserId(userId);
+            var leaveRequestsModels = leaveRequests.Select(leaveRequest => LeaveRequestMapper.ToLeaveRequestModel(leaveRequest)).ToList();
+            return leaveRequestsModels;
+        }
+
+        public async Task DeleteLeaveRequest(int leaveRequestId)
+        {
+            var leaveRequest = await _unitOfWork.LeaveRequests.GetByIDAsync(leaveRequestId);
+            _unitOfWork.LeaveRequests.Delete(leaveRequest);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<LeaveRequestModel> AddLeaveRequest(LeaveRequestModel leaveRequestModel, int userId)
+        {
+            leaveRequestModel.UserId = userId;
+            leaveRequestModel.AdminId = leaveRequestModel.AdminModel.Id;
+            var leaveRequest = LeaveRequestMapper.ToLeaveRequest(leaveRequestModel);
+            await _unitOfWork.LeaveRequests.InsertAsync(leaveRequest);
+            await _unitOfWork.CommitAsync();
+            leaveRequestModel.Id = leaveRequest.Id;
+            return leaveRequestModel;
+        }
 
         public async Task<LeaveRequestModel> AcceptLeaveRequest(int leaveRequestId, int newStatus, int adminId)
         {

@@ -17,19 +17,42 @@ class DaysoffGeneral extends React.Component {
     this.state = {
       disabled: true,
       showNewDaysoffDialog: false,
+      admins: [],
+      dayoffs: [],
+      chartData: {
+        total: 0,
+        used: 0,
+      },
     };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "description", headerName: "Description", width: 325 },
       {
         field: "startDate",
         type: "date",
-        headerName: "Start date",
-        width: 210,
+        headerName: "Date",
+        width: 150,
+        valueFormatter: (params) => params.value.split("T")[0],
       },
-      { field: "endDate", type: "date", headerName: "End date", width: 210 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 200 },
+      {
+        field: "endDate",
+        type: "string",
+        headerName: "End date",
+        width: 150,
+        valueFormatter: (params) => params.value.split("T")[0],
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 120,
+        valueFormatter: (params) =>
+          params.value === 0
+            ? "Waiting"
+            : params.value === 1
+            ? "Refused"
+            : "Approved",
+      },
+      { field: "verifiedBy", headerName: "Verified By", width: 260 },
       {
         field: "",
         width: 100,
@@ -62,7 +85,7 @@ class DaysoffGeneral extends React.Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.deleteDayoff(thisRow.id);
           };
 
           return (
@@ -73,92 +96,18 @@ class DaysoffGeneral extends React.Component {
         },
       },
     ];
-
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Lannister",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Stark",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: null,
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Targaryen",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Melisandre",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: "Admin",
-      },
-      {
-        id: 7,
-        description: "Clifford",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Frances",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Roxie",
-        startDate: new Date(),
-        endDate: new Date(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
   }
-  componentDidMount() {
-    this.setState({ disabled: false });
+
+  async componentDidMount() {
+    const admins = await this.props.onGetAdmins();
+    const dayoffs = await this.props.onGetDayoffs();
+    const chartData = await this.props.onGetDayoffChartData();
+    this.setState({
+      disabled: chartData.used >= chartData.total,
+      admins,
+      dayoffs,
+      chartData,
+    });
   }
 
   openNewDaysoffDialog = () => {
@@ -169,7 +118,22 @@ class DaysoffGeneral extends React.Component {
     this.setState({ showNewDaysoffDialog: false });
   };
 
-  addNewDayoff = () => {};
+  addDayoff = async (dayoff) => {
+    if (dayoff.description !== "" && dayoff.adminModel !== null) {
+      const dayoffModel = await this.props.onAddDayoff(dayoff);
+      await this.setState((prevState) => ({
+        dayoffs: [dayoffModel, ...prevState.dayoffs],
+      }));
+      this.closeNewDaysoffDialog();
+    }
+  };
+
+  deleteDayoff = async (dayoffId) => {
+    await this.props.onDeleteDayoff(dayoffId);
+    this.setState({
+      dayoffs: this.state.dayoffs.filter((dayoff, _) => dayoff.id !== dayoffId),
+    });
+  };
 
   render() {
     const { classes } = this.props;
@@ -187,12 +151,12 @@ class DaysoffGeneral extends React.Component {
                   chartType="BarChart"
                   loader={<div>Loading Chart</div>}
                   data={[
+                    ["Daysoff", "2021 Available", "2021 Used"],
                     [
-                      "Daysoff",
-                      "2021 Available daysoff",
-                      "2021 Unavailable daysoff",
+                      "",
+                      this.state.chartData.total - this.state.chartData.used,
+                      this.state.chartData.used,
                     ],
-                    ["", parseInt(15), parseInt(10)],
                   ]}
                   options={{
                     title: "Daysoff availability chart",
@@ -201,7 +165,7 @@ class DaysoffGeneral extends React.Component {
                     hAxis: {
                       viewWindow: {
                         min: 0,
-                        max: 25,
+                        max: this.state.chartData.total,
                       },
                       format: "0",
                     },
@@ -213,7 +177,7 @@ class DaysoffGeneral extends React.Component {
                 <Paper className={classes.paper}>
                   <div style={{ height: 560, width: "100%" }}>
                     <DataGrid
-                      rows={this.rows}
+                      rows={this.state.dayoffs}
                       columns={this.columns}
                       pageSize={10}
                       rowHeight={45}
@@ -226,7 +190,8 @@ class DaysoffGeneral extends React.Component {
             {this.state.showNewDaysoffDialog && (
               <DaysoffDialog
                 onClose={this.closeNewDaysoffDialog}
-                onAdd={this.addNewDayoff}
+                onAdd={this.addDayoff}
+                admins={this.state.admins}
               />
             )}
           </Container>

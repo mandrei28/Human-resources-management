@@ -15,9 +15,9 @@ namespace HRDesk.Services.Mappers
             {
                 Id = leaveRequest.Id,
                 Description = leaveRequest.Description,
-                StartDate = leaveRequest.StartDate,
-                StartHour = leaveRequest.StartHour,
-                EndHour = leaveRequest.EndHour,
+                StartDate = leaveRequest.StartDate.ToLocalTime().AddSeconds(-leaveRequest.StartDate.ToLocalTime().Second),
+                StartHour = leaveRequest.StartHour.ToLocalTime().AddSeconds(-leaveRequest.StartHour.ToLocalTime().Second),
+                EndHour = leaveRequest.EndHour.ToLocalTime().AddSeconds(-leaveRequest.EndHour.ToLocalTime().Second),
                 UserId = leaveRequest.UserId,
                 UserModel = UserMapper.ToUserModel(leaveRequest.User),
                 AdminId = leaveRequest.AdminId,
@@ -40,17 +40,5 @@ namespace HRDesk.Services.Mappers
                 Status = leaveRequestModel.Status,
             };
         }
-
-        //public static LeaveRequest UpdateLeaveRequest(LeaveRequest leaveRequest, LeaveRequestModel leaveRequestModel)
-        //{
-        //    leaveRequest.Description = leaveRequestModel.Description;
-        //    leaveRequest.StartDate = leaveRequestModel.StartDate;
-        //    leaveRequest.StartHour = leaveRequestModel.StartHour;
-        //    leaveRequest.EndHour = leaveRequestModel.EndHour;
-        //    leaveRequest.UserId = leaveRequestModel.UserId;
-        //    leaveRequest.AdminId = leaveRequestModel.AdminId;
-        //    leaveRequest.Approved = leaveRequestModel.Approved;
-        //    return leaveRequest;
-        //}
     }
 }

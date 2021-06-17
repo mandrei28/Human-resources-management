@@ -23,9 +23,7 @@ namespace HRDesk.Infrastructure.Repositories
         {
             var yesterday = DateTime.Today.AddDays(-1);
             return GetAll().OrderBy(a => a.StartDate).Include(a => a.MeetingRoom).Include(a => a.Team).Where(a => !a.IsDeleted &&
-            a.StartDate.Year >= yesterday.Year &&
-            a.StartDate.Month >= yesterday.Month &&
-            a.StartDate.Day > yesterday.Day && a.StartDate.Hour >= yesterday.Hour && a.TeamId == teamId).Take(10);
+            a.StartDate > yesterday && a.StartDate.Hour >= (DateTime.Now.Hour - 2) && a.TeamId == teamId).Take(10);
         }
 
         public IQueryable<Meeting> GetAllMeetingsBetweenRange(DateTime startDate, DateTime endDate, int teamId)

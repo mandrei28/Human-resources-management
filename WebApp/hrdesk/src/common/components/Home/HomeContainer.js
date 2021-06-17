@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import * as meetingActions from "../../../redux/actions/meetingActions";
+import * as userActions from "../../../redux/actions/userActions";
 import HomeGeneral from "./HomeGeneral";
 
 const mapStateToProps = (state, ownProps) => {
@@ -20,6 +21,9 @@ const mergeProps = (stateProps, dispatchProps) => {
     ...dispatchProps,
     onGetUpcomingMeetings: async () => {
       return await dispatch(meetingActions.getUpcomingMeetings());
+    },
+    onGetStatistics: async () => {
+      return await dispatch(userActions.getStatistics());
     },
   };
 };

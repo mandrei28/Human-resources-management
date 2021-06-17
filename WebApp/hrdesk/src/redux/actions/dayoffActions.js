@@ -6,6 +6,12 @@ export const GET_HOLIDAY_CALENDAR_SUCCESS = "GET_HOLIDAY_CALENDAR_SUCCESS";
 export const GET_HOLIDAY_CALENDAR_ERROR = "GET_HOLIDAY_CALENDAR_ERROR";
 export const DELETE_DAYOFF_SUCCESS = "DELETE_DAYOFF_SUCCESS";
 export const DELETE_DAYOFF_ERROR = "DELETE_DAYOFF_ERROR";
+export const ADD_DAYOFF_SUCCESS = "ADD_DAYOFF_SUCCESS";
+export const ADD_DAYOFF_ERROR = "ADD_DAYOFF_ERROR";
+export const GET_USER_DAYOFFS_SUCCESS = "GET_USER_DAYOFFS_SUCCESS";
+export const GET_USER_DAYOFFS_ERROR = "GET_USER_DAYOFFS_ERROR";
+export const GET_DAYOFF_CHART_DATA_SUCCESS = "GET_DAYOFF_CHART_DATA_SUCCESS";
+export const GET_DAYOFF_CHART_DATA_ERROR = "GET_DAYOFF_CHART_DATA_ERROR";
 export const APPROVE_DAYOFF_SUCCESS = "APPROVE_DAYOFF_SUCCESS";
 export const APPROVE_DAYOFF_ERROR = "APPROVE_DAYOFF_ERROR";
 
@@ -22,6 +28,48 @@ export const getDaysoffError = (error) => {
   return {
     type: GET_DAYSOFF_ERROR,
     error: error,
+  };
+};
+
+export const getUserDayoffsSuccess = (dayoffs) => {
+  return {
+    type: GET_USER_DAYOFFS_SUCCESS,
+    payload: dayoffs,
+  };
+};
+
+export const getUserDayoffsError = (error) => {
+  return {
+    type: GET_USER_DAYOFFS_ERROR,
+    error: error,
+  };
+};
+
+export const getDayoffChartDataSuccess = (chartData) => {
+  return {
+    type: GET_DAYOFF_CHART_DATA_SUCCESS,
+    payload: chartData,
+  };
+};
+
+export const getDayoffChartDataError = (error) => {
+  return {
+    type: GET_DAYOFF_CHART_DATA_ERROR,
+    error: error,
+  };
+};
+
+export const addDayOffSuccess = (dayoffModel) => {
+  return {
+    type: ADD_DAYOFF_SUCCESS,
+    payload: dayoffModel,
+  };
+};
+
+export const addDayOffError = (error) => {
+  return {
+    type: ADD_DAYOFF_ERROR,
+    payload: error,
   };
 };
 
@@ -103,25 +151,84 @@ export const getHolidayCalendar = () => {
       });
   };
 };
-// export const deleteDayoff = (dayoffId) => {
-//   debugger;
-//   return (dispatch) => {
-//     return apiClient
-//       .post(`dayoff/deleteDayoff/${dayoffId}`)
-//       .then((response) => {
-//         dispatch(deleteDayoffSuccess(response.data));
-//         toastr.success("Dayoff", "Dayoff deleted");
-//         return response.data;
-//       })
-//       .catch((error) => {
-//         if (error.response !== undefined) {
-//           toastr.error("Error", error.response.data.Message);
-//         }
-//         dispatch(deleteDayoffError(error));
-//         throw error;
-//       });
-//   };
-// };
+
+export const addDayoff = (dayoffModel) => {
+  debugger;
+  return (dispatch) => {
+    return apiClient
+      .post("dayoff/addDayoff", dayoffModel)
+      .then((response) => {
+        dispatch(addDayOffSuccess(response.data));
+        toastr.success("Dayoff", "Dayoff added");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(addDayOffError(error));
+        throw error;
+      });
+  };
+};
+
+export const deleteDayoff = (dayoffId) => {
+  debugger;
+  return (dispatch) => {
+    return apiClient
+      .post(`dayoff/deleteDayoff/${dayoffId}`)
+      .then((response) => {
+        dispatch(deleteDayoffSuccess(response.data));
+        toastr.success("Dayoff", "Dayoff deleted");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(deleteDayoffError(error));
+        throw error;
+      });
+  };
+};
+
+export const getAllUserDayoffs = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("dayoff/getAllUserDayoffs")
+      .then((response) => {
+        dispatch(getUserDayoffsSuccess(response.data));
+        toastr.success("DayOff", "Data fetched with success");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getUserDayoffsError(error));
+        throw error;
+      });
+  };
+};
+
+export const getDayoffChartData = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("dayoff/getDayoffChartData")
+      .then((response) => {
+        dispatch(getDayoffChartDataSuccess(response.data));
+        toastr.success("Dayoff chart", "Data fetched with success");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getDayoffChartDataError(error));
+        throw error;
+      });
+  };
+};
 
 export const approveDayoff = (dayoffId, shouldApprove) => {
   debugger;

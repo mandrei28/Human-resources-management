@@ -1,12 +1,10 @@
 import "./App.css";
 import LoginContainer from "./common/components/Login/LoginContainer";
-import DaysoffGeneral from "./common/components/Daysoff/DaysoffGeneral";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 import PrivateRoute from "./services/PrivateRoute";
 import * as userActions from "./redux/actions/userActions";
 import { isTokenValid } from "./services/authService";
-import LeaveRequestGeneral from "./common/components/LeaveRequest/LeaveRequestGeneral";
 import ReduxToastr from "react-redux-toastr";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
@@ -26,6 +24,8 @@ import TeamContainer from "./common/components/Team/TeamContainer";
 import MeetingsContainer from "./common/components/Meetings/MeetingsContainer";
 import HomeContainer from "./common/components/Home/HomeContainer";
 import HolidayCalendarContainer from "./common/components/HolidayCalendar/HolidayCalendarContainer";
+import LeaveRequestContainer from "./common/components/LeaveRequest/LeaveRequestContainer";
+import DaysoffContainer from "./common/components/Daysoff/DaysoffContainer";
 
 const styles = (theme) => ({
   root: {
@@ -89,7 +89,7 @@ class App extends React.Component {
             <PrivateRoute
               exact
               path="/daysoff"
-              component={DaysoffGeneral}
+              component={DaysoffContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
                 this.state.user.permissions,
@@ -99,7 +99,7 @@ class App extends React.Component {
             <PrivateRoute
               exact
               path="/leaverequest"
-              component={LeaveRequestGeneral}
+              component={LeaveRequestContainer}
               isLoggedIn={this.state.isLoggedIn}
               hasPermission={userHasPermission(
                 this.state.user.permissions,

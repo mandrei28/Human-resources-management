@@ -9,5 +9,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
     public interface ILeaveRequestRepository : IBaseRepository<LeaveRequest>
     {
         IQueryable<LeaveRequest> GetAllByAdminId(int adminId);
+        IQueryable<LeaveRequest> GetAllByUserId(int userId);
     }
 }

@@ -10,5 +10,8 @@ namespace HRDesk.Services.ServiceInterfaces
     {
         List<LeaveRequestModel> GetAllAdminLeaveRequests(int adminId);
         Task<LeaveRequestModel> AcceptLeaveRequest(int leaveRequestId, int newStatus, int adminId);
+        List<LeaveRequestModel> GetAllUserLeaveRequests(int userId);
+        Task<LeaveRequestModel> AddLeaveRequest(LeaveRequestModel leaveRequestModel, int userId);
+        Task DeleteLeaveRequest(int leaveRequestId);
     }
 }

@@ -13,5 +13,12 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
         User GetUserByEmail(string email);
         bool CheckIfEmailIsInUse(string email);
         IQueryable<User> GetUsers();
+        IQueryable<User> GetAdmins();
+        public int GetEmployeesNumber();
+        public int GetBoardNumber();
+        public int GetHumanResourceNumber();
+        public int GetProjectManagerNumber();
+        public int GetDevelopersNumber();
+        public int GetQualityAssuranceNumber();
     }
 }

@@ -44,6 +44,20 @@ namespace HRDesk.Controllers
         }
 
         [Authorize]
+        [HttpGet("admins")]
+        public List<UserModel> GetAdmins()
+        {
+            return _userService.GetAdmins();
+        }
+
+        [Authorize]
+        [HttpGet("statistics")]
+        public CompanyStatisticsModel GetStatistics()
+        {
+            return _userService.GetCompanyStatistics();
+        }
+
+        [Authorize]
         [HttpGet("{id}")]
         public UserModel GetUser(int id)
         {

@@ -26,6 +26,13 @@ namespace HRDesk.Services.Services
             return dayoffsModels;
         }
 
+        public List<DayoffModel> GetAllUserDayoffs(int userId)
+        {
+            var dayoffs = _unitOfWork.Daysoff.GetAllByUserId(userId);
+            var dayoffsModels = dayoffs.Select(dayoff => DayoffMapper.ToDayoffModel(dayoff)).ToList();
+            return dayoffsModels;
+        }
+
         public async Task<DayoffModel> AcceptDayoff(int dayoffId, int newStatus, int adminId)
         {
             var dayoff = await _unitOfWork.Daysoff.GetByIDAsync(dayoffId);
@@ -36,6 +43,35 @@ namespace HRDesk.Services.Services
             await _unitOfWork.CommitAsync();
             var dayoffModel = DayoffMapper.ToDayoffModel(dayoff);
             return dayoffModel;
+        }
+
+        public async Task<DayoffModel> AddDayoff(DayoffModel dayoffModel, int userId)
+        {
+            if (dayoffModel.StartDate > dayoffModel.EndDate)
+                throw new Exception("Invalid date range");
+
+            dayoffModel.UserId = userId;
+            dayoffModel.AdminId = dayoffModel.AdminModel.Id;
+            var dayoff = DayoffMapper.ToDayoff(dayoffModel);
+
+            var chartData = GetNumberOfUsedHolidayDays(userId);
+
+            if (chartData.Used + ((dayoff.EndDate - dayoff.StartDate).Days + 1) > chartData.Total)
+                throw new Exception("Too many days");
+
+            await _unitOfWork.Daysoff.InsertAsync(dayoff);
+            await _unitOfWork.CommitAsync();
+
+            dayoffModel.Id = dayoff.Id;
+
+            return dayoffModel;
+        }
+
+        public async Task DeleteDayoff(int dayoffId)
+        {
+            var dayoff = await _unitOfWork.Daysoff.GetByIDAsync(dayoffId);
+            _unitOfWork.Daysoff.Delete(dayoff);
+            await _unitOfWork.CommitAsync();
         }
 
         public List<HolidayCalendarComponentModel> GetHolidayCalendar(int userId)
@@ -56,6 +92,44 @@ namespace HRDesk.Services.Services
                 EndDate = n.EndDate,
             });
             return holidayCalendarComponents.Concat(holidayDayoffComponents).ToList();
+        }
+
+        public DayoffChartModel GetNumberOfUsedHolidayDays(int userId)
+        {
+            var year = 2021;
+            var user = _unitOfWork.Users.GetUserById(userId);
+            var userDayoffs = _unitOfWork.Daysoff.GetAllApprovedForUserByYear(userId, year).ToList();
+            var nationalDays = _unitOfWork.NationalDays.GetAllByYear(year).ToList();
+            var used = 0;
+            foreach (var userDayoff in userDayoffs)
+            {
+                var start = userDayoff.StartDate;
+                var end = userDayoff.EndDate;
+                var days = (end - start).Days + 1;
+                while (start <= end)
+                {
+                    if (days == 0)
+                        break;
+                    if (start.DayOfWeek == DayOfWeek.Saturday || start.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        days--;
+                        start = start.AddDays(1);
+                        continue;
+                    }
+                    if (nationalDays.Any(a => a.StartDate <= start && start <= a.EndDate))
+                    {
+                        days--;
+                    }
+                    start = start.AddDays(1);
+                }
+                used += days;
+            }
+
+            return new DayoffChartModel
+            {
+                Used = used,
+                Total = user.NumberOfDaysoff,
+            };
         }
     }
 }

@@ -19,21 +19,15 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
-const top100Films = [
-  { name: "Admin", id: 1 },
-  { name: "Admin2", id: 2 },
-];
-
 export default class DaysoffDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dayoff: {
         description: "",
-        startDate: null,
-        endDate: null,
-        numberOfDays: null,
-        person: null,
+        startDate: new Date(),
+        endDate: new Date(),
+        adminModel: null,
       },
     };
   }
@@ -130,12 +124,14 @@ export default class DaysoffDialog extends Component {
             </MuiPickersUtilsProvider>
             <Autocomplete
               id="combo-box-demo"
-              options={top100Films}
-              getOptionLabel={(option) => option.name}
+              options={this.props.admins}
+              getOptionLabel={(option) =>
+                option.firstName + " " + option.lastName
+              }
               fullWidth
-              value={this.state.dayoff.person}
+              value={this.state.dayoff.adminModel}
               onChange={(event, newValue) =>
-                this.handleDayoffPersonFieldChange(newValue, "person")
+                this.handleDayoffPersonFieldChange(newValue, "adminModel")
               }
               renderInput={(params) => {
                 return (
@@ -157,22 +153,15 @@ export default class DaysoffDialog extends Component {
                 );
               }}
             />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="days"
-              value={this.state.dayoff.numberOfDays}
-              label="Number of days needed"
-              type="number"
-              disabled
-              fullWidth
-            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.props.onClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.props.onAdd} color="primary">
+            <Button
+              onClick={() => this.props.onAdd(this.state.dayoff)}
+              color="primary"
+            >
               Add
             </Button>
           </DialogActions>

@@ -1,4 +1,5 @@
 ﻿using HRDesk.Infrastructure.Entities;
+using HRDesk.Infrastructure.Enums;
 using HRDesk.Infrastructure.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,6 +37,36 @@ namespace HRDesk.Infrastructure.Repositories
         public IQueryable<User> GetUsers()
         {
             return GetAll().Include(u => u.Team).Include(u => u.Function).Include(u => u.Office).Where(u => !u.IsDeleted);
+        }
+
+        public IQueryable<User> GetAdmins()
+        {
+            return GetAll().Include(a => a.Permissions).Where(a => a.Permissions.Any(p => p.Id == (int)Permissions.ManageHolidays));
+        }
+
+        public int GetEmployeesNumber()
+        {
+            return GetAll().Where(u => !u.IsDeleted).Count();
+        }
+        public int GetBoardNumber()
+        {
+            return GetAll().Include(a => a.Function).Where(u => !u.IsDeleted && u.Function.Id == (int)PredefinedFunctions.Board).Count();
+        }
+        public int GetHumanResourceNumber()
+        {
+            return GetAll().Include(a => a.Function).Where(u => !u.IsDeleted && u.Function.Id == (int)PredefinedFunctions.HumanResource).Count();
+        }
+        public int GetProjectManagerNumber()
+        {
+            return GetAll().Include(a => a.Function).Where(u => !u.IsDeleted && u.Function.Id == (int)PredefinedFunctions.ProjectManager).Count();
+        }
+        public int GetDevelopersNumber()
+        {
+            return GetAll().Include(a => a.Function).Where(u => !u.IsDeleted && u.Function.Id == (int)PredefinedFunctions.Developer).Count();
+        }
+        public int GetQualityAssuranceNumber()
+        {
+            return GetAll().Include(a => a.Function).Where(u => !u.IsDeleted && u.Function.Id == (int)PredefinedFunctions.QualityAssurance).Count();
         }
     }
 }

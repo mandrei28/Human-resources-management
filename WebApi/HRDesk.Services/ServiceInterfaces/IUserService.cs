@@ -15,5 +15,7 @@ namespace HRDesk.Services.ServiceInterfaces
         UserModel GetUserById(int userId);
         Task DeleteUser(int userId);
         Task UpdateUser(UserModel userModel);
+        List<UserModel> GetAdmins();
+        CompanyStatisticsModel GetCompanyStatistics();
     }
 }

@@ -18,7 +18,13 @@ namespace HRDesk.Infrastructure.Repositories
 
         public IQueryable<LeaveRequest> GetAllByAdminId(int adminId)
         {
-            return GetAll().OrderByDescending(a => a.Status == RequestStatus.Waiting).Include(a => a.Admin).Include(a => a.User).Where(a => a.AdminId == adminId);
+            return GetAll().OrderByDescending(a => a.Status == RequestStatus.Waiting).Include(a => a.Admin).Include(a => a.User).Where(a => a.AdminId == adminId && !a.IsDeleted);
+        }
+
+        public IQueryable<LeaveRequest> GetAllByUserId(int userId)
+        {
+            var date = DateTime.Now.AddDays(-5);
+            return GetAll().OrderByDescending(a => a.Status == RequestStatus.Waiting).ThenBy(a => a.StartDate).Include(a => a.Admin).Include(a => a.User).Where(a => a.AdminId == userId && a.StartDate > date && !a.IsDeleted);
         }
     }
 }

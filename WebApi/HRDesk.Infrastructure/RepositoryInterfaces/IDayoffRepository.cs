@@ -10,5 +10,7 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
     {
         IQueryable<Dayoff> GetAllByAdminId(int adminId);
         IQueryable<Dayoff> GetAllByUserTeamId(int teamId);
+        IQueryable<Dayoff> GetAllByUserId(int userId);
+        IQueryable<Dayoff> GetAllApprovedForUserByYear(int userId, int year);
     }
 }

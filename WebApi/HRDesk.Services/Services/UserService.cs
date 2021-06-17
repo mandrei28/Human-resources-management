@@ -108,6 +108,13 @@ namespace HRDesk.Services.Services
             return userModel;
         }
 
+        public List<UserModel> GetAdmins()
+        {
+            var admins = _unitOfWork.Users.GetAdmins();
+            var adminModels = admins.Select(admin => UserMapper.ToUserModel(admin)).ToList();
+            return adminModels;
+        }
+
         public async Task DeleteUser(int userId)
         {
             var user = await _unitOfWork.Users.GetByIDAsync(userId);
@@ -147,6 +154,26 @@ namespace HRDesk.Services.Services
                 permissions.Add(userPermission.PermissionId.Value);
             }
             return permissions;
+        }
+
+        public CompanyStatisticsModel GetCompanyStatistics()
+        {
+            var employees = _unitOfWork.Users.GetEmployeesNumber();
+            var board = _unitOfWork.Users.GetBoardNumber();
+            var humanResource = _unitOfWork.Users.GetHumanResourceNumber();
+            var projectManager = _unitOfWork.Users.GetProjectManagerNumber();
+            var developers = _unitOfWork.Users.GetDevelopersNumber();
+            var qualityAssurance = _unitOfWork.Users.GetQualityAssuranceNumber();
+
+            return new CompanyStatisticsModel
+            {
+                Employees = employees,
+                QualityAssurance = qualityAssurance,
+                Board = board,
+                Developers = developers,
+                HumanResource = humanResource,
+                ProjectManager = projectManager
+            };
         }
     }
 }

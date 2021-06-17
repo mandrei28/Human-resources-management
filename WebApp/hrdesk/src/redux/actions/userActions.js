@@ -3,6 +3,10 @@ import { storeToken } from "../../services/storage";
 import { toastr } from "react-redux-toastr";
 export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
+export const GET_ADMINS_SUCCESS = "GET_ADMINS_SUCCESS";
+export const GET_ADMINS_ERROR = "GET_ADMINS_ERROR";
+export const GET_STATISTICS_SUCCESS = "GET_STATISTICS_SUCCESS";
+export const GET_STATISTICS_ERROR = "GET_STATISTICS_ERROR";
 export const USER_REGISTER_SUCCESS = "USER_REGISTER_SUCCESS";
 export const USER_REGISTER_ERROR = "USER_REGISTER_ERROR";
 export const USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
@@ -39,6 +43,34 @@ export const getUsersSuccess = (users) => {
 export const getUsersError = (error) => {
   return {
     type: GET_USERS_ERROR,
+    error: error,
+  };
+};
+
+export const getAdminsSuccess = (users) => {
+  return {
+    type: GET_ADMINS_SUCCESS,
+    payload: users,
+  };
+};
+
+export const getAdminsError = (error) => {
+  return {
+    type: GET_ADMINS_ERROR,
+    error: error,
+  };
+};
+
+export const getStatisticsSuccess = (users) => {
+  return {
+    type: GET_STATISTICS_SUCCESS,
+    payload: users,
+  };
+};
+
+export const getStatisticsError = (error) => {
+  return {
+    type: GET_STATISTICS_ERROR,
     error: error,
   };
 };
@@ -113,6 +145,44 @@ export const login = (user) => {
           toastr.error("Error", error.response.data.Message);
         }
         dispatch(userLoginError(error));
+        throw error;
+      });
+  };
+};
+
+export const getAdmins = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("user/admins")
+      .then((response) => {
+        dispatch(getAdminsSuccess(response.data));
+        toastr.success("Employees", "Admins fetched");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getAdminsError(error));
+        throw error;
+      });
+  };
+};
+
+export const getStatistics = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("user/statistics")
+      .then((response) => {
+        dispatch(getStatisticsSuccess(response.data));
+        toastr.success("Employees", "Statistics fetched");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getStatisticsError(error));
         throw error;
       });
   };

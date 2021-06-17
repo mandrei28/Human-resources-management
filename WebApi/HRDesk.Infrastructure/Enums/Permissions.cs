@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HRDesk.Services.Enums
+namespace HRDesk.Infrastructure.Enums
 {
     public enum Permissions
     {

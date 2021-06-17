@@ -21,35 +21,56 @@ import {
   Button,
 } from "@material-ui/core";
 
-const top100Films = [
-  { name: "Admin", id: 1 },
-  { name: "Admin2", id: 2 },
-];
-
 class LeaveRequestGeneral extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      person: null,
+      leaveRequests: [],
+      admins: [],
+      leaveRequest: {
+        adminModel: null,
+        description: "",
+        startDate: new Date(),
+        startHour: new Date(),
+        endHour: new Date(),
+      },
     };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 250 },
+      { field: "description", headerName: "Description", width: 240 },
       {
-        field: "date",
+        field: "startDate",
         type: "date",
         headerName: "Date",
         width: 160,
+        valueFormatter: (params) => params.value.split("T")[0],
       },
       {
         field: "startHour",
         type: "string",
         headerName: "Start hour",
-        width: 155,
+        width: 140,
+        valueFormatter: (params) => params.value.split("T")[1].split(".")[0],
       },
-      { field: "endHour", type: "string", headerName: "End hour", width: 155 },
-      { field: "status", headerName: "Status", width: 150 },
-      { field: "verified", headerName: "Verified By", width: 150 },
+      {
+        field: "endHour",
+        type: "string",
+        headerName: "End hour",
+        width: 135,
+        valueFormatter: (params) => params.value.split("T")[1].split(".")[0],
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 120,
+        valueFormatter: (params) =>
+          params.value === 0
+            ? "Waiting"
+            : params.value === 1
+            ? "Refused"
+            : "Approved",
+      },
+      { field: "verifiedBy", headerName: "Verified By", width: 260 },
       {
         field: "",
         width: 100,
@@ -69,123 +90,54 @@ class LeaveRequestGeneral extends Component {
               thisRow[f] = params.getValue(f);
             });
 
-            return alert(JSON.stringify(thisRow, null, 4));
+            this.deleteLeaveRequest(thisRow.id);
           };
 
           return (
-            <div>
+            <div hidden={params.row.status === 1 || params.row.status === 2}>
               <DeleteIcon onClick={onClick} />
             </div>
           );
         },
       },
     ];
-
-    this.rows = [
-      {
-        id: 1,
-        description: "Snow",
-        date: new Date(),
-        startHour: "22:40:10",
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 2,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 3,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 4,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 5,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 6,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 7,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 8,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 9,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 10,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-      {
-        id: 11,
-        description: "Snow",
-        date: new Date(),
-        startHour: new Date().toLocaleTimeString(),
-        endHour: new Date().toLocaleTimeString(),
-        status: "Approved",
-        verified: null,
-      },
-    ];
   }
 
-  handleHourChange = (event) => {
-    debugger;
+  async componentDidMount() {
+    const admins = await this.props.onGetAdmins();
+    const leaveRequests = await this.props.onGetLeaveRequests();
+    await this.setState({ admins, leaveRequests });
+  }
+
+  deleteLeaveRequest = async (leaveRequestId) => {
+    await this.props.onDeleteLeaveRequest(leaveRequestId);
+    this.setState({
+      leaveRequests: this.state.leaveRequests.filter(
+        (leaveRequest, _) => leaveRequest.id !== leaveRequestId
+      ),
+    });
+  };
+
+  handleFieldChange = (newValue, field) => {
+    this.setState((prevState) => {
+      const { leaveRequest } = prevState;
+      leaveRequest[field] = newValue;
+      return { leaveRequest };
+    });
+  };
+
+  addLeaveRequest = async () => {
+    if (
+      this.state.leaveRequest.description !== "" &&
+      this.state.leaveRequest.admin !== null
+    ) {
+      const leaveRequestModel = await this.props.onAddLeaveRequest(
+        this.state.leaveRequest
+      );
+      await this.setState((prevState) => ({
+        leaveRequests: [leaveRequestModel, ...prevState.leaveRequests],
+      }));
+    }
   };
 
   render() {
@@ -195,7 +147,7 @@ class LeaveRequestGeneral extends Component {
         <CssBaseline />
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Container maxWidth="lg" className={classes.container}>
+          <Container maxWidth="xl" className={classes.container}>
             <Grid container spacing={3} alignItems="center" justify="center">
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid
@@ -210,7 +162,10 @@ class LeaveRequestGeneral extends Component {
                     required
                     id="standard-required"
                     label="Short description"
-                    defaultValue=""
+                    defaultValue={this.state.leaveRequest.description}
+                    onChange={(event) =>
+                      this.handleFieldChange(event.target.value, "description")
+                    }
                     fullWidth
                   />
                 </Grid>
@@ -222,42 +177,41 @@ class LeaveRequestGeneral extends Component {
                     margin="normal"
                     id="date"
                     label="Date"
-                    //error={this.state.dayoff.startDate === null}
                     fullWidth
                     required
-                    //value={this.state.dayoff.startDate}
+                    value={this.state.leaveRequest.startDate}
                     onChange={(event) =>
-                      this.handleDayoffDateFieldChange(event, "startDate")
+                      this.handleFieldChange(event, "startDate")
                     }
                     KeyboardButtonProps={{
                       "aria-label": "change date",
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={3} lg={2}>
+                <Grid item xs={12} sm={12} md={3} lg>
                   <KeyboardTimePicker
                     margin="normal"
                     id="startHour"
                     label="Start Hour"
                     fullWidth
-                    //value={selectedDate}
+                    value={this.state.leaveRequest.startHour}
                     onChange={(event) =>
-                      this.handleHourChange(event, "startHour")
+                      this.handleFieldChange(event, "startHour")
                     }
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={3} lg={2}>
+                <Grid item xs={12} sm={12} md={3} lg>
                   <KeyboardTimePicker
                     margin="normal"
                     id="endHour"
                     label="End hour"
                     fullWidth
-                    //value={selectedDate}
+                    value={this.state.leaveRequest.endHour}
                     onChange={(event) =>
-                      this.handleHourChange(event, "endHour")
+                      this.handleFieldChange(event, "endHour")
                     }
                     KeyboardButtonProps={{
                       "aria-label": "change time",
@@ -269,29 +223,31 @@ class LeaveRequestGeneral extends Component {
                   xs={12}
                   sm={12}
                   md={4}
-                  lg={2}
+                  lg={3}
                   style={{ paddingTop: "19.5px" }}
                 >
                   {" "}
                   <Autocomplete
                     id="combo-box-demo"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.name}
+                    options={this.state.admins}
+                    getOptionLabel={(option) =>
+                      option.firstName + " " + option.lastName
+                    }
                     fullWidth
-                    value={this.state.person}
+                    value={this.state.leaveRequest.adminModel}
                     onChange={(event, newValue) =>
-                      this.handleDayoffPersonFieldChange(newValue, "person")
+                      this.handleFieldChange(newValue, "adminModel")
                     }
                     renderInput={(params) => {
                       return (
-                        <Grid container spacing={1} alignItems="flex-end">
-                          <Grid item lg={2} md={1} sm={1} xs={1}>
+                        <Grid container spacing={2} alignItems="flex-end">
+                          <Grid item lg={1} md={1} sm={1} xs={1}>
                             <AccountCircle />
                           </Grid>
-                          <Grid item lg={10} md={11} sm={11} xs={11}>
+                          <Grid item lg={11} md={11} sm={11} xs={11}>
                             <TextField
                               {...params}
-                              //error={params.inputProps.value === ""}
+                              required
                               id="input-with-icon-grid"
                               label="Spoke with"
                               fullWidth
@@ -310,7 +266,12 @@ class LeaveRequestGeneral extends Component {
                   lg={1}
                   style={{ paddingTop: "19.5px" }}
                 >
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ float: "right" }}
+                    onClick={this.addLeaveRequest}
+                  >
                     Add
                   </Button>
                 </Grid>
@@ -324,7 +285,7 @@ class LeaveRequestGeneral extends Component {
                   <Paper className={classes.paper}>
                     <div style={{ height: 560, width: "100%" }}>
                       <DataGrid
-                        rows={this.rows}
+                        rows={this.state.leaveRequests}
                         columns={this.columns}
                         pageSize={10}
                         rowHeight={45}

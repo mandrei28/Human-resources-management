@@ -30,11 +30,35 @@ namespace HRDesk.Controllers
         }
 
         [Authorize]
+        [HttpGet("getAllUserLeaveRequests")]
+        public ActionResult<List<LeaveRequestModel>> GetAllUserLeaveRequests()
+        {
+            var userId = _identityService.GetUserId();
+            return _leaveRequestService.GetAllUserLeaveRequests(userId.Value);
+        }
+
+        [Authorize]
+        [HttpPost("addLeaveRequest")]
+        public async Task<LeaveRequestModel> AddLeaveRequest([FromBody] LeaveRequestModel leaveRequestModel)
+        {
+            var userId = _identityService.GetUserId();
+            return await _leaveRequestService.AddLeaveRequest(leaveRequestModel, userId.Value);
+        }
+
+        [Authorize]
         [HttpPut("approve/{leaveRequestId}")]
         public async Task<ActionResult<LeaveRequestModel>> ApproveLeaveRequest(int leaveRequestId, [FromBody] int newStatus)
         {
             var userId = _identityService.GetUserId();
             return await _leaveRequestService.AcceptLeaveRequest(leaveRequestId, newStatus, userId.Value);
+        }
+
+        [Authorize]
+        [HttpPost("deleteLeaveRequest/{id}")]
+        public async Task<IActionResult> DeleteLeaveRequest(int id)
+        {
+            await _leaveRequestService.DeleteLeaveRequest(id);
+            return Ok();
         }
     }
 }
