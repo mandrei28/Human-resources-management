@@ -3,6 +3,63 @@ import Chart from "react-google-charts";
 import { Grid } from "@material-ui/core";
 
 export default class CompanyChartsGeneral extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ageData: [["Task", "Hours per Day"]],
+      functionData: [["Task", "Hours per Day"]],
+      countryData: [["Task", "Hours per Day"]],
+    };
+  }
+
+  async componentDidMount() {
+    const ageChart = await this.props.onGetAgeChart();
+    const functionChart = await this.props.onGetFunctionChart();
+    const countryChart = await this.props.onGetCountryChart();
+    await this.setAgeChartData(ageChart);
+    await this.setFunctionChartData(functionChart);
+    await this.setCountryChartData(countryChart);
+  }
+
+  setAgeChartData = async (ageChart) => {
+    await this.setState((prevState) => {
+      var { ageData } = prevState;
+      ageChart.forEach((age) => {
+        var newAge = [];
+        newAge[0] = age.key;
+        newAge[1] = age.value;
+        ageData = [...ageData, newAge];
+      });
+      return { ageData };
+    });
+  };
+
+  setFunctionChartData = async (functionChart) => {
+    await this.setState((prevState) => {
+      var { functionData } = prevState;
+      functionChart.forEach((fct) => {
+        var newFunction = [];
+        newFunction[0] = fct.key;
+        newFunction[1] = fct.value;
+        functionData = [...functionData, newFunction];
+      });
+      return { functionData };
+    });
+  };
+
+  setCountryChartData = async (countryChart) => {
+    await this.setState((prevState) => {
+      var { countryData } = prevState;
+      countryChart.forEach((country) => {
+        var newCountry = [];
+        newCountry[0] = country.key;
+        newCountry[1] = country.value;
+        countryData = [...countryData, newCountry];
+      });
+      return { countryData };
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -13,13 +70,7 @@ export default class CompanyChartsGeneral extends Component {
               height={"750px"}
               chartType="PieChart"
               loader={<div>Age chart</div>}
-              data={[
-                ["Task", "Hours per Day"],
-                ["20-30", 40],
-                ["30-40", 20],
-                ["40-50", 10],
-                ["50+", 20],
-              ]}
+              data={this.state.ageData}
               options={{
                 title: "Age chart",
               }}
@@ -32,15 +83,7 @@ export default class CompanyChartsGeneral extends Component {
               height={"750px"}
               chartType="PieChart"
               loader={<div>Functions chart</div>}
-              data={[
-                ["Task", "Hours per Day"],
-                ["Developers", 213],
-                ["Quality assurance", 137],
-                ["Project managers", 24],
-                ["Operational managers", 16],
-                ["Board", 3],
-                ["Functional manager", 1],
-              ]}
+              data={this.state.functionData}
               options={{
                 title: "Functions chart",
               }}
@@ -53,13 +96,7 @@ export default class CompanyChartsGeneral extends Component {
               height={"750px"}
               chartType="PieChart"
               loader={<div>Provenience chart</div>}
-              data={[
-                ["Task", "Hours per Day"],
-                ["Romania", 40],
-                ["France", 5],
-                ["UK", 10],
-                ["Spain", 20],
-              ]}
+              data={this.state.countryData}
               options={{
                 title: "Provenience chart",
               }}

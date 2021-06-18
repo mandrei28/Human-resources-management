@@ -1,4 +1,5 @@
 ﻿using HRDesk.Infrastructure.Entities;
+using HRDesk.Infrastructure.Models;
 using HRDesk.Infrastructure.RepositoryInterfaces;
 using HRDesk.Services.Mappers;
 using HRDesk.Services.Models;
@@ -174,6 +175,48 @@ namespace HRDesk.Services.Services
                 HumanResource = humanResource,
                 ProjectManager = projectManager
             };
+        }
+
+        public List<ChartModel> GetAgeChart()
+        {
+            var chart = new List<ChartModel>();
+            var twentyToThirty = _unitOfWork.Users.GetNumberOfUsersBetweenAge(20, 30);
+            var thirtyToForty = _unitOfWork.Users.GetNumberOfUsersBetweenAge(30, 40);
+            var fortyToFifty = _unitOfWork.Users.GetNumberOfUsersBetweenAge(40, 50);
+            var fiftyPlus = _unitOfWork.Users.GetNumberOfUsersBetweenAge(50, 100);
+            chart.Add(new ChartModel
+            {
+                Key = "20-30",
+                Value = twentyToThirty
+            });
+            chart.Add(new ChartModel
+            {
+                Key = "30-40",
+                Value = thirtyToForty
+            });
+            chart.Add(new ChartModel
+            {
+                Key = "40-50",
+                Value = fortyToFifty
+            });
+            chart.Add(new ChartModel
+            {
+                Key = "50+",
+                Value = fiftyPlus
+            });
+            return chart;
+        }
+
+        public List<ChartModel> GetFunctionChart()
+        {
+            var chart = _unitOfWork.Users.GetFunctionChart().ToList();
+            return chart;
+        }
+
+        public List<ChartModel> GetCountryChart()
+        {
+            var chart = _unitOfWork.Users.GetCountryChart().ToList();
+            return chart;
         }
     }
 }

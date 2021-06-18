@@ -1,5 +1,6 @@
 ﻿using HRDesk.Infrastructure.Entities;
 using HRDesk.Infrastructure.Enums;
+using HRDesk.Infrastructure.Models;
 using HRDesk.Infrastructure.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -92,6 +93,28 @@ namespace HRDesk.Infrastructure.Repositories
         public int GetQualityAssuranceNumber()
         {
             return GetAll().Include(a => a.Function).Where(u => !u.IsDeleted && u.Function.Id == (int)PredefinedFunctions.QualityAssurance).Count();
+        }
+        public int GetNumberOfUsersBetweenAge(int startAge, int endAge)
+        {
+            return GetAll().Include(a => a.PersonalDetails)
+                .Where(u => !u.IsDeleted && (DateTime.Today.Year - u.PersonalDetails.DateOfBirth.Year) >= startAge && (DateTime.Today.Year - u.PersonalDetails.DateOfBirth.Year) < endAge).Count();
+        }
+        public IQueryable<ChartModel> GetFunctionChart()
+        {
+            return GetAll().Include(a => a.PersonalDetails).Include(a => a.CompanyDetails).Include(a => a.Function).Where(u => !u.IsDeleted).GroupBy(a => a.Function.Name).Select(u => new ChartModel
+            {
+                Key = u.Key,
+                Value = u.Count(),
+            });
+        }
+
+        public IQueryable<ChartModel> GetCountryChart()
+        {
+            return GetAll().Include(a => a.PersonalDetails).Include(a => a.CompanyDetails).Include(a => a.Function).Where(u => !u.IsDeleted).GroupBy(a => a.PersonalDetails.CountryOfBirth).Select(u => new ChartModel
+            {
+                Key = u.Key,
+                Value = u.Count(),
+            });
         }
     }
 }

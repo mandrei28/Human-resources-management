@@ -1,4 +1,5 @@
 ﻿using HRDesk.Infrastructure.Entities;
+using HRDesk.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,15 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
         bool CheckIfEmailIsInUse(string email);
         IQueryable<User> GetUsers();
         IQueryable<User> GetAdmins();
-        public int GetEmployeesNumber();
-        public int GetBoardNumber();
-        public int GetHumanResourceNumber();
-        public int GetProjectManagerNumber();
-        public int GetDevelopersNumber();
-        public int GetQualityAssuranceNumber();
+        int GetEmployeesNumber();
+        int GetBoardNumber();
+        int GetHumanResourceNumber();
+        int GetProjectManagerNumber();
+        int GetDevelopersNumber();
+        int GetQualityAssuranceNumber();
         Task<User> GetByIDAsync(int id);
+        int GetNumberOfUsersBetweenAge(int startAge, int endAge);
+        IQueryable<ChartModel> GetFunctionChart();
+        IQueryable<ChartModel> GetCountryChart();
     }
 }

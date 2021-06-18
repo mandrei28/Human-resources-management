@@ -9,15 +9,16 @@ import StepLabel from "@material-ui/core/StepLabel";
 import FirstStep from "./UIComponents/FirstStep/FirstStep";
 import SecondStep from "./UIComponents/SecondStep/SecondStep";
 import ThirdStep from "./UIComponents/ThirdStep/ThirdStep";
+import ForthStep from "./UIComponents/ForthStep/ForthStep";
 
-const labels = ["Personal Data", "Company Data", "Permissions"];
+const labels = ["Personal Data", "Company Data", "Picture", "Permissions"];
 
 class EmployeeGeneral extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isNew: true,
-      step: 0,
+      step: 2,
       user: {
         id: 0,
         firstName: "",
@@ -37,6 +38,8 @@ class EmployeeGeneral extends Component {
         dateOfEmployment: new Date(),
         workEmail: "",
         permissions: [],
+        imageFile: null,
+        imageSrc: null,
       },
       allPermissions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     };
@@ -90,12 +93,35 @@ class EmployeeGeneral extends Component {
     console.info(this.state);
   };
 
-  handleDayoffDateFieldChange = (value, field) => {
+  handleDateFieldChange = (value, field) => {
     this.setState((prevState) => {
       const { user } = prevState;
       user[field] = value;
       return { user };
     });
+  };
+
+  handlePictureChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let imageFile = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (x) => {
+        this.setState((prevState) => {
+          const { user } = prevState;
+          user.imageFile = imageFile;
+          user.imageSrc = x.target.result;
+          return { user };
+        });
+      };
+      reader.readAsDataURL(imageFile);
+    } else {
+      this.setState((prevState) => {
+        const { user } = prevState;
+        user.imageFile = null;
+        user.imageSrc = null;
+        return { user };
+      });
+    }
   };
 
   handleSubmit = async () => {
@@ -116,7 +142,7 @@ class EmployeeGeneral extends Component {
           <FirstStep
             handleNext={this.handleNext}
             handleChange={this.handleFieldChange}
-            handleDateChange={this.handleDayoffDateFieldChange}
+            handleDateChange={this.handleDateFieldChange}
             user={this.state.user}
             // formErrors={formErrors}
           />
@@ -127,7 +153,7 @@ class EmployeeGeneral extends Component {
             handleNext={this.handleNext}
             handleBack={this.handleBack}
             handleChange={this.handleFieldChange}
-            handleDateChange={this.handleDayoffDateFieldChange}
+            handleDateChange={this.handleDateFieldChange}
             user={this.state.user}
             offices={this.state.offices}
             teams={this.state.teams}
@@ -139,6 +165,16 @@ class EmployeeGeneral extends Component {
       case 2:
         return (
           <ThirdStep
+            handleBack={this.handleBack}
+            handleNext={this.handleNext}
+            handleChange={this.handlePermissionChange}
+            handlePictureChange={this.handlePictureChange}
+            user={this.state.user}
+          />
+        );
+      case 3:
+        return (
+          <ForthStep
             handleNext={this.handleNext}
             handleBack={this.handleBack}
             handleChange={this.handlePermissionChange}
@@ -147,6 +183,7 @@ class EmployeeGeneral extends Component {
             allPermissions={this.state.allPermissions}
           />
         );
+
       default:
         break;
     }

@@ -1,4 +1,5 @@
-﻿using HRDesk.Services.Models;
+﻿using HRDesk.Infrastructure.Models;
+using HRDesk.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,5 +18,8 @@ namespace HRDesk.Services.ServiceInterfaces
         Task UpdateUser(UserModel userModel);
         List<UserModel> GetAdmins();
         CompanyStatisticsModel GetCompanyStatistics();
+        List<ChartModel> GetAgeChart();
+        List<ChartModel> GetFunctionChart();
+        List<ChartModel> GetCountryChart();
     }
 }

@@ -13,6 +13,12 @@ import {
   GET_ADMINS_ERROR,
   GET_STATISTICS_SUCCESS,
   GET_STATISTICS_ERROR,
+  GET_AGE_CHART_SUCCESS,
+  GET_FUNCTION_CHART_SUCCESS,
+  GET_COUNTRY_CHART_SUCCESS,
+  GET_AGE_CHART_ERROR,
+  GET_FUNCTION_CHART_ERROR,
+  GET_COUNTRY_CHART_ERROR,
 } from "../actions/userActions";
 import { initialState } from "../selectors/userSelector";
 
@@ -32,6 +38,18 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, error: null };
     case GET_ADMINS_ERROR:
       return { ...state, error: null };
+    case GET_AGE_CHART_SUCCESS:
+      return { ...state, error: null };
+    case GET_AGE_CHART_ERROR:
+      return { ...state, error: action.payload };
+    case GET_FUNCTION_CHART_SUCCESS:
+      return { ...state, error: null };
+    case GET_FUNCTION_CHART_ERROR:
+      return { ...state, error: action.payload };
+    case GET_COUNTRY_CHART_SUCCESS:
+      return { ...state, error: null };
+    case GET_COUNTRY_CHART_ERROR:
+      return { ...state, error: action.payload };
     case USER_UPDATE_ERROR:
       return { ...state, error: action.payload };
     case GET_USERS_SUCCESS:

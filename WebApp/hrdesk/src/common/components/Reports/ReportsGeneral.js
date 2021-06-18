@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { styles } from "./ReportsStyles";
-import CompanyChartsGeneral from "./CompanyCharts/CompanyChartsGeneral";
+import CompanyChartsContainer from "./CompanyCharts/CompanyChartsContainer";
 import AgeChartGeneral from "./AgeChart/AgeChartGeneral";
 
 class ReportsGeneral extends Component {
@@ -37,7 +37,7 @@ class ReportsGeneral extends Component {
             </Tabs>
           </Paper>
           <Container maxWidth="xl" className={classes.container}>
-            {this.state.value === 0 && <CompanyChartsGeneral />}
+            {this.state.value === 0 && <CompanyChartsContainer />}
             {this.state.value === 1 && <AgeChartGeneral />}
           </Container>
         </main>

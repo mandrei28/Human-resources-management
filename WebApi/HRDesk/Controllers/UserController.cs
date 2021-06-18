@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using HRDesk.Infrastructure.Entities;
+using HRDesk.Infrastructure.Models;
 using HRDesk.Infrastructure.RepositoryInterfaces;
 using HRDesk.Services.Models;
 using HRDesk.Services.ServiceInterfaces;
@@ -96,6 +97,27 @@ namespace HRDesk.Controllers
         public async Task Update([FromBody] UserModel model)
         {
             await _userService.UpdateUser(model);
+        }
+
+        [Authorize]
+        [HttpGet("getAgeChart")]
+        public List<ChartModel> GetAgeChart()
+        {
+            return _userService.GetAgeChart();
+        }
+
+        [Authorize]
+        [HttpGet("getFunctionChart")]
+        public List<ChartModel> GetFunctionChart()
+        {
+            return _userService.GetFunctionChart();
+        }
+
+        [Authorize]
+        [HttpGet("getCountryChart")]
+        public List<ChartModel> GetCountryChart()
+        {
+            return _userService.GetCountryChart();
         }
     }
 }

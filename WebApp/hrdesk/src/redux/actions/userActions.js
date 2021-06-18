@@ -9,6 +9,12 @@ export const GET_STATISTICS_SUCCESS = "GET_STATISTICS_SUCCESS";
 export const GET_STATISTICS_ERROR = "GET_STATISTICS_ERROR";
 export const USER_REGISTER_SUCCESS = "USER_REGISTER_SUCCESS";
 export const USER_REGISTER_ERROR = "USER_REGISTER_ERROR";
+export const GET_AGE_CHART_SUCCESS = "GET_AGE_CHART_SUCCESS";
+export const GET_FUNCTION_CHART_SUCCESS = "GET_FUNCTION_CHART_SUCCESS";
+export const GET_COUNTRY_CHART_SUCCESS = "GET_COUNTRY_CHART_SUCCESS";
+export const GET_AGE_CHART_ERROR = "GET_AGE_CHART_ERROR";
+export const GET_FUNCTION_CHART_ERROR = "GET_FUNCTION_CHART_ERROR";
+export const GET_COUNTRY_CHART_ERROR = "GET_COUNTRY_CHART_ERROR";
 export const USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
 export const USER_UPDATE_ERROR = "USER_UPDATE_ERROR";
 export const GET_USERS_SUCCESS = "GET_USERS_SUCCESS";
@@ -57,6 +63,46 @@ export const getAdminsSuccess = (users) => {
 export const getAdminsError = (error) => {
   return {
     type: GET_ADMINS_ERROR,
+    error: error,
+  };
+};
+
+export const getAgeChartSuccess = (users) => {
+  return {
+    type: GET_AGE_CHART_SUCCESS,
+    payload: users,
+  };
+};
+
+export const getAgeChartError = (error) => {
+  return {
+    type: GET_AGE_CHART_ERROR,
+    error: error,
+  };
+};
+export const getFunctionChartSuccess = (users) => {
+  return {
+    type: GET_FUNCTION_CHART_SUCCESS,
+    payload: users,
+  };
+};
+
+export const getFunctionChartError = (error) => {
+  return {
+    type: GET_FUNCTION_CHART_ERROR,
+    error: error,
+  };
+};
+export const getCountryChartSuccess = (users) => {
+  return {
+    type: GET_COUNTRY_CHART_SUCCESS,
+    payload: users,
+  };
+};
+
+export const getCountryChartError = (error) => {
+  return {
+    type: GET_COUNTRY_CHART_ERROR,
     error: error,
   };
 };
@@ -295,6 +341,61 @@ export const deleteUser = (userId) => {
           toastr.error("Error", error.response.data.Message);
         }
         dispatch(deleteUserError(error));
+        throw error;
+      });
+  };
+};
+
+export const getAgeChart = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("user/getAgeChart")
+      .then((response) => {
+        dispatch(getAgeChartSuccess(response.data));
+        toastr.success("Chart", "Age chart fetched");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getAgeChartError(error));
+        throw error;
+      });
+  };
+};
+export const getFunctionChart = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("user/getFunctionChart")
+      .then((response) => {
+        dispatch(getFunctionChartSuccess(response.data));
+        toastr.success("Chart", "Function chart fetched");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getFunctionChartError(error));
+        throw error;
+      });
+  };
+};
+export const getCountryChart = () => {
+  return (dispatch) => {
+    return apiClient
+      .get("user/getCountryChart")
+      .then((response) => {
+        dispatch(getCountryChartSuccess(response.data));
+        toastr.success("Chart", "Country chart fetched");
+        return response.data;
+      })
+      .catch((error) => {
+        if (error.response !== undefined) {
+          toastr.error("Error", error.response.data.Message);
+        }
+        dispatch(getCountryChartError(error));
         throw error;
       });
   };
