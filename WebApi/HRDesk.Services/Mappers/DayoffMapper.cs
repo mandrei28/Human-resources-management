@@ -22,7 +22,7 @@ namespace HRDesk.Services.Mappers
                 AdminId = dayoff.AdminId,
                 AdminModel = UserMapper.ToUserModel(dayoff.Admin),
                 Status = dayoff.Status,
-                VerifiedBy = dayoff.Status != RequestStatus.Waiting ? dayoff.Admin.LastName + " " + dayoff.Admin.FirstName : null,
+                VerifiedBy = dayoff.Status != RequestStatus.Waiting ? dayoff.Admin.PersonalDetails.LastName + " " + dayoff.Admin.PersonalDetails.FirstName : null,
             };
         }
 
@@ -38,17 +38,5 @@ namespace HRDesk.Services.Mappers
                 Status = dayoffModel.Status,
             };
         }
-
-        //public static Dayoff UpdateDayoff(Dayoff dayoff, DayoffModel dayoffModel)
-        //{
-        //    dayoff.Description = dayoffModel.Description;
-        //    dayoff.StartDate = dayoffModel.StartDate;
-        //    dayoff.StartHour = dayoffModel.StartHour;
-        //    dayoff.EndHour = dayoffModel.EndHour;
-        //    dayoff.UserId = dayoffModel.UserId;
-        //    dayoff.AdminId = dayoffModel.AdminId;
-        //    dayoff.Approved = dayoffModel.Approved;
-        //    return dayoff;
-        //}
     }
 }

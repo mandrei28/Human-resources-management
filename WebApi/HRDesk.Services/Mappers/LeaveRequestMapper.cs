@@ -23,7 +23,7 @@ namespace HRDesk.Services.Mappers
                 AdminId = leaveRequest.AdminId,
                 AdminModel = UserMapper.ToUserModel(leaveRequest.Admin),
                 Status = leaveRequest.Status,
-                VerifiedBy = leaveRequest.Status != RequestStatus.Waiting ? leaveRequest.Admin.LastName + " " + leaveRequest.Admin.FirstName : null,
+                VerifiedBy = leaveRequest.Status != RequestStatus.Waiting ? leaveRequest.Admin.PersonalDetails.LastName + " " + leaveRequest.Admin.PersonalDetails.FirstName : null,
             };
         }
 

@@ -3,10 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HRDesk.Infrastructure.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialConfiguration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "CompanyDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NumberOfDaysoff = table.Column<int>(type: "int", nullable: false),
+                    Salary = table.Column<int>(type: "int", nullable: false),
+                    DateOfEmployment = table.Column<DateTime>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyDetails", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Functions",
                 columns: table => new
@@ -92,6 +107,26 @@ namespace HRDesk.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PersonalDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CountryOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
+                    CNP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonalDetails", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -149,23 +184,14 @@ namespace HRDesk.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CountryOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "date", nullable: false),
-                    CNP = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WorkEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberOfDaysoff = table.Column<int>(type: "int", nullable: false),
-                    Salary = table.Column<int>(type: "int", nullable: false),
-                    DateOfEmployment = table.Column<DateTime>(type: "date", nullable: false),
+                    Predefined = table.Column<bool>(type: "bit", nullable: false),
                     TeamId = table.Column<int>(type: "int", nullable: true),
                     FunctionId = table.Column<int>(type: "int", nullable: true),
                     OfficeId = table.Column<int>(type: "int", nullable: true),
-                    Predefined = table.Column<bool>(type: "bit", nullable: false),
+                    CompanyDetailsId = table.Column<int>(type: "int", nullable: true),
+                    PersonalDetailsId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -173,6 +199,12 @@ namespace HRDesk.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_CompanyDetails_CompanyDetailsId",
+                        column: x => x.CompanyDetailsId,
+                        principalTable: "CompanyDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Users_Functions_FunctionId",
                         column: x => x.FunctionId,
@@ -183,6 +215,12 @@ namespace HRDesk.Infrastructure.Migrations
                         name: "FK_Users_Offices_OfficeId",
                         column: x => x.OfficeId,
                         principalTable: "Offices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Users_PersonalDetails_PersonalDetailsId",
+                        column: x => x.PersonalDetailsId,
+                        principalTable: "PersonalDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -289,6 +327,11 @@ namespace HRDesk.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "CompanyDetails",
+                columns: new[] { "Id", "DateOfEmployment", "NumberOfDaysoff", "Salary" },
+                values: new object[] { 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 20, 5000 });
+
+            migrationBuilder.InsertData(
                 table: "Functions",
                 columns: new[] { "Id", "CreatedDate", "Description", "Name", "Predefined", "UpdatedDate" },
                 values: new object[,]
@@ -316,18 +359,23 @@ namespace HRDesk.Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { 11, "Manage organization" },
                     { 10, "Manage holidays" },
                     { 9, "Manage employees" },
                     { 8, "Book room" },
                     { 7, "Holiday calendar" },
-                    { 6, "Team" },
                     { 2, "Leave requests" },
+                    { 5, "Meetings" },
                     { 4, "Reports" },
                     { 3, "Daysoff requests" },
-                    { 11, "Manage organization" },
                     { 1, "Dashboard" },
-                    { 5, "Meetings" }
+                    { 6, "Team" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "PersonalDetails",
+                columns: new[] { "Id", "Address", "CNP", "CountryOfBirth", "DateOfBirth", "Email", "FirstName", "LastName", "Phone" },
+                values: new object[] { 1, "Company address", "1980528111111", "Romania", new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@admin.com", "Andrei Cristian", "Marcu", "0749206007" });
 
             migrationBuilder.InsertData(
                 table: "Teams",
@@ -336,8 +384,8 @@ namespace HRDesk.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Address", "CNP", "CountryOfBirth", "CreatedDate", "DateOfBirth", "DateOfEmployment", "Email", "FirstName", "FunctionId", "IsDeleted", "LastName", "NumberOfDaysoff", "OfficeId", "Password", "Phone", "Predefined", "Salary", "TeamId", "UpdatedDate", "WorkEmail" },
-                values: new object[] { 1, "Company address", "1980528111111", "Romania", new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@admin.com", "Andrei Cristian", 1, false, "Marcu", 20, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", "0749206007", true, 5000, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@company.com" });
+                columns: new[] { "Id", "CompanyDetailsId", "CreatedDate", "FunctionId", "IsDeleted", "OfficeId", "Password", "PersonalDetailsId", "Predefined", "TeamId", "UpdatedDate", "WorkEmail" },
+                values: new object[] { 1, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", 1, true, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@company.com" });
 
             migrationBuilder.InsertData(
                 table: "UserPermissions",
@@ -398,6 +446,11 @@ namespace HRDesk.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_CompanyDetailsId",
+                table: "Users",
+                column: "CompanyDetailsId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_FunctionId",
                 table: "Users",
                 column: "FunctionId");
@@ -406,6 +459,11 @@ namespace HRDesk.Infrastructure.Migrations
                 name: "IX_Users_OfficeId",
                 table: "Users",
                 column: "OfficeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_PersonalDetailsId",
+                table: "Users",
+                column: "PersonalDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_TeamId",
@@ -440,10 +498,16 @@ namespace HRDesk.Infrastructure.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
+                name: "CompanyDetails");
+
+            migrationBuilder.DropTable(
                 name: "Functions");
 
             migrationBuilder.DropTable(
                 name: "Offices");
+
+            migrationBuilder.DropTable(
+                name: "PersonalDetails");
 
             migrationBuilder.DropTable(
                 name: "Teams");

@@ -13,20 +13,20 @@ namespace HRDesk.Services.Mappers
             return new UserModel()
             {
                 Id = user.Id,
-                FirstName = user.FirstName,
-                Address = user.Address,
-                Cnp = user.CNP,
-                CountryOfBirth = user.CountryOfBirth,
-                DateOfBirth = user.DateOfBirth,
-                DateOfEmployment = user.DateOfEmployment,
-                Email = user.Email,
+                FirstName = user.PersonalDetails.FirstName,
+                Address = user.PersonalDetails.Address,
+                Cnp = user.PersonalDetails.CNP,
+                CountryOfBirth = user.PersonalDetails.CountryOfBirth,
+                DateOfBirth = user.PersonalDetails.DateOfBirth,
+                DateOfEmployment = user.CompanyDetails.DateOfEmployment,
+                Email = user.PersonalDetails.Email,
                 WorkEmail = user.WorkEmail,
                 FunctionId = user.FunctionId.Value,
-                LastName = user.LastName,
-                NumberOfDaysoff = user.NumberOfDaysoff,
+                LastName = user.PersonalDetails.LastName,
+                NumberOfDaysoff = user.CompanyDetails.NumberOfDaysoff,
                 OfficeId = user.OfficeId.Value,
-                Phone = user.Phone,
-                Salary = user.Salary,
+                Phone = user.PersonalDetails.Phone,
+                Salary = user.CompanyDetails.Salary,
                 TeamId = user.TeamId.Value,
                 Office = user.Office != null ? OfficeMapper.ToOfficeModel(user.Office) : null,
                 OfficeName = user.Office != null ? user.Office.Name : null,
@@ -44,40 +44,46 @@ namespace HRDesk.Services.Mappers
             return new User()
             {
                 // Id = userModel.Id,
-                FirstName = userModel.FirstName,
-                Address = userModel.Address,
-                CNP = userModel.Cnp,
-                CountryOfBirth = userModel.CountryOfBirth,
-                DateOfBirth = userModel.DateOfBirth,
-                DateOfEmployment = userModel.DateOfEmployment,
-                Email = userModel.Email,
+                PersonalDetails = new PersonalDetails
+                {
+                    FirstName = userModel.FirstName,
+                    Address = userModel.Address,
+                    CNP = userModel.Cnp,
+                    CountryOfBirth = userModel.CountryOfBirth,
+                    DateOfBirth = userModel.DateOfBirth,
+                    Email = userModel.Email,
+                    LastName = userModel.LastName,
+                    Phone = userModel.Phone,
+                },
+                CompanyDetails = new CompanyDetails
+                {
+                    DateOfEmployment = userModel.DateOfEmployment,
+                    NumberOfDaysoff = userModel.NumberOfDaysoff,
+                    Salary = userModel.Salary,
+                },
                 WorkEmail = userModel.WorkEmail,
                 FunctionId = userModel.FunctionId,
-                LastName = userModel.LastName,
-                NumberOfDaysoff = userModel.NumberOfDaysoff,
                 OfficeId = userModel.OfficeId,
-                Phone = userModel.Phone,
-                Salary = userModel.Salary,
                 TeamId = userModel.TeamId,
             };
         }
 
         public static User UpdateUser(User user, UserModel userModel)
         {
-            user.FirstName = userModel.FirstName;
-            user.Address = userModel.Address;
-            user.CNP = userModel.Cnp;
-            user.CountryOfBirth = userModel.CountryOfBirth;
-            user.DateOfBirth = userModel.DateOfBirth;
-            user.DateOfEmployment = userModel.DateOfEmployment;
-            user.Email = userModel.Email;
+            user.PersonalDetails.FirstName = userModel.FirstName;
+            user.PersonalDetails.Address = userModel.Address;
+            user.PersonalDetails.CNP = userModel.Cnp;
+            user.PersonalDetails.CountryOfBirth = userModel.CountryOfBirth;
+            user.PersonalDetails.DateOfBirth = userModel.DateOfBirth;
+            user.CompanyDetails.DateOfEmployment = userModel.DateOfEmployment;
+            user.PersonalDetails.Email = userModel.Email;
             user.WorkEmail = userModel.WorkEmail;
             user.FunctionId = userModel.FunctionId;
-            user.LastName = userModel.LastName;
-            user.NumberOfDaysoff = userModel.NumberOfDaysoff;
+            user.PersonalDetails.LastName = userModel.LastName;
+            user.CompanyDetails.NumberOfDaysoff = userModel.NumberOfDaysoff;
             user.OfficeId = userModel.OfficeId;
-            user.Phone = userModel.Phone;
-            user.Salary = userModel.Salary;
+            user.PersonalDetails.Phone = userModel.Phone;
+            user.CompanyDetails.Salary = userModel.Salary;
             user.TeamId = userModel.TeamId;
             return user;
         }

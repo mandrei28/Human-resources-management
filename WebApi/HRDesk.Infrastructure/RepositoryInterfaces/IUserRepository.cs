@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HRDesk.Infrastructure.RepositoryInterfaces
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-        bool EmailAlreadyInUse(string email);
         User GetUserById(int id);
         User GetUserByEmail(string email);
         bool CheckIfEmailIsInUse(string email);
@@ -20,5 +20,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
         public int GetProjectManagerNumber();
         public int GetDevelopersNumber();
         public int GetQualityAssuranceNumber();
+        Task<User> GetByIDAsync(int id);
     }
 }

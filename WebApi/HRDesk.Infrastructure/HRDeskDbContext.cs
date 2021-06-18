@@ -17,6 +17,8 @@ namespace HRDesk.Infrastructure
         public DbSet<NationalDay> NationalDays { get; set; }
         public DbSet<MeetingRoom> MeetingRooms { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<PersonalDetails> PersonalDetails { get; set; }
+        public DbSet<CompanyDetails> CompanyDetails { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public HRDeskDbContext(DbContextOptions<HRDeskDbContext> options) : base(options)
@@ -103,6 +105,26 @@ namespace HRDesk.Infrastructure
                 UpdatedDate = new DateTime(2021, 6, 5),
                 Predefined = true,
             });
+
+            modelBuilder.Entity<PersonalDetails>().HasData(new PersonalDetails
+            {
+                Id = 1,
+                FirstName = "Andrei Cristian",
+                LastName = "Marcu",
+                Address = "Company address",
+                CNP = "1980528111111",
+                CountryOfBirth = "Romania",
+                DateOfBirth = new DateTime(1998, 5, 28),
+                Email = "administrator@admin.com",
+                Phone = "0749206007",
+            });
+            modelBuilder.Entity<CompanyDetails>().HasData(new CompanyDetails
+            {
+                Id = 1,
+                DateOfEmployment = new DateTime(2021, 6, 5),
+                NumberOfDaysoff = 20,
+                Salary = 5000,
+            });
             //   "Email" : "administrator@admin.com",
             //"Password" : "administrator"
             modelBuilder.Entity<User>().HasData(new User
@@ -110,21 +132,12 @@ namespace HRDesk.Infrastructure
                 Id = 1,
                 CreatedDate = new DateTime(2021, 6, 5),
                 IsDeleted = false,
-                Address = "Company address",
-                CNP = "1980528111111",
-                CountryOfBirth = "Romania",
-                DateOfBirth = new DateTime(1998, 5, 28),
-                DateOfEmployment = new DateTime(2021, 6, 5),
-                Email = "administrator@admin.com",
-                FirstName = "Andrei Cristian",
-                LastName = "Marcu",
+                PersonalDetailsId = 1,
+                CompanyDetailsId = 1,
                 FunctionId = 1,
-                NumberOfDaysoff = 20,
                 OfficeId = 1,
-                Password = "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==",
-                Phone = "0749206007",
-                Salary = 5000,
                 TeamId = 1,
+                Password = "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==",
                 WorkEmail = "administrator@company.com",
                 UpdatedDate = new DateTime(2021, 6, 5),
                 Predefined = true,

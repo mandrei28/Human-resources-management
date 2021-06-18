@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HRDesk.Infrastructure.Repositories
 {
@@ -14,34 +15,58 @@ namespace HRDesk.Infrastructure.Repositories
         public UserRepository(HRDeskDbContext dbContext) : base(dbContext)
         {
         }
-        public bool EmailAlreadyInUse(string email)
-        {
-            return GetAll().Any(u => u.WorkEmail == email);
-        }
-
         public User GetUserByEmail(string email)
         {
-            return GetAll().Where(u => u.WorkEmail == email && !u.IsDeleted).FirstOrDefault();
+            return GetAll()
+                .Include(u => u.CompanyDetails)
+                .Include(u => u.PersonalDetails)
+                .Where(u => u.WorkEmail == email && !u.IsDeleted).FirstOrDefault();
         }
 
         public bool CheckIfEmailIsInUse(string email)
         {
-            return GetAll().Any(u => u.WorkEmail == email);
+            return GetAll()
+                .Include(u => u.CompanyDetails)
+                .Include(u => u.PersonalDetails)
+                .Any(u => u.WorkEmail == email);
+        }
+
+        public async Task<User> GetByIDAsync(int id)
+        {
+            return await GetAll()
+                   .Include(u => u.CompanyDetails)
+                   .Include(u => u.PersonalDetails).FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public User GetUserById(int id)
         {
-            return GetAll().Include(u => u.Team).Include(u => u.Function).Include(u => u.Office).Where(u => u.Id == id && !u.IsDeleted).FirstOrDefault();
+            return GetAll()
+                .Include(u => u.CompanyDetails)
+                .Include(u => u.PersonalDetails)
+                .Include(u => u.Team)
+                .Include(u => u.Function)
+                .Include(u => u.Office)
+                .Where(u => u.Id == id && !u.IsDeleted).FirstOrDefault();
         }
 
         public IQueryable<User> GetUsers()
         {
-            return GetAll().Include(u => u.Team).Include(u => u.Function).Include(u => u.Office).Where(u => !u.IsDeleted);
+            return GetAll()
+                .Include(u => u.CompanyDetails)
+                .Include(u => u.PersonalDetails)
+                .Include(u => u.Team)
+                .Include(u => u.Function)
+                .Include(u => u.Office)
+                .Where(u => !u.IsDeleted);
         }
 
         public IQueryable<User> GetAdmins()
         {
-            return GetAll().Include(a => a.Permissions).Where(a => a.Permissions.Any(p => p.Id == (int)Permissions.ManageHolidays));
+            return GetAll()
+                .Include(u => u.CompanyDetails)
+                .Include(u => u.PersonalDetails)
+                .Include(a => a.Permissions)
+                .Where(a => a.Permissions.Any(p => p.Id == (int)Permissions.ManageHolidays));
         }
 
         public int GetEmployeesNumber()

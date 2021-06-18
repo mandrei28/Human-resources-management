@@ -87,7 +87,7 @@ namespace HRDesk.Services.Services
             });
             var holidayDayoffComponents = daysoff.Select(n => new HolidayCalendarComponentModel
             {
-                Title = n.Description + " - " + n.User.FirstName + " " + n.User.LastName,
+                Title = n.Description + " - " + n.User.PersonalDetails.FirstName + " " + n.User.PersonalDetails.LastName,
                 StartDate = n.StartDate,
                 EndDate = n.EndDate,
             });
@@ -128,7 +128,7 @@ namespace HRDesk.Services.Services
             return new DayoffChartModel
             {
                 Used = used,
-                Total = user.NumberOfDaysoff,
+                Total = user.CompanyDetails.NumberOfDaysoff,
             };
         }
     }

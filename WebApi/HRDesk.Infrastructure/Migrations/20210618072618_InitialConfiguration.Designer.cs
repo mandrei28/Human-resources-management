@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRDesk.Infrastructure.Migrations
 {
     [DbContext(typeof(HRDeskDbContext))]
-    [Migration("20210615202952_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210618072618_InitialConfiguration")]
+    partial class InitialConfiguration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,36 @@ namespace HRDesk.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.CompanyDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateOfEmployment")
+                        .HasColumnType("date");
+
+                    b.Property<int>("NumberOfDaysoff")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Salary")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompanyDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateOfEmployment = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            NumberOfDaysoff = 20,
+                            Salary = 5000
+                        });
+                });
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.Dayoff", b =>
                 {
@@ -430,6 +460,56 @@ namespace HRDesk.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.PersonalDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CNP")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryOfBirth")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonalDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Company address",
+                            CNP = "1980528111111",
+                            CountryOfBirth = "Romania",
+                            DateOfBirth = new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "administrator@admin.com",
+                            FirstName = "Andrei Cristian",
+                            LastName = "Marcu",
+                            Phone = "0749206007"
+                        });
+                });
+
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -475,29 +555,11 @@ namespace HRDesk.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CNP")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryOfBirth")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CompanyDetailsId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("date");
-
-                    b.Property<DateTime>("DateOfEmployment")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("FunctionId")
                         .HasColumnType("int");
@@ -505,26 +567,17 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfDaysoff")
-                        .HasColumnType("int");
-
                     b.Property<int?>("OfficeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("PersonalDetailsId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Predefined")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Salary")
-                        .HasColumnType("int");
 
                     b.Property<int?>("TeamId")
                         .HasColumnType("int");
@@ -537,9 +590,13 @@ namespace HRDesk.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyDetailsId");
+
                     b.HasIndex("FunctionId");
 
                     b.HasIndex("OfficeId");
+
+                    b.HasIndex("PersonalDetailsId");
 
                     b.HasIndex("TeamId");
 
@@ -549,23 +606,14 @@ namespace HRDesk.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Address = "Company address",
-                            CNP = "1980528111111",
-                            CountryOfBirth = "Romania",
+                            CompanyDetailsId = 1,
                             CreatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfBirth = new DateTime(1998, 5, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateOfEmployment = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "administrator@admin.com",
-                            FirstName = "Andrei Cristian",
                             FunctionId = 1,
                             IsDeleted = false,
-                            LastName = "Marcu",
-                            NumberOfDaysoff = 20,
                             OfficeId = 1,
                             Password = "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==",
-                            Phone = "0749206007",
+                            PersonalDetailsId = 1,
                             Predefined = true,
-                            Salary = 5000,
                             TeamId = 1,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             WorkEmail = "administrator@company.com"
@@ -726,6 +774,10 @@ namespace HRDesk.Infrastructure.Migrations
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.User", b =>
                 {
+                    b.HasOne("HRDesk.Infrastructure.Entities.CompanyDetails", "CompanyDetails")
+                        .WithMany()
+                        .HasForeignKey("CompanyDetailsId");
+
                     b.HasOne("HRDesk.Infrastructure.Entities.Function", "Function")
                         .WithMany()
                         .HasForeignKey("FunctionId");
@@ -734,13 +786,21 @@ namespace HRDesk.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("OfficeId");
 
+                    b.HasOne("HRDesk.Infrastructure.Entities.PersonalDetails", "PersonalDetails")
+                        .WithMany()
+                        .HasForeignKey("PersonalDetailsId");
+
                     b.HasOne("HRDesk.Infrastructure.Entities.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId");
 
+                    b.Navigation("CompanyDetails");
+
                     b.Navigation("Function");
 
                     b.Navigation("Office");
+
+                    b.Navigation("PersonalDetails");
 
                     b.Navigation("Team");
                 });

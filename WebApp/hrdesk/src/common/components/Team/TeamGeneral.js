@@ -1,31 +1,14 @@
 import React, { Component } from "react";
 import { styles } from "./TeamStyles";
 import { withRouter } from "react-router-dom";
-import {
-  Paper,
-  Grid,
-  Container,
-  CssBaseline,
-  withStyles,
-} from "@material-ui/core";
+import { Grid, Container, CssBaseline, withStyles } from "@material-ui/core";
 import CustomCard from "./UIComponents/CustomCard";
 
 class TeamGeneral extends Component {
   constructor(props) {
     super();
     this.state = {
-      users: [
-        // {
-        //   name: "Andrei Cristian Marcu",
-        //   room: "Room B",
-        //   function: "Software Developer",
-        //   birthDate: new Date(),
-        //   since: new Date(),
-        //   email: "mail@mail.com",
-        //   team: "Team B",
-        //   phoneNumber: "0749206007",
-        // },
-      ],
+      users: [],
     };
   }
 
