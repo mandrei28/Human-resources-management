@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import { Paper, Container, CssBaseline } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 
 export default class FirstStep extends Component {
   constructor(props) {
@@ -20,7 +16,6 @@ export default class FirstStep extends Component {
   }
   componentDidMount() {
     console.info(this.props);
-    debugger;
   }
   render() {
     const isValid =

@@ -31,7 +31,7 @@ class TeamGeneral extends Component {
 
   async componentDidMount() {
     const users = await this.props.onGetUsers();
-    debugger;
+
     await this.setState({ users });
   }
 

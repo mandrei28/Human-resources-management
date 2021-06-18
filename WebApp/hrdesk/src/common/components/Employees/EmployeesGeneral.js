@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   DataGrid,
-  GridApi,
   GridToolbarContainer,
   GridToolbarExport,
 } from "@material-ui/data-grid";
@@ -132,7 +131,6 @@ class EmployeesGeneral extends Component {
     var users = await this.props.onGetUsers();
     this.setState({ users, setupComplete: true });
     console.info(users);
-    debugger;
   }
 
   createNewUser = () => {

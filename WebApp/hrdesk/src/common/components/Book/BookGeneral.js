@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Paper from "@material-ui/core/Paper";
 import { withRouter } from "react-router-dom";
 import {
   ViewState,
@@ -18,19 +17,10 @@ import {
   AppointmentTooltip,
   AppointmentForm,
   Toolbar,
-  ViewSwitcher,
-  AllDayPanel,
   DragDropProvider,
   DateNavigator,
 } from "@devexpress/dx-react-scheduler-material-ui";
-import DateFnsUtils from "@date-io/date-fns";
-import { blue, orange } from "@material-ui/core/colors";
-import { withStyles, CssBaseline, Grid, Container } from "@material-ui/core";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import cloneDeep from "lodash/cloneDeep";
+import { withStyles, CssBaseline, Container } from "@material-ui/core";
 
 const BooleanEditor = (props) => {
   return (
@@ -76,7 +66,7 @@ class BookGeneral extends Component {
     const meetingRooms = await this.props.onGetMeetingRooms();
     var meetings = await this.props.onGetMeetings();
     meetings = this.mapMeetingsDates(meetings);
-    debugger;
+
     await this.setState((prevState) => {
       const { resources } = prevState;
       resources[0].instances = meetingRooms;
@@ -109,7 +99,7 @@ class BookGeneral extends Component {
       }
       if (changed) {
         console.info(this.state.data);
-        debugger;
+
         data = data.map((appointment) =>
           changed[appointment.id]
             ? { ...appointment, ...changed[appointment.id] }

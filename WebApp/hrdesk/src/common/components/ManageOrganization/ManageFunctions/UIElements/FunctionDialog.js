@@ -4,20 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import DateFnsUtils from "@date-io/date-fns";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControl from "@material-ui/core/FormControl";
-import { Grid } from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
 
 export default class FunctionDialog extends Component {
   constructor(props) {
@@ -33,7 +20,6 @@ export default class FunctionDialog extends Component {
 
   async componentDidMount() {
     if (this.props.functionModel) {
-      debugger;
       await this.setState({ userFunction: this.props.functionModel });
     }
   }

@@ -10,7 +10,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-import { Paper, Container, CssBaseline } from "@material-ui/core";
+import { Paper, Container } from "@material-ui/core";
 import { PermissionsNames } from "../../../../../utils/constants";
 
 function not(a, b) {
@@ -34,7 +34,6 @@ class ThirdStep extends Component {
   }
 
   componentDidMount() {
-    debugger;
     this.setState({
       left: this.props.allPermissions,
       right: this.props.user.permissions,

@@ -19,7 +19,6 @@ const mergeProps = (stateProps, dispatchProps) => {
     ...stateProps,
     ...dispatchProps,
     onGetMeetings: async (dates) => {
-      debugger;
       return await dispatch(meetingActions.getAllMeetingsBetweenRange(dates));
     },
   };

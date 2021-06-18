@@ -7,7 +7,7 @@ import {
   GridToolbarContainer,
   GridToolbarExport,
 } from "@material-ui/data-grid";
-import { Paper, Grid, Container, CssBaseline, Button } from "@material-ui/core";
+import { Paper, Grid, Button } from "@material-ui/core";
 import { RequestStatuses } from "../../../../utils/constants";
 import "../ManageRequestsStyles.css";
 
@@ -138,12 +138,11 @@ class ManageLeaveRequestsGeneral extends Component {
 
   async componentDidMount() {
     const leaveRequests = await this.props.onGetLeaveRequests();
-    debugger;
+
     this.setState({ leaveRequests });
   }
 
   approveLeaveRequest = async (leaveRequestId, newStatus) => {
-    debugger;
     var leaveRequest = await this.props.onApproveLeaveRequest(
       leaveRequestId,
       newStatus

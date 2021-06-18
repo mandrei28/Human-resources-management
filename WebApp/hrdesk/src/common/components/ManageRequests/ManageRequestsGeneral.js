@@ -16,7 +16,6 @@ class ManageRequestsGeneral extends Component {
   }
 
   handleChange = (event, newValue) => {
-    debugger;
     this.setState({ value: newValue });
   };
 

@@ -86,7 +86,6 @@ export const getAllTeams = () => {
     return apiClient
       .get("team/getAllTeams")
       .then((response) => {
-        debugger;
         dispatch(getTeamsSuccess(response.data));
         toastr.success("Team", "Data fetched with success");
         return response.data;
@@ -106,7 +105,6 @@ export const getAllBookingTeams = () => {
     return apiClient
       .get("team/getAllBookingTeams")
       .then((response) => {
-        debugger;
         dispatch(getBookingTeamsSuccess(response.data));
         toastr.success("Team", "Data fetched with success");
         return response.data;
@@ -141,7 +139,6 @@ export const addTeam = (teamModel) => {
 };
 
 export const deleteTeam = (teamId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`team/deleteTeam/${teamId}`)
@@ -161,7 +158,6 @@ export const deleteTeam = (teamId) => {
 };
 
 export const updateTeam = (teamModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`team/update`, teamModel)

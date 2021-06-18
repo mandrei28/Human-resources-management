@@ -1,11 +1,10 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from "./DaysoffStyles";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
 import Chart from "react-google-charts";
-import { DataGrid, GridApi } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import "./DaysoffStyles.css";

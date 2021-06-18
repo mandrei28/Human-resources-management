@@ -208,7 +208,6 @@ export const silentLogin = () => {
 };
 
 export const registerUser = (userModel, history) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post("user/register", userModel)
@@ -228,7 +227,6 @@ export const registerUser = (userModel, history) => {
 };
 
 export const updateUser = (userModel, history) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put("user/update", userModel)
@@ -248,7 +246,6 @@ export const updateUser = (userModel, history) => {
 };
 
 export const getUsers = () => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .get("user/users")
@@ -268,7 +265,6 @@ export const getUsers = () => {
 };
 
 export const getUser = (userId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .get(`user/${userId}`)
@@ -287,7 +283,6 @@ export const getUser = (userId) => {
   };
 };
 export const deleteUser = (userId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`user/deleteUser/${userId}`)

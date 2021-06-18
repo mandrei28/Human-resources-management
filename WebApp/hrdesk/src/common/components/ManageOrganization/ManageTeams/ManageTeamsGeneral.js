@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import {
-  DataGrid,
-  GridApi,
-  GridToolbarContainer,
-  GridToolbarExport,
-} from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
+import { Paper, Grid } from "@material-ui/core";
 import { styles } from "./ManageTeamsStyles";
 import EditIcon from "@material-ui/icons/Edit";
 import TeamDialog from "./UIElements/TeamDialog";
@@ -101,9 +96,8 @@ class ManageTeamsGeneral extends Component {
 
   async componentDidMount() {
     const teams = await this.props.onGetTeams();
-    debugger;
+
     this.setState({ teams });
-    debugger;
   }
 
   openTeamDialog = () => {
@@ -135,7 +129,7 @@ class ManageTeamsGeneral extends Component {
     } else {
       await this.props.onUpdateTeam(team);
       var index = this.state.teams.findIndex((f) => f.id === team.id);
-      debugger;
+
       await this.setState((prevState) => {
         let teams = [...prevState.teams];
         teams[index] = team;

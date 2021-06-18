@@ -28,7 +28,6 @@ import {
   Equalizer,
   HowToReg,
   Schedule,
-  Comment,
   PersonAdd,
   EventBusy,
   Business,
@@ -192,7 +191,7 @@ class NavBar extends React.Component {
 
   componentDidMount() {
     console.info(this.props);
-    debugger;
+
     this.checkCurrentPath();
   }
 

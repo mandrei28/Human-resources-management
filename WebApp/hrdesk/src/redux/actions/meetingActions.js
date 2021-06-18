@@ -104,7 +104,6 @@ export const getAllMeetings = () => {
     return apiClient
       .get("meeting/getAllMeetings")
       .then((response) => {
-        debugger;
         dispatch(getMeetingsSuccess(response.data));
         toastr.success("Meeting", "Data fetched with success");
         return response.data;
@@ -124,7 +123,6 @@ export const getAllMeetingsBetweenRange = (range) => {
     return apiClient
       .post(`meeting/getAllMeetingsBetweenRange`, range)
       .then((response) => {
-        debugger;
         dispatch(getMeetingsBetweenRangeSuccess(response.data));
         toastr.success("Meeting", "Data fetched with success");
         return response.data;
@@ -144,7 +142,6 @@ export const getUpcomingMeetings = () => {
     return apiClient
       .get(`meeting/getUpcomingMeetings`)
       .then((response) => {
-        debugger;
         dispatch(getUpcomingMeetingsSuccess(response.data));
         toastr.success("Meeting", "Data fetched with success");
         return response.data;
@@ -179,7 +176,6 @@ export const addMeeting = (meetingModel) => {
 };
 
 export const deleteMeeting = (meetingId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`meeting/deleteMeeting/${meetingId}`)
@@ -199,7 +195,6 @@ export const deleteMeeting = (meetingId) => {
 };
 
 export const updateMeeting = (meetingModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`meeting/update`, meetingModel)

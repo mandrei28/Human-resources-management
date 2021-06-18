@@ -16,7 +16,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mergeProps = (stateProps, dispatchProps) => {
-  const { dispatch } = dispatchProps;
   return {
     ...stateProps,
     ...dispatchProps,

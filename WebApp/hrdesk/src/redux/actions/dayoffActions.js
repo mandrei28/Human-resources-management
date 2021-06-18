@@ -153,7 +153,6 @@ export const getHolidayCalendar = () => {
 };
 
 export const addDayoff = (dayoffModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post("dayoff/addDayoff", dayoffModel)
@@ -173,7 +172,6 @@ export const addDayoff = (dayoffModel) => {
 };
 
 export const deleteDayoff = (dayoffId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`dayoff/deleteDayoff/${dayoffId}`)
@@ -231,7 +229,6 @@ export const getDayoffChartData = () => {
 };
 
 export const approveDayoff = (dayoffId, shouldApprove) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`dayoff/approve/${dayoffId}`, shouldApprove)

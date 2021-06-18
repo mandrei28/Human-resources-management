@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { styles } from "./HolidayCalendarStyles";
-import { withStyles, CssBaseline, Grid, Container } from "@material-ui/core";
+import { withStyles, CssBaseline, Container } from "@material-ui/core";
 import {
   Scheduler,
   MonthView,

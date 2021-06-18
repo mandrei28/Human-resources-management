@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
+import { Container, CssBaseline } from "@material-ui/core";
 import { styles } from "./EmployeeStyles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -46,7 +46,7 @@ class EmployeeGeneral extends Component {
     const functions = await this.props.onGetFunctions();
     const teams = await this.props.onGetTeams();
     await this.setState({ offices, functions, teams });
-    debugger;
+
     if (this.props.match.params.id === "new") {
       this.setState({ isNew: true });
     } else {
@@ -110,7 +110,6 @@ class EmployeeGeneral extends Component {
   handleBack = () => this.setState({ step: this.state.step - 1 });
 
   handleSteps = (step) => {
-    debugger;
     switch (step) {
       case 0:
         return (

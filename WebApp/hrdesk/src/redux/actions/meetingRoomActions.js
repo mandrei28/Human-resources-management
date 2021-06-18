@@ -139,7 +139,6 @@ export const addMeetingRoom = (meetingRoomModel) => {
 };
 
 export const deleteMeetingRoom = (meetingRoomId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`meetingRoom/deleteMeetingRoom/${meetingRoomId}`)
@@ -159,7 +158,6 @@ export const deleteMeetingRoom = (meetingRoomId) => {
 };
 
 export const updateMeetingRoom = (meetingRoomModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`meetingRoom/update`, meetingRoomModel)

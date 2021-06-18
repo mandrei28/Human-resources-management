@@ -104,7 +104,6 @@ export const addNationalDay = (nationalDayModel) => {
 };
 
 export const deleteNationalDay = (nationalDayId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`nationalDay/deleteNationalDay/${nationalDayId}`)
@@ -124,7 +123,6 @@ export const deleteNationalDay = (nationalDayId) => {
 };
 
 export const updateNationalDay = (nationalDayModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`nationalDay/update`, nationalDayModel)

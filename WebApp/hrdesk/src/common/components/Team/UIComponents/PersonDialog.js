@@ -31,7 +31,6 @@ class PersonDialog extends Component {
   }
   componentDidMount() {
     console.info(this.props);
-    debugger;
   }
   render() {
     const { classes } = this.props;

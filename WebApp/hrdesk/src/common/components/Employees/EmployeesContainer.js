@@ -1,8 +1,5 @@
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import * as officeActions from "../../../redux/actions/officeActions";
-import * as functionActions from "../../../redux/actions/functionActions";
-import * as teamActions from "../../../redux/actions/teamActions";
 import * as userActions from "../../../redux/actions/userActions";
 import EmployeesGeneral from "./EmployeesGeneral";
 

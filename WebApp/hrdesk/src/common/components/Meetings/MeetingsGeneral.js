@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import DateFnsUtils from "@date-io/date-fns";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { DataGrid } from "@material-ui/data-grid";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-  KeyboardTimePicker,
 } from "@material-ui/pickers";
 import {
   Paper,

@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import {
-  DataGrid,
-  GridApi,
-  GridToolbarContainer,
-  GridToolbarExport,
-} from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
+import { Paper, Grid } from "@material-ui/core";
 import { styles } from "./ManageRoomsStyles";
 import EditIcon from "@material-ui/icons/Edit";
 import MeetingRoomDialog from "./UIElements/MeetingRoomDialog";
@@ -202,9 +197,8 @@ class ManageRoomsGeneral extends Component {
   async componentDidMount() {
     const offices = await this.props.onGetOffices();
     const meetingRooms = await this.props.onGetMeetingRooms();
-    debugger;
+
     this.setState({ offices, meetingRooms });
-    debugger;
   }
 
   openMeetingRoomDialog = () => {
@@ -225,7 +219,6 @@ class ManageRoomsGeneral extends Component {
   };
 
   editMeetingRoom = async (meetingRoom) => {
-    debugger;
     await this.setState({ meetingRoom: meetingRoom });
     this.openMeetingRoomDialog();
   };
@@ -241,7 +234,7 @@ class ManageRoomsGeneral extends Component {
       var index = this.state.meetingRooms.findIndex(
         (f) => f.id === meetingRoom.id
       );
-      debugger;
+
       await this.setState((prevState) => {
         let meetingRooms = [...prevState.meetingRooms];
         meetingRooms[index] = meetingRoom;
@@ -270,7 +263,6 @@ class ManageRoomsGeneral extends Component {
   };
 
   editOffice = async (office) => {
-    debugger;
     await this.setState({ office: office });
     this.openOfficeDialog();
   };
@@ -284,7 +276,7 @@ class ManageRoomsGeneral extends Component {
     } else {
       await this.props.onUpdateOffice(office);
       var index = this.state.offices.findIndex((f) => f.id === office.id);
-      debugger;
+
       await this.setState((prevState) => {
         let offices = [...prevState.offices];
         offices[index] = office;

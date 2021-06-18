@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import { Paper, Container, CssBaseline } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -20,7 +20,7 @@ export default class SecondStep extends Component {
   }
   render() {
     console.info(this.props);
-    debugger;
+
     var isValid =
       this.props.user.teamId !== 0 &&
       this.props.user.functionId !== null &&

@@ -104,7 +104,6 @@ export const addOffice = (officeModel) => {
 };
 
 export const deleteOffice = (officeId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`office/deleteOffice/${officeId}`)
@@ -124,7 +123,6 @@ export const deleteOffice = (officeId) => {
 };
 
 export const updateOffice = (officeModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`office/update`, officeModel)

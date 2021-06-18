@@ -8,7 +8,7 @@ import {
   GridToolbarExport,
 } from "@material-ui/data-grid";
 import { RequestStatuses } from "../../../../utils/constants";
-import { Paper, Grid, Container, CssBaseline, Button } from "@material-ui/core";
+import { Paper, Grid, Button } from "@material-ui/core";
 import "../ManageRequestsStyles.css";
 
 function CustomToolbar() {
@@ -131,12 +131,11 @@ class ManageDaysoffRequestsGeneral extends Component {
 
   async componentDidMount() {
     const daysoff = await this.props.onGetDaysoff();
-    debugger;
+
     this.setState({ daysoff });
   }
 
   approveDayoff = async (dayoffId, newStatus) => {
-    debugger;
     var dayoff = await this.props.onApproveDayoff(dayoffId, newStatus);
     var index = this.state.daysoff.findIndex((f) => f.id === dayoff.id);
     await this.setState((prevState) => {

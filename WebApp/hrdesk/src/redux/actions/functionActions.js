@@ -84,7 +84,6 @@ export const getAllFunctions = () => {
 };
 
 export const addFunction = (functionModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post("function/addFunction", functionModel)
@@ -104,7 +103,6 @@ export const addFunction = (functionModel) => {
 };
 
 export const deleteFunction = (functionId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`function/deleteFunction/${functionId}`)
@@ -124,7 +122,6 @@ export const deleteFunction = (functionId) => {
 };
 
 export const updateFunction = (functionModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`function/update`, functionModel)

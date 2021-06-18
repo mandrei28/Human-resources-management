@@ -1,5 +1,3 @@
-import { withTheme } from "@material-ui/core";
-
-const styles = (theme) => ({});
+const styles = () => ({});
 
 export { styles };

@@ -1,6 +1,4 @@
-import { withTheme } from "@material-ui/core";
-
-const styles = (theme) => ({
+const styles = () => ({
   root: {
     display: "flex",
     width: "100vw",

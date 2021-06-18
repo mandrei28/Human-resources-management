@@ -11,11 +11,6 @@ import {
   Link,
 } from "@material-ui/core";
 
-// Generate Order Data
-function createData(id, date, start, end, room, description) {
-  return { id, date, start, end, room, description };
-}
-
 const styles = (theme) => ({
   seeMore: {
     marginTop: theme.spacing(3),

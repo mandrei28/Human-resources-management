@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import {
-  DataGrid,
-  GridApi,
-  GridToolbarContainer,
-  GridToolbarExport,
-} from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
-import { Paper, Grid, Container, CssBaseline } from "@material-ui/core";
+import { Paper, Grid } from "@material-ui/core";
 import { styles } from "./ManageFunctionsStyles";
 import EditIcon from "@material-ui/icons/Edit";
 import FunctionDialog from "./UIElements/FunctionDialog";
@@ -106,7 +101,6 @@ class ManageFunctionsGeneral extends Component {
   async componentDidMount() {
     const functions = await this.props.onGetFunctions();
     this.setState({ functions });
-    debugger;
   }
 
   openFunctionDialog = () => {
@@ -127,14 +121,13 @@ class ManageFunctionsGeneral extends Component {
   };
 
   editFunction = async (functionModel) => {
-    debugger;
     await this.setState({ functionModel: functionModel });
     this.openFunctionDialog();
   };
 
   addOrUpdateFunction = async (functionModel) => {
     console.info(this.state);
-    debugger;
+
     if (this.state.functionModel === null) {
       var newFunction = await this.props.onAddFunction(functionModel);
       await this.setState({
@@ -145,7 +138,7 @@ class ManageFunctionsGeneral extends Component {
       var index = this.state.functions.findIndex(
         (f) => f.id === functionModel.id
       );
-      debugger;
+
       await this.setState((prevState) => {
         let functions = [...prevState.functions];
         functions[index] = functionModel;

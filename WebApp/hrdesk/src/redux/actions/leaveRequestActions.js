@@ -103,7 +103,6 @@ export const getAllLeaveRequests = () => {
 };
 
 export const addLeaveRequest = (leaveRequestModel) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post("leaveRequest/addLeaveRequest", leaveRequestModel)
@@ -123,7 +122,6 @@ export const addLeaveRequest = (leaveRequestModel) => {
 };
 
 export const deleteLeaveRequest = (leaveRequestId) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .post(`leaverequest/deleteLeaveRequest/${leaveRequestId}`)
@@ -162,7 +160,6 @@ export const getAllUserLeaveRequests = () => {
 };
 
 export const approveLeaveRequest = (leaveRequestId, shouldApprove) => {
-  debugger;
   return (dispatch) => {
     return apiClient
       .put(`leaveRequest/approve/${leaveRequestId}`, shouldApprove)
