@@ -8,5 +8,6 @@ namespace HRDesk.Services.Models
     {
         public int Id { get; set; }
         public List<int> Permissions { get; set; }
+        public string ImageSrc { get; set; }
     }
 }

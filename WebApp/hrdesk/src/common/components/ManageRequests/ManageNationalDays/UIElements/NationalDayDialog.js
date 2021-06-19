@@ -66,8 +66,6 @@ export default class NationalDayDialog extends Component {
               : "Create new national dayoff"}
           </DialogTitle>
           <DialogContent>
-            {/* <DialogContentText>
-                </DialogContentText> */}
             <TextField
               error={this.state.nationalDay.description.length === 0}
               autoFocus

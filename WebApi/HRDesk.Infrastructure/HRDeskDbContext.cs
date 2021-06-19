@@ -21,6 +21,9 @@ namespace HRDesk.Infrastructure
         public DbSet<CompanyDetails> CompanyDetails { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<Poll> Polls { get; set; }
+        public DbSet<PollAnswer> PollAnswers { get; set; }
+        public DbSet<UserPollAnswer> UserPollAnswers { get; set; }
         public HRDeskDbContext(DbContextOptions<HRDeskDbContext> options) : base(options)
         {
         }

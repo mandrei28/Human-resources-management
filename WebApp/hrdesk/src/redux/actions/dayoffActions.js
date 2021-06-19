@@ -196,7 +196,7 @@ export const getAllUserDayoffs = () => {
       .get("dayoff/getAllUserDayoffs")
       .then((response) => {
         dispatch(getUserDayoffsSuccess(response.data));
-        toastr.success("DayOff", "Data fetched with success");
+        toastr.success("Dayoff", "Data fetched with success");
         return response.data;
       })
       .catch((error) => {

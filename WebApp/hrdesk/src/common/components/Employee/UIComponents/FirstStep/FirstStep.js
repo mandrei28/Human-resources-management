@@ -41,8 +41,6 @@ export default class FirstStep extends Component {
                 onChange={(event) =>
                   this.props.handleChange(event, "firstName")
                 }
-                //error={!!formErrors.firstName}
-                //helperText={formErrors.firstName}
                 required
               />
             </Grid>
@@ -55,8 +53,6 @@ export default class FirstStep extends Component {
                 margin="normal"
                 value={this.props.user.lastName || ""}
                 onChange={(event) => this.props.handleChange(event, "lastName")}
-                //error={!!formErrors.lastName}
-                //helperText={formErrors.lastName}
                 required
               />
             </Grid>
@@ -71,8 +67,6 @@ export default class FirstStep extends Component {
                 value={this.props.user.email || ""}
                 onChange={(event) => this.props.handleChange(event, "email")}
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
@@ -87,8 +81,6 @@ export default class FirstStep extends Component {
                 onChange={(event) =>
                   this.props.handleChange(event, "countryOfBirth")
                 }
-                //error={!!formErrors.lastName}
-                //helperText={formErrors.lastName}
                 required
               />
             </Grid>
@@ -101,8 +93,6 @@ export default class FirstStep extends Component {
                 value={this.props.user.phone || ""}
                 onChange={(event) => this.props.handleChange(event, "phone")}
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
@@ -115,29 +105,10 @@ export default class FirstStep extends Component {
                 value={this.props.user.address || ""}
                 onChange={(event) => this.props.handleChange(event, "address")}
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                label="Date of birth"
-                name="date"
-                type="date"
-                //defaultValue={date || "1999-12-31"}
-                //onChange={handleChange}
-                value={this.props.user.dateOfBirth || ""}
-                onChange={(event) =>
-                  this.props.handleChange(event, "dateOfBirth")
-                }
-                margin="normal"
-                required
-              /> */}
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <React.Fragment>
                   <KeyboardDatePicker
@@ -147,7 +118,6 @@ export default class FirstStep extends Component {
                     margin="normal"
                     id="dateOfBirth"
                     label="Date of birth"
-                    //error={this.state.dayoff.startDate === null}
                     fullWidth
                     required
                     value={this.props.user.dateOfBirth || ""}
@@ -170,8 +140,6 @@ export default class FirstStep extends Component {
                 value={this.props.user.cnp || ""}
                 onChange={(event) => this.props.handleChange(event, "cnp")}
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
@@ -187,7 +155,6 @@ export default class FirstStep extends Component {
               variant="contained"
               disabled={!isValid}
               color="primary"
-              //onClick={isValid ? this.props.handleNext : null}
               onClick={this.props.handleNext}
             >
               Next

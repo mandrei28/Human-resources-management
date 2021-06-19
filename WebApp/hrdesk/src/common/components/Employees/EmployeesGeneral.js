@@ -26,37 +26,32 @@ class EmployeesGeneral extends Component {
     this.state = { setupComplete: false, users: [] };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "firstName", headerName: "First Name", flex: 1 },
+      { field: "firstName", headerName: "First Name", width: 180 },
       {
         field: "lastName",
         headerName: "Last name",
-        flex: 0.7,
+        width: 150,
       },
-      { field: "workEmail", headerName: "Work email", width: 240 },
+      { field: "workEmail", headerName: "Work email", width: 260 },
       {
         field: "teamName",
         headerName: "Team",
-        width: 180,
+        width: 220,
       },
       {
         field: "officeName",
         headerName: "Office",
-        width: 180,
+        width: 220,
       },
       {
         field: "functionName",
         headerName: "Function",
-        width: 200,
+        width: 220,
       },
       {
         field: "salary",
         headerName: "Salary",
-        flex: 0.5,
-      },
-      {
-        field: "phone",
-        headerName: "Phone",
-        flex: 0.7,
+        width: 120,
       },
       {
         field: "",

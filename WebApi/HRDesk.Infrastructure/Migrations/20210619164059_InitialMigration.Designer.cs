@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRDesk.Infrastructure.Migrations
 {
     [DbContext(typeof(HRDeskDbContext))]
-    [Migration("20210619093057_InitialConfiguration")]
-    partial class InitialConfiguration
+    [Migration("20210619164059_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -510,6 +510,52 @@ namespace HRDesk.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.Poll", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AdminId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("AllowMultiple")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.ToTable("Polls");
+                });
+
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.PollAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AnswerLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PollId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PollId");
+
+                    b.ToTable("PollAnswers");
+                });
+
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.Team", b =>
                 {
                     b.Property<int>("Id")
@@ -733,6 +779,28 @@ namespace HRDesk.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.UserPollAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("PollAnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PollAnswerId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserPollAnswers");
+                });
+
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.Dayoff", b =>
                 {
                     b.HasOne("HRDesk.Infrastructure.Entities.User", "Admin")
@@ -776,6 +844,24 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Navigation("MeetingRoom");
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.Poll", b =>
+                {
+                    b.HasOne("HRDesk.Infrastructure.Entities.User", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
+
+                    b.Navigation("Admin");
+                });
+
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.PollAnswer", b =>
+                {
+                    b.HasOne("HRDesk.Infrastructure.Entities.Poll", "Poll")
+                        .WithMany()
+                        .HasForeignKey("PollId");
+
+                    b.Navigation("Poll");
                 });
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.User", b =>
@@ -822,6 +908,21 @@ namespace HRDesk.Infrastructure.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Permission");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.UserPollAnswer", b =>
+                {
+                    b.HasOne("HRDesk.Infrastructure.Entities.PollAnswer", "PollAnswer")
+                        .WithMany()
+                        .HasForeignKey("PollAnswerId");
+
+                    b.HasOne("HRDesk.Infrastructure.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("PollAnswer");
 
                     b.Navigation("User");
                 });

@@ -5,7 +5,6 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
-  Link,
   Paper,
   Box,
   Grid,
@@ -119,13 +118,6 @@ class LoginGeneral extends React.Component {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-              </Grid>
             </form>
             <Box className={classes.copyright}>{this.copyright()}</Box>
           </div>

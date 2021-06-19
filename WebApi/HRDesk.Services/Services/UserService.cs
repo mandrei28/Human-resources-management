@@ -52,6 +52,7 @@ namespace HRDesk.Services.Services
 
             var authData = _authService.GetAuthData(user);
             authData.UserModel.Permissions = GetUserPermissions(user.Id);
+            authData.UserModel.ImageSrc = user.ImageSrc != null ? user.ImageType + ',' + Convert.ToBase64String(user.ImageSrc) : null;
 
             return authData;
         }

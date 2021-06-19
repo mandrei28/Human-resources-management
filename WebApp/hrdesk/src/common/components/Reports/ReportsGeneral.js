@@ -33,7 +33,7 @@ class ReportsGeneral extends Component {
               textColor="primary"
             >
               <Tab className={classes.tabText} label="Company charts" />
-              <Tab className={classes.tabText} label="Future use chart" />
+              {/* <Tab className={classes.tabText} label="Future use chart" /> */}
             </Tabs>
           </Paper>
           <Container maxWidth="xl" className={classes.container}>

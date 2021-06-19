@@ -98,8 +98,6 @@ export default class SecondStep extends Component {
                 value={this.props.user.password || ""}
                 onChange={(event) => this.props.handleChange(event, "password")}
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
@@ -115,8 +113,6 @@ export default class SecondStep extends Component {
                   this.props.handleChange(event, "numberOfDaysoff")
                 }
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
@@ -130,27 +126,10 @@ export default class SecondStep extends Component {
                 value={this.props.user.salary || 0}
                 onChange={(event) => this.props.handleChange(event, "salary")}
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                label="Date of employment"
-                name="employmentDate"
-                type="date"
-                value={this.props.user.dateOfEmployment || ""}
-                onChange={(event) =>
-                  this.props.handleChange(event, "dateOfEmployment")
-                }
-                margin="normal"
-                required
-              /> */}{" "}
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <React.Fragment>
                   <KeyboardDatePicker
@@ -160,7 +139,6 @@ export default class SecondStep extends Component {
                     margin="normal"
                     id="dateOfEmployment"
                     label="Date of employment"
-                    //error={this.state.dayoff.startDate === null}
                     fullWidth
                     required
                     value={this.props.user.dateOfEmployment || ""}
@@ -185,8 +163,6 @@ export default class SecondStep extends Component {
                   this.props.handleChange(event, "workEmail")
                 }
                 margin="normal"
-                //error={!!formErrors.email}
-                // helperText={formErrors.email}
                 required
               />
             </Grid>
@@ -210,7 +186,6 @@ export default class SecondStep extends Component {
               variant="contained"
               disabled={!isValid}
               color="primary"
-              //onClick={isValid ? handleNext : null}
               onClick={this.props.handleNext}
             >
               Next

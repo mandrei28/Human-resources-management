@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HRDesk.Infrastructure.Migrations
 {
-    public partial class InitialConfiguration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -301,6 +301,27 @@ namespace HRDesk.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Polls",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Question = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminId = table.Column<int>(type: "int", nullable: true),
+                    AllowMultiple = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Polls", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Polls_Users_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserPermissions",
                 columns: table => new
                 {
@@ -322,6 +343,53 @@ namespace HRDesk.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserPermissions_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PollAnswers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AnswerLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnswerText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PollId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PollAnswers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PollAnswers_Polls_PollId",
+                        column: x => x.PollId,
+                        principalTable: "Polls",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPollAnswers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    PollAnswerId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPollAnswers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPollAnswers_PollAnswers_PollAnswerId",
+                        column: x => x.PollAnswerId,
+                        principalTable: "PollAnswers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserPollAnswers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -438,6 +506,16 @@ namespace HRDesk.Infrastructure.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PollAnswers_PollId",
+                table: "PollAnswers",
+                column: "PollId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Polls_AdminId",
+                table: "Polls",
+                column: "AdminId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserPermissions_PermissionId",
                 table: "UserPermissions",
                 column: "PermissionId");
@@ -445,6 +523,16 @@ namespace HRDesk.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserPermissions_UserId",
                 table: "UserPermissions",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPollAnswers_PollAnswerId",
+                table: "UserPollAnswers",
+                column: "PollAnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPollAnswers_UserId",
+                table: "UserPollAnswers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -491,10 +579,19 @@ namespace HRDesk.Infrastructure.Migrations
                 name: "UserPermissions");
 
             migrationBuilder.DropTable(
+                name: "UserPollAnswers");
+
+            migrationBuilder.DropTable(
                 name: "MeetingRooms");
 
             migrationBuilder.DropTable(
                 name: "Permissions");
+
+            migrationBuilder.DropTable(
+                name: "PollAnswers");
+
+            migrationBuilder.DropTable(
+                name: "Polls");
 
             migrationBuilder.DropTable(
                 name: "Users");

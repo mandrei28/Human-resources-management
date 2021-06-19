@@ -13,19 +13,6 @@ const styles = (theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-  fixedHeight: {
-    height: 240,
-  },
-  copyright: {
-    position: "fixed",
-    bottom: theme.spacing(2),
-  },
 });
 
 export { styles };

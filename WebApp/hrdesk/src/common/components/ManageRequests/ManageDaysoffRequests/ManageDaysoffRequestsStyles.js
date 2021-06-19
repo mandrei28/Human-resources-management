@@ -1,2 +1,2 @@
-const styles = (theme) => ({});
+const styles = () => ({});
 export { styles };

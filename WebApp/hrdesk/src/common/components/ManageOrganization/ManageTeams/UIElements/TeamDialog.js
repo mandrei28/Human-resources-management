@@ -51,8 +51,6 @@ export default class TeamDialog extends Component {
             {this.props.team !== null ? "Update team" : "Create new team"}
           </DialogTitle>
           <DialogContent>
-            {/* <DialogContentText>
-                </DialogContentText> */}
             <TextField
               error={this.state.team.description.length === 0}
               autoFocus

@@ -52,8 +52,6 @@ export default class OfficeDialog extends Component {
             {this.props.office !== null ? "Update office" : "Create new office"}
           </DialogTitle>
           <DialogContent>
-            {/* <DialogContentText>
-                </DialogContentText> */}
             <TextField
               error={this.state.office.name.length === 0}
               autoFocus

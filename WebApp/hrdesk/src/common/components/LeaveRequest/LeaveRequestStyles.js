@@ -20,13 +20,6 @@ const styles = (theme) => ({
     overflow: "auto",
     flexDirection: "column",
   },
-  fixedHeight: {
-    height: 240,
-  },
-  copyright: {
-    position: "fixed",
-    bottom: theme.spacing(2),
-  },
 });
 
 export { styles };

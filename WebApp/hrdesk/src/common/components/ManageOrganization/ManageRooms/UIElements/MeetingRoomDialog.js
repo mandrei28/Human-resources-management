@@ -54,8 +54,6 @@ export default class MeetingRoomDialog extends Component {
               : "Create new meeting room"}
           </DialogTitle>
           <DialogContent>
-            {/* <DialogContentText>
-                </DialogContentText> */}
             <TextField
               error={this.state.meetingRoom.name.length === 0}
               autoFocus

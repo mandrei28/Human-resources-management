@@ -52,8 +52,6 @@ export default class FunctionDialog extends Component {
               : "Create new function"}
           </DialogTitle>
           <DialogContent>
-            {/* <DialogContentText>
-                </DialogContentText> */}
             <TextField
               error={this.state.userFunction.description.length === 0}
               autoFocus

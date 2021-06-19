@@ -16,6 +16,8 @@ import {
   AppBar,
   IconButton,
   Divider,
+  Avatar,
+  Grid,
 } from "@material-ui/core";
 import {
   People,
@@ -34,6 +36,7 @@ import {
 } from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { styles } from "./NavBarStyles";
+import defaultuser from "../../media/defaultuser.jpg";
 import { userHasPermission } from "../../services/authService";
 
 function Copyright(props) {
@@ -295,11 +298,23 @@ class NavBar extends React.Component {
           }}
           open={this.state.open}
         >
-          <div className={classes.toolbarIcon}>
-            <IconButton onClick={this.handleDrawerClose}>
-              <ChevronLeft />
-            </IconButton>
-          </div>
+          <Grid className={classes.toolbarIcon} justify="space-between">
+            <Grid>
+              <Avatar
+                alt="User Photo"
+                src={
+                  this.props.user.imageSrc !== null
+                    ? this.props.user.imageSrc
+                    : defaultuser
+                }
+              />
+            </Grid>
+            <Grid>
+              <IconButton onClick={this.handleDrawerClose}>
+                <ChevronLeft />
+              </IconButton>
+            </Grid>
+          </Grid>
           <Divider />
           <List>
             {this.state.itemsList.map((item, index) => {

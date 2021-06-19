@@ -62,7 +62,6 @@ class ManageNationalDaysGeneral extends Component {
         renderHeader: (params) => {
           return (
             <Button
-              // disabled={this.state.disabled}
               variant="contained"
               color="primary"
               onClick={this.openNationalDayDialog}

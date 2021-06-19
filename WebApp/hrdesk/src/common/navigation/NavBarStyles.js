@@ -5,12 +5,11 @@ const styles = (theme) => ({
     display: "flex",
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24,
   },
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end",
     padding: "0 8px",
     ...theme.mixins.toolbar,
   },

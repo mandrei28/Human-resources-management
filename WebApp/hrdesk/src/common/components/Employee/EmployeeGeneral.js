@@ -102,9 +102,7 @@ class EmployeeGeneral extends Component {
   };
 
   handlePictureChange = (event) => {
-    debugger;
     if (event.target.files && event.target.files[0]) {
-      debugger;
       let imageFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (x) => {
@@ -117,7 +115,6 @@ class EmployeeGeneral extends Component {
       };
       reader.readAsDataURL(imageFile);
     } else {
-      debugger;
       this.setState((prevState) => {
         const { user } = prevState;
         user.imageFile = null;
@@ -156,7 +153,6 @@ class EmployeeGeneral extends Component {
             handleChange={this.handleFieldChange}
             handleDateChange={this.handleDateFieldChange}
             user={this.state.user}
-            // formErrors={formErrors}
           />
         );
       case 1:
@@ -171,7 +167,6 @@ class EmployeeGeneral extends Component {
             teams={this.state.teams}
             functions={this.state.functions}
             isNew={this.state.isNew}
-            //formErrors={formErrors}
           />
         );
       case 2:

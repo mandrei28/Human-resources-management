@@ -202,7 +202,6 @@ export const getAdmins = () => {
       .get("user/admins")
       .then((response) => {
         dispatch(getAdminsSuccess(response.data));
-        toastr.success("Employees", "Admins fetched");
         return response.data;
       })
       .catch((error) => {
@@ -352,7 +351,6 @@ export const getAgeChart = () => {
       .get("user/getAgeChart")
       .then((response) => {
         dispatch(getAgeChartSuccess(response.data));
-        toastr.success("Chart", "Age chart fetched");
         return response.data;
       })
       .catch((error) => {
@@ -370,7 +368,6 @@ export const getFunctionChart = () => {
       .get("user/getFunctionChart")
       .then((response) => {
         dispatch(getFunctionChartSuccess(response.data));
-        toastr.success("Chart", "Function chart fetched");
         return response.data;
       })
       .catch((error) => {
@@ -388,7 +385,7 @@ export const getCountryChart = () => {
       .get("user/getCountryChart")
       .then((response) => {
         dispatch(getCountryChartSuccess(response.data));
-        toastr.success("Chart", "Country chart fetched");
+        toastr.success("Chart", "Charts fetched");
         return response.data;
       })
       .catch((error) => {

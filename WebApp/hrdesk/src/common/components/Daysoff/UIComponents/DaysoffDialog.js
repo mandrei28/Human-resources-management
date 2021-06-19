@@ -63,8 +63,6 @@ export default class DaysoffDialog extends Component {
         >
           <DialogTitle id="form-dialog-title">Create new daysoff</DialogTitle>
           <DialogContent>
-            {/* <DialogContentText>
-            </DialogContentText> */}
             <TextField
               error={this.state.dayoff.description.length === 0}
               autoFocus
