@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import { withRouter } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-import employee from "../../../../media/employee.jpg";
+import defaultuser from "../../../../media/defaultuser.jpg";
 import PersonDialog from "./PersonDialog";
 
 const styles = (theme) => ({
@@ -53,7 +53,11 @@ class CustomCard extends Component {
         <Card className={classes.root} onClick={this.showPersonDialog}>
           <CardMedia
             className={classes.cover}
-            image={employee}
+            image={
+              this.props.user.imageSrc !== null
+                ? this.props.user.imageSrc
+                : defaultuser
+            }
             title="User photo"
           />
           <div className={classes.details}>

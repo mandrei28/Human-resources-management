@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRDesk.Infrastructure.Migrations
 {
     [DbContext(typeof(HRDeskDbContext))]
-    [Migration("20210618072618_InitialConfiguration")]
+    [Migration("20210619093057_InitialConfiguration")]
     partial class InitialConfiguration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -563,6 +563,12 @@ namespace HRDesk.Infrastructure.Migrations
 
                     b.Property<int?>("FunctionId")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ImageSrc")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

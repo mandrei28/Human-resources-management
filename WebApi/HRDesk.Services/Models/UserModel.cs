@@ -32,5 +32,6 @@ namespace HRDesk.Services.Models
         public OfficeModel Office { get; set; }
         public TeamModel Team { get; set; }
         public bool Predefined { get; set; }
+        public string ImageSrc { get; set; }
     }
 }

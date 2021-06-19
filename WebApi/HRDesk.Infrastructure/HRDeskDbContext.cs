@@ -141,6 +141,7 @@ namespace HRDesk.Infrastructure
                 WorkEmail = "administrator@company.com",
                 UpdatedDate = new DateTime(2021, 6, 5),
                 Predefined = true,
+                ImageSrc = null,
             });
 
             modelBuilder.Entity<Permission>().HasData(new Permission

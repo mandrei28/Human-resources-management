@@ -33,5 +33,7 @@ namespace HRDesk.Infrastructure.Entities
 
         [ForeignKey("PersonalDetailsId")]
         public PersonalDetails PersonalDetails { get; set; }
+        public byte[] ImageSrc { get; set; }
+        public string ImageType { get; set; }
     }
 }

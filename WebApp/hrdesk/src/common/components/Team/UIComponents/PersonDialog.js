@@ -4,7 +4,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withRouter } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
-import employee from "../../../../media/employee.jpg";
+import defaultuser from "../../../../media/defaultuser.jpg";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import { Grid, withStyles } from "@material-ui/core";
@@ -40,8 +40,12 @@ class PersonDialog extends Component {
             <Grid container spacing={3}>
               <Grid container item lg={12} justify="center">
                 <Avatar
-                  alt="Remy Sharp"
-                  src={employee}
+                  alt={this.props.user.firstName}
+                  src={
+                    this.props.user.imageSrc !== null
+                      ? this.props.user.imageSrc
+                      : defaultuser
+                  }
                   className={classes.large}
                 />
               </Grid>

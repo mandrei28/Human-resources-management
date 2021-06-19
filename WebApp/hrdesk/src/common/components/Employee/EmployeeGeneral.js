@@ -18,7 +18,7 @@ class EmployeeGeneral extends Component {
     super(props);
     this.state = {
       isNew: true,
-      step: 2,
+      step: 0,
       user: {
         id: 0,
         firstName: "",
@@ -102,7 +102,9 @@ class EmployeeGeneral extends Component {
   };
 
   handlePictureChange = (event) => {
+    debugger;
     if (event.target.files && event.target.files[0]) {
+      debugger;
       let imageFile = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (x) => {
@@ -115,6 +117,7 @@ class EmployeeGeneral extends Component {
       };
       reader.readAsDataURL(imageFile);
     } else {
+      debugger;
       this.setState((prevState) => {
         const { user } = prevState;
         user.imageFile = null;
@@ -122,6 +125,15 @@ class EmployeeGeneral extends Component {
         return { user };
       });
     }
+  };
+
+  removePicture = () => {
+    this.setState((prevState) => {
+      const { user } = prevState;
+      user.imageFile = null;
+      user.imageSrc = null;
+      return { user };
+    });
   };
 
   handleSubmit = async () => {
@@ -169,6 +181,7 @@ class EmployeeGeneral extends Component {
             handleNext={this.handleNext}
             handleChange={this.handlePermissionChange}
             handlePictureChange={this.handlePictureChange}
+            removePicture={this.removePicture}
             user={this.state.user}
           />
         );

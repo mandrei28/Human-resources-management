@@ -8,10 +8,12 @@ import defaultuser from "../../../../../media/defaultuser.jpg";
 export default class ThirdStep extends Component {
   constructor(props) {
     super(props);
-    this.state = { imageFile: null, imageSrc: null };
+    this.state = {};
   }
+  componentDidMount() {}
 
   render() {
+    console.info(this.props);
     return (
       <React.Fragment>
         <Container maxWidth="md">
@@ -51,6 +53,7 @@ export default class ThirdStep extends Component {
                 alt="userPicture"
                 width="280px"
                 height="280px"
+                onClick={this.props.removePicture}
               />
             </Grid>
           </Grid>{" "}
@@ -72,7 +75,6 @@ export default class ThirdStep extends Component {
             <Button
               variant="contained"
               color="primary"
-              //onClick={isValid ? handleNext : null}
               onClick={this.props.handleNext}
             >
               Next

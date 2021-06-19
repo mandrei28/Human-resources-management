@@ -562,6 +562,12 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<int?>("FunctionId")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("ImageSrc")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 

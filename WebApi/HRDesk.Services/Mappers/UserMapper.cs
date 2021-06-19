@@ -36,6 +36,7 @@ namespace HRDesk.Services.Mappers
                 FunctionName = user.Function != null ? user.Function.Name : null,
                 Password = null,
                 Predefined = user.Predefined,
+                ImageSrc = user.ImageSrc != null ? user.ImageType + ',' + Convert.ToBase64String(user.ImageSrc) : null,
             };
         }
 
@@ -65,6 +66,8 @@ namespace HRDesk.Services.Mappers
                 FunctionId = userModel.FunctionId,
                 OfficeId = userModel.OfficeId,
                 TeamId = userModel.TeamId,
+                ImageSrc = userModel.ImageSrc != null ? Convert.FromBase64String(userModel.ImageSrc.Split(',')[1]) : null,
+                ImageType = userModel.ImageSrc != null ? userModel.ImageSrc.Split(',')[0] : null,
             };
         }
 
@@ -85,6 +88,8 @@ namespace HRDesk.Services.Mappers
             user.PersonalDetails.Phone = userModel.Phone;
             user.CompanyDetails.Salary = userModel.Salary;
             user.TeamId = userModel.TeamId;
+            user.ImageSrc = userModel.ImageSrc != null ? Convert.FromBase64String(userModel.ImageSrc.Split(',')[1]) : null;
+            user.ImageType = userModel.ImageSrc != null ? userModel.ImageSrc.Split(',')[0] : null;
             return user;
         }
     }

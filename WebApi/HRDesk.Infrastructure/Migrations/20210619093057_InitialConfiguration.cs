@@ -192,6 +192,8 @@ namespace HRDesk.Infrastructure.Migrations
                     OfficeId = table.Column<int>(type: "int", nullable: true),
                     CompanyDetailsId = table.Column<int>(type: "int", nullable: true),
                     PersonalDetailsId = table.Column<int>(type: "int", nullable: true),
+                    ImageSrc = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
@@ -384,8 +386,8 @@ namespace HRDesk.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "CompanyDetailsId", "CreatedDate", "FunctionId", "IsDeleted", "OfficeId", "Password", "PersonalDetailsId", "Predefined", "TeamId", "UpdatedDate", "WorkEmail" },
-                values: new object[] { 1, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", 1, true, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@company.com" });
+                columns: new[] { "Id", "CompanyDetailsId", "CreatedDate", "FunctionId", "ImageSrc", "ImageType", "IsDeleted", "OfficeId", "Password", "PersonalDetailsId", "Predefined", "TeamId", "UpdatedDate", "WorkEmail" },
+                values: new object[] { 1, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, null, false, 1, "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==", 1, true, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "administrator@company.com" });
 
             migrationBuilder.InsertData(
                 table: "UserPermissions",
