@@ -18,5 +18,6 @@ namespace HRDesk.Services.Models
         public UserModel AdminModel { get; set; }
         public RequestStatus Status { get; set; }
         public string VerifiedBy { get; set; }
+        public string MadeBy { get; set; }
     }
 }

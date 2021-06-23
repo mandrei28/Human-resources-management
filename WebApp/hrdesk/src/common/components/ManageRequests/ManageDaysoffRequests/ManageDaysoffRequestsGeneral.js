@@ -25,7 +25,7 @@ class ManageDaysoffRequestsGeneral extends Component {
     this.state = { daysoff: [] };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 325 },
+      { field: "madeBy", headerName: "User", width: 230 },
       {
         field: "startDate",
         type: "date",
@@ -51,7 +51,7 @@ class ManageDaysoffRequestsGeneral extends Component {
             ? "Refused"
             : "Approved",
       },
-      { field: "verifiedBy", headerName: "Verified By", width: 230 },
+      { field: "description", headerName: "Description", width: 325 },
       {
         field: "",
         width: 100,

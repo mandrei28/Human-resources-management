@@ -24,6 +24,7 @@ namespace HRDesk.Services.Mappers
                 AdminModel = UserMapper.ToUserModel(leaveRequest.Admin),
                 Status = leaveRequest.Status,
                 VerifiedBy = leaveRequest.Status != RequestStatus.Waiting ? leaveRequest.Admin.PersonalDetails.LastName + " " + leaveRequest.Admin.PersonalDetails.FirstName : null,
+                MadeBy = leaveRequest.User.PersonalDetails.LastName + " " + leaveRequest.Admin.PersonalDetails.FirstName,
             };
         }
 

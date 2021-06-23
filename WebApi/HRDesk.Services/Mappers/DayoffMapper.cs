@@ -23,6 +23,7 @@ namespace HRDesk.Services.Mappers
                 AdminModel = UserMapper.ToUserModel(dayoff.Admin),
                 Status = dayoff.Status,
                 VerifiedBy = dayoff.Status != RequestStatus.Waiting ? dayoff.Admin.PersonalDetails.LastName + " " + dayoff.Admin.PersonalDetails.FirstName : null,
+                MadeBy = dayoff.User.PersonalDetails.LastName + " " + dayoff.User.PersonalDetails.FirstName,
             };
         }
 

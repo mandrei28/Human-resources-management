@@ -25,7 +25,7 @@ class ManageLeaveRequestsGeneral extends Component {
     this.state = { leaveRequests: [] };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "description", headerName: "Description", width: 200 },
+      { field: "madeBy", headerName: "User", width: 230 },
       {
         field: "startDate",
         type: "date",
@@ -58,7 +58,7 @@ class ManageLeaveRequestsGeneral extends Component {
             ? "Refused"
             : "Approved",
       },
-      { field: "verifiedBy", headerName: "Verified By", width: 230 },
+      { field: "description", headerName: "Description", width: 200 },
       {
         field: "",
         width: 100,
