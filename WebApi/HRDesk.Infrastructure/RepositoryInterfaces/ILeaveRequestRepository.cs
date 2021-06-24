@@ -10,5 +10,6 @@ namespace HRDesk.Infrastructure.RepositoryInterfaces
     {
         IQueryable<LeaveRequest> GetAllByAdminId(int adminId);
         IQueryable<LeaveRequest> GetAllByUserId(int userId);
+        LeaveRequest GetById(int leaverequestId);
     }
 }

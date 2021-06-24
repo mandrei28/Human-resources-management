@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRDesk.Infrastructure.Migrations
 {
     [DbContext(typeof(HRDeskDbContext))]
-    [Migration("20210619164059_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210624145123_InitialConfiguration")]
+    partial class InitialConfiguration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

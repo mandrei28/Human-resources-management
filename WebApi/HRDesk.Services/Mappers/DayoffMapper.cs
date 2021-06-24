@@ -15,8 +15,8 @@ namespace HRDesk.Services.Mappers
             {
                 Id = dayoff.Id,
                 Description = dayoff.Description,
-                StartDate = dayoff.StartDate,
-                EndDate = dayoff.EndDate,
+                StartDate = dayoff.StartDate.ToLocalTime().AddSeconds(-dayoff.StartDate.ToLocalTime().Second),
+                EndDate = dayoff.EndDate.ToLocalTime().AddSeconds(-dayoff.StartDate.ToLocalTime().Second),
                 UserId = dayoff.UserId,
                 UserModel = UserMapper.ToUserModel(dayoff.User),
                 AdminId = dayoff.AdminId,

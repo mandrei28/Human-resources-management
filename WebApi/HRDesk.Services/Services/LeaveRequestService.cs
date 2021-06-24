@@ -47,12 +47,15 @@ namespace HRDesk.Services.Services
             await _unitOfWork.LeaveRequests.InsertAsync(leaveRequest);
             await _unitOfWork.CommitAsync();
             leaveRequestModel.Id = leaveRequest.Id;
+            leaveRequestModel.StartDate = leaveRequestModel.StartDate.ToLocalTime().AddSeconds(-leaveRequestModel.StartDate.ToLocalTime().Second);
+            leaveRequestModel.StartHour = leaveRequestModel.StartHour.ToLocalTime().AddSeconds(-leaveRequestModel.StartHour.ToLocalTime().Second);
+            leaveRequestModel.EndHour = leaveRequestModel.EndHour.ToLocalTime().AddSeconds(-leaveRequestModel.EndHour.ToLocalTime().Second);
             return leaveRequestModel;
         }
 
         public async Task<LeaveRequestModel> AcceptLeaveRequest(int leaveRequestId, int newStatus, int adminId)
         {
-            var leaveRequest = await _unitOfWork.LeaveRequests.GetByIDAsync(leaveRequestId);
+            var leaveRequest = _unitOfWork.LeaveRequests.GetById(leaveRequestId);
             var admin = await _unitOfWork.Users.GetByIDAsync(adminId);
             leaveRequest.Status = (RequestStatus)newStatus;
             leaveRequest.AdminId = adminId;

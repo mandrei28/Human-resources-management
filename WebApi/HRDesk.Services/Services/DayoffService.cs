@@ -35,7 +35,7 @@ namespace HRDesk.Services.Services
 
         public async Task<DayoffModel> AcceptDayoff(int dayoffId, int newStatus, int adminId)
         {
-            var dayoff = await _unitOfWork.Daysoff.GetByIDAsync(dayoffId);
+            var dayoff = _unitOfWork.Daysoff.GetById(dayoffId);
             var admin = await _unitOfWork.Users.GetByIDAsync(adminId);
             dayoff.Status = (RequestStatus)newStatus;
             dayoff.AdminId = adminId;
@@ -63,6 +63,8 @@ namespace HRDesk.Services.Services
             await _unitOfWork.CommitAsync();
 
             dayoffModel.Id = dayoff.Id;
+            dayoffModel.StartDate = dayoffModel.StartDate.ToLocalTime().AddSeconds(-dayoffModel.StartDate.ToLocalTime().Second);
+            dayoffModel.EndDate = dayoffModel.EndDate.ToLocalTime().AddSeconds(-dayoffModel.EndDate.ToLocalTime().Second);
 
             return dayoffModel;
         }

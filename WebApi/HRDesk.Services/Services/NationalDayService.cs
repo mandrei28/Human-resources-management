@@ -48,7 +48,7 @@ namespace HRDesk.Services.Services
             var updatedNationalDay = NationalDayMapper.UpdateNationalDay(nationalDay, nationalDayModel);
             _unitOfWork.NationalDays.Update(updatedNationalDay);
             await _unitOfWork.CommitAsync();
-            return nationalDayModel;
+            return NationalDayMapper.ToNationalDayModel(updatedNationalDay);
         }
     }
 }

@@ -36,6 +36,7 @@ namespace HRDesk.Infrastructure.Repositories
         {
             return await GetAll()
                    .Include(u => u.CompanyDetails)
+                   .Include(u => u.Permissions)
                    .Include(u => u.PersonalDetails).FirstOrDefaultAsync(u => u.Id == id);
         }
 
@@ -67,7 +68,7 @@ namespace HRDesk.Infrastructure.Repositories
                 .Include(u => u.CompanyDetails)
                 .Include(u => u.PersonalDetails)
                 .Include(a => a.Permissions)
-                .Where(a => a.Permissions.Any(p => p.Id == (int)Permissions.ManageHolidays));
+                .Where(a => a.Permissions.Any(p => p.PermissionId == (int)Permissions.ManageHolidays));
         }
 
         public int GetEmployeesNumber()

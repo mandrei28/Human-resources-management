@@ -25,7 +25,7 @@ class ManageLeaveRequestsGeneral extends Component {
     this.state = { leaveRequests: [] };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
-      { field: "madeBy", headerName: "User", width: 230 },
+      { field: "madeBy", headerName: "User", width: 215 },
       {
         field: "startDate",
         type: "date",
@@ -168,7 +168,7 @@ class ManageLeaveRequestsGeneral extends Component {
             <DataGrid
               rows={this.state.leaveRequests}
               columns={this.columns}
-              pageSize={10}
+              pageSize={9}
               rowHeight={45}
               disableSelectionOnClick={true}
               components={{

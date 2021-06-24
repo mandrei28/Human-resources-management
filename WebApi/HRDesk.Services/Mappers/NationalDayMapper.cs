@@ -34,8 +34,8 @@ namespace HRDesk.Services.Mappers
         public static NationalDay UpdateNationalDay(NationalDay nationalDay, NationalDayModel nationalDayModel)
         {
             nationalDay.Description = nationalDayModel.Description;
-            nationalDay.StartDate = nationalDayModel.StartDate;
-            nationalDay.EndDate = nationalDayModel.EndDate;
+            nationalDay.StartDate = nationalDayModel.StartDate.ToLocalTime();
+            nationalDay.EndDate = nationalDayModel.EndDate.ToLocalTime();
             return nationalDay;
         }
     }

@@ -39,6 +39,7 @@ export default class NationalDayDialog extends Component {
   };
 
   handleNationalDayDateFieldChange = (value, field) => {
+    debugger;
     this.setState((prevState) => {
       const { nationalDay } = prevState;
       nationalDay[field] = value;

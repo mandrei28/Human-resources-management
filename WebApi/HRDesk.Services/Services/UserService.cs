@@ -144,6 +144,22 @@ namespace HRDesk.Services.Services
                 updatedUser.Password = _authService.HashPassword(userModel.Password);
             }
             _unitOfWork.Users.Update(updatedUser);
+            foreach (UserPermission permission in user.Permissions)
+            {
+                _unitOfWork.UserPermission.Delete(permission);
+            }
+
+            await _unitOfWork.CommitAsync();
+
+            foreach (int permission in userModel.Permissions)
+            {
+                await _unitOfWork.UserPermission.InsertAsync(new UserPermission
+                {
+                    PermissionId = permission,
+                    UserId = userModel.Id,
+                });
+            }
+
             await _unitOfWork.CommitAsync();
         }
 

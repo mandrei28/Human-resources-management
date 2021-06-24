@@ -35,7 +35,17 @@ namespace HRDesk.Infrastructure.Repositories
                 .Include(a => a.Admin).ThenInclude(a => a.PersonalDetails)
                 .Include(a => a.User).ThenInclude(a => a.CompanyDetails)
                 .Include(a => a.User).ThenInclude(a => a.PersonalDetails)
-                .Where(a => a.AdminId == userId && a.StartDate > date && !a.IsDeleted);
+                .Where(a => a.UserId == userId && a.StartDate > date && !a.IsDeleted);
+        }
+
+        public LeaveRequest GetById(int leaverequestId)
+        {
+            return GetAll()
+                .Include(d => d.User).ThenInclude(u => u.PersonalDetails)
+                .Include(u => u.User).ThenInclude(u => u.CompanyDetails)
+                .Include(d => d.Admin).ThenInclude(u => u.PersonalDetails)
+                .Include(u => u.Admin).ThenInclude(u => u.CompanyDetails)
+                .FirstOrDefault(d => d.Id == leaverequestId);
         }
     }
 }

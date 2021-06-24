@@ -53,5 +53,15 @@ namespace HRDesk.Infrastructure.Repositories
                 .Include(a => a.User).ThenInclude(a => a.PersonalDetails)
                 .Where(a => a.UserId == userId && !a.IsDeleted && a.Status == RequestStatus.Approved && a.StartDate.Year == year);
         }
+
+        public Dayoff GetById(int dayoffId)
+        {
+            return GetAll()
+                .Include(d => d.User).ThenInclude(u => u.PersonalDetails)
+                .Include(u => u.User).ThenInclude(u => u.CompanyDetails)
+                .Include(d => d.Admin).ThenInclude(u => u.PersonalDetails)
+                .Include(u => u.Admin).ThenInclude(u => u.CompanyDetails)
+                .FirstOrDefault(d => d.Id == dayoffId);
+        }
     }
 }
