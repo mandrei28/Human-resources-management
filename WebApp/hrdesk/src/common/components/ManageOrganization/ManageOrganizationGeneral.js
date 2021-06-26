@@ -8,6 +8,7 @@ import { styles } from "./ManageOrganizationStyles";
 import ManageTeamsContainer from "./ManageTeams/ManageTeamsContainer";
 import ManageFunctionsContainer from "./ManageFunctions/ManageFunctionsContainer";
 import ManageRoomsContainer from "./ManageRooms/ManageRoomsContainer";
+import ManageHardwareRequestsContainer from "./ManageHardwareRequests/ManageHardwareRequestsContainer";
 
 class ManageOrganizationGeneral extends Component {
   constructor(props) {
@@ -40,12 +41,14 @@ class ManageOrganizationGeneral extends Component {
                 className={classes.tabText}
                 label="Meeting rooms and offices"
               />
+              <Tab className={classes.tabText} label="Hardware requests" />
             </Tabs>
           </Paper>
           <Container maxWidth="lg" className={classes.container}>
             {this.state.value === 0 && <ManageTeamsContainer />}
             {this.state.value === 1 && <ManageFunctionsContainer />}
             {this.state.value === 2 && <ManageRoomsContainer />}
+            {this.state.value === 3 && <ManageHardwareRequestsContainer />}
           </Container>
         </main>
       </div>

@@ -33,6 +33,7 @@ import {
   PersonAdd,
   EventBusy,
   Business,
+  Computer,
 } from "@material-ui/icons";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { styles } from "./NavBarStyles";
@@ -92,6 +93,19 @@ class NavBar extends React.Component {
               pathname: "/daysoff",
             });
             props.history.push("/daysoff");
+          },
+        },
+        {
+          text: "Hardware requests",
+          pathname: "/hardware",
+          id: 12,
+          icon: <Computer />,
+          onClick: () => {
+            this.setState({
+              selected: "Hardware requests",
+              pathname: "/hardware",
+            });
+            props.history.push("/hardware");
           },
         },
         {

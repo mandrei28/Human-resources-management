@@ -26,6 +26,7 @@ import HomeContainer from "./common/components/Home/HomeContainer";
 import HolidayCalendarContainer from "./common/components/HolidayCalendar/HolidayCalendarContainer";
 import LeaveRequestContainer from "./common/components/LeaveRequest/LeaveRequestContainer";
 import DaysoffContainer from "./common/components/Daysoff/DaysoffContainer";
+import HardwareRequestContainer from "./common/components/Hardware/HardwareRequestContainer";
 
 const styles = (theme) => ({
   root: {
@@ -194,6 +195,16 @@ class App extends React.Component {
               hasPermission={userHasPermission(
                 this.state.user.permissions,
                 Permissions.ManageOrganization
+              )}
+            />
+            <PrivateRoute
+              exact
+              path="/hardware"
+              component={HardwareRequestContainer}
+              isLoggedIn={this.state.isLoggedIn}
+              hasPermission={userHasPermission(
+                this.state.user.permissions,
+                Permissions.HardwareRequests
               )}
             />{" "}
             <ReduxToastr

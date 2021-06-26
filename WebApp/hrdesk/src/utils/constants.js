@@ -10,6 +10,7 @@ export const Permissions = {
   ManageEmployees: 9,
   ManageHolidays: 10,
   ManageOrganization: 11,
+  HardwareRequests: 12,
 };
 
 export const PermissionsNames = {
@@ -30,3 +31,9 @@ export const RequestStatuses = {
   Decline: 1,
   Approve: 2,
 };
+
+export const HardwareRequestTypes = [
+  { id: 1, text: "Personal use" },
+  { id: 2, text: "Project" },
+  { id: 3, text: "Upgrade" },
+];

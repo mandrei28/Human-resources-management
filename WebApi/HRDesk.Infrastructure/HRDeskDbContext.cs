@@ -24,6 +24,7 @@ namespace HRDesk.Infrastructure
         public DbSet<Poll> Polls { get; set; }
         public DbSet<PollAnswer> PollAnswers { get; set; }
         public DbSet<UserPollAnswer> UserPollAnswers { get; set; }
+        public DbSet<HardwareRequest> HardwareRequests { get; set; }
         public HRDeskDbContext(DbContextOptions<HRDeskDbContext> options) : base(options)
         {
         }
@@ -213,6 +214,12 @@ namespace HRDesk.Infrastructure
                 Name = "Manage organization"
             });
 
+            modelBuilder.Entity<Permission>().HasData(new Permission
+            {
+                Id = 12,
+                Name = "Hardware request"
+            });
+
             modelBuilder.Entity<MeetingRoom>().HasData(new MeetingRoom
             {
                 Id = 1,
@@ -289,6 +296,12 @@ namespace HRDesk.Infrastructure
                 Id = 11,
                 UserId = 1,
                 PermissionId = 11
+            });
+            modelBuilder.Entity<UserPermission>().HasData(new UserPermission
+            {
+                Id = 12,
+                UserId = 1,
+                PermissionId = 12
             });
             #endregion
         }

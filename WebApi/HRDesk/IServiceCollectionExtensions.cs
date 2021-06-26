@@ -39,7 +39,8 @@ namespace HRDesk
                 .AddScoped<INationalDayRepository, NationalDayRepository>()
                 .AddScoped<ILeaveRequestRepository, LeaveRequestRepository>()
                 .AddScoped<IDayoffRepository, DayoffRepository>()
-                .AddScoped<IMeetingRepository, MeetingRepository>();
+                .AddScoped<IMeetingRepository, MeetingRepository>()
+                .AddScoped<IHardwareRequestRepository, HardwareRequestRepository>();
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
@@ -59,7 +60,8 @@ namespace HRDesk
             .AddScoped<INationalDayService, NationalDayService>()
             .AddScoped<ILeaveRequestService, LeaveRequestService>()
             .AddScoped<IDayoffService, DayoffService>()
-            .AddScoped<IMeetingService, MeetingService>();
+            .AddScoped<IMeetingService, MeetingService>()
+            .AddScoped<IHardwareRequestService, HardwareRequestService>();
         }
     }
 }

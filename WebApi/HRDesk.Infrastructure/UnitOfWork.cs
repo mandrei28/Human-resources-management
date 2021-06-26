@@ -24,6 +24,7 @@ namespace HRDesk.Infrastructure
         private LeaveRequestRepository _leaveRequests;
         private DayoffRepository _daysoff;
         private MeetingRepository _meetings;
+        private HardwareRequestRepository _hardwareRequests;
 
         public UnitOfWork(HRDeskDbContext dbContext)
         {
@@ -115,6 +116,15 @@ namespace HRDesk.Infrastructure
             {
                 return _meetings ??
                     (_meetings = new MeetingRepository(_dbContext));
+            }
+        }
+
+        public IHardwareRequestRepository HardwareRequests
+        {
+            get
+            {
+                return _hardwareRequests ??
+                    (_hardwareRequests = new HardwareRequestRepository(_dbContext));
             }
         }
 

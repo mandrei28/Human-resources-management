@@ -1,0 +1,2 @@
+const styles = () => ({});
+export { styles };

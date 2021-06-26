@@ -267,6 +267,40 @@ namespace HRDesk.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HardwareRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "date", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "date", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    AdminId = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    HardwareRequestType = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HardwareRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HardwareRequests_Users_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_HardwareRequests_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LeaveRequests",
                 columns: table => new
                 {
@@ -429,15 +463,16 @@ namespace HRDesk.Infrastructure.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { 12, "Hardware request" },
                     { 11, "Manage organization" },
                     { 10, "Manage holidays" },
                     { 9, "Manage employees" },
                     { 8, "Book room" },
                     { 7, "Holiday calendar" },
-                    { 2, "Leave requests" },
+                    { 3, "Daysoff requests" },
                     { 5, "Meetings" },
                     { 4, "Reports" },
-                    { 3, "Daysoff requests" },
+                    { 2, "Leave requests" },
                     { 1, "Dashboard" },
                     { 6, "Team" }
                 });
@@ -472,7 +507,8 @@ namespace HRDesk.Infrastructure.Migrations
                     { 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 8, null, 1 },
                     { 9, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 9, null, 1 },
                     { 10, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 10, null, 1 },
-                    { 11, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 11, null, 1 }
+                    { 11, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 11, null, 1 },
+                    { 12, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 12, null, 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -483,6 +519,16 @@ namespace HRDesk.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Daysoff_UserId",
                 table: "Daysoff",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HardwareRequests_AdminId",
+                table: "HardwareRequests",
+                column: "AdminId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HardwareRequests_UserId",
+                table: "HardwareRequests",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -565,6 +611,9 @@ namespace HRDesk.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Daysoff");
+
+            migrationBuilder.DropTable(
+                name: "HardwareRequests");
 
             migrationBuilder.DropTable(
                 name: "LeaveRequests");

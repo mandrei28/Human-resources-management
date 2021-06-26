@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRDesk.Infrastructure.Migrations
 {
     [DbContext(typeof(HRDeskDbContext))]
-    [Migration("20210624145123_InitialConfiguration")]
+    [Migration("20210626134015_InitialConfiguration")]
     partial class InitialConfiguration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,6 +175,52 @@ namespace HRDesk.Infrastructure.Migrations
                             Predefined = true,
                             UpdatedDate = new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
+                });
+
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.HardwareRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AdminId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("HardwareRequestType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("HardwareRequests");
                 });
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.LeaveRequest", b =>
@@ -457,6 +503,11 @@ namespace HRDesk.Infrastructure.Migrations
                         {
                             Id = 11,
                             Name = "Manage organization"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Hardware request"
                         });
                 });
 
@@ -776,6 +827,13 @@ namespace HRDesk.Infrastructure.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PermissionId = 11,
                             UserId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PermissionId = 12,
+                            UserId = 1
                         });
                 });
 
@@ -802,6 +860,21 @@ namespace HRDesk.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("HRDesk.Infrastructure.Entities.Dayoff", b =>
+                {
+                    b.HasOne("HRDesk.Infrastructure.Entities.User", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
+
+                    b.HasOne("HRDesk.Infrastructure.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HRDesk.Infrastructure.Entities.HardwareRequest", b =>
                 {
                     b.HasOne("HRDesk.Infrastructure.Entities.User", "Admin")
                         .WithMany()

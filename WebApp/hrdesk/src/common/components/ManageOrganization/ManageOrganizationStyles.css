@@ -1,0 +1,8 @@
+.approveButton {
+  background-color: green !important;
+  color: white !important;
+}
+.declineButton {
+  background-color: red !important;
+  color: white !important;
+}
