@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRDesk.Infrastructure.Migrations
 {
     [DbContext(typeof(HRDeskDbContext))]
-    [Migration("20210626134015_InitialConfiguration")]
+    [Migration("20210626204435_InitialConfiguration")]
     partial class InitialConfiguration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,7 +193,7 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<int>("HardwareRequestType")
@@ -202,7 +202,7 @@ namespace HRDesk.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("date");
 
                     b.Property<int>("Status")

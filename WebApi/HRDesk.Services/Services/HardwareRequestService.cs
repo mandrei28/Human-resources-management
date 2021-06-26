@@ -46,8 +46,8 @@ namespace HRDesk.Services.Services
             await _unitOfWork.HardwareRequests.InsertAsync(hardwareRequest);
             await _unitOfWork.CommitAsync();
             hardwareRequestModel.Id = hardwareRequest.Id;
-            hardwareRequestModel.StartDate = hardwareRequestModel.StartDate.ToLocalTime().AddSeconds(-hardwareRequestModel.StartDate.ToLocalTime().Second);
-            hardwareRequestModel.EndDate = hardwareRequestModel.EndDate.ToLocalTime().AddSeconds(-hardwareRequestModel.EndDate.ToLocalTime().Second);
+            hardwareRequestModel.StartDate = hardwareRequestModel.StartDate.GetValueOrDefault().ToLocalTime().AddSeconds(-hardwareRequestModel.StartDate.GetValueOrDefault().ToLocalTime().Second);
+            hardwareRequestModel.EndDate = hardwareRequestModel.EndDate.GetValueOrDefault().ToLocalTime().AddSeconds(-hardwareRequestModel.EndDate.GetValueOrDefault().ToLocalTime().Second);
             return hardwareRequestModel;
         }
 

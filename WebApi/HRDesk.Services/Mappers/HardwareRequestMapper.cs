@@ -15,8 +15,8 @@ namespace HRDesk.Services.Mappers
             {
                 Id = hardwareRequest.Id,
                 Description = hardwareRequest.Description,
-                StartDate = hardwareRequest.StartDate.ToLocalTime().AddSeconds(-hardwareRequest.StartDate.ToLocalTime().Second),
-                EndDate = hardwareRequest.EndDate.ToLocalTime().AddSeconds(-hardwareRequest.EndDate.ToLocalTime().Second),
+                StartDate = hardwareRequest.StartDate.GetValueOrDefault().ToLocalTime().AddSeconds(-hardwareRequest.StartDate.GetValueOrDefault().Second),
+                EndDate = hardwareRequest.EndDate.GetValueOrDefault().ToLocalTime().AddSeconds(-hardwareRequest.EndDate.GetValueOrDefault().Second),
                 UserId = hardwareRequest.UserId,
                 UserModel = UserMapper.ToUserModel(hardwareRequest.User),
                 AdminId = hardwareRequest.AdminId,

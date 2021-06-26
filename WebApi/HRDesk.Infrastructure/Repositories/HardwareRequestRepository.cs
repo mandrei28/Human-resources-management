@@ -28,14 +28,13 @@ namespace HRDesk.Infrastructure.Repositories
 
         public IQueryable<HardwareRequest> GetAllByUserId(int userId)
         {
-            var date = DateTime.Now.AddDays(-5);
             return GetAll()
                 .OrderByDescending(a => a.Status == RequestStatus.Waiting).ThenBy(a => a.StartDate)
                 .Include(a => a.Admin).ThenInclude(a => a.CompanyDetails)
                 .Include(a => a.Admin).ThenInclude(a => a.PersonalDetails)
                 .Include(a => a.User).ThenInclude(a => a.CompanyDetails)
                 .Include(a => a.User).ThenInclude(a => a.PersonalDetails)
-                .Where(a => a.UserId == userId && a.StartDate > date && !a.IsDeleted);
+                .Where(a => a.UserId == userId && !a.IsDeleted);
         }
 
         public HardwareRequest GetById(int hardwarerequestId)

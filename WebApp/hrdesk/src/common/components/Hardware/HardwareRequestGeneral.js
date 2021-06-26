@@ -5,7 +5,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, useLogger } from "@material-ui/data-grid";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -17,6 +17,7 @@ import {
   CssBaseline,
   withStyles,
   Button,
+  Checkbox,
 } from "@material-ui/core";
 import { HardwareRequestTypes } from "../../../utils/constants";
 
@@ -31,6 +32,7 @@ class HardwareRequestGeneral extends Component {
         startDate: new Date(),
         endDate: new Date(),
       },
+      checked: true,
     };
     this.columns = [
       { field: "id", headerName: "ID", width: 70 },
@@ -40,14 +42,20 @@ class HardwareRequestGeneral extends Component {
         type: "date",
         headerName: "Start date",
         width: 140,
-        valueFormatter: (params) => params.value.split("T")[0],
+        valueFormatter: (params) =>
+          params.value.split("T")[0] === "0001-01-01"
+            ? "Permanent"
+            : params.value.split("T")[0],
       },
       {
         field: "endDate",
         type: "date",
         headerName: "End date",
         width: 140,
-        valueFormatter: (params) => params.value.split("T")[0],
+        valueFormatter: (params) =>
+          params.value.split("T")[0] === "0001-01-01"
+            ? "Permanent"
+            : params.value.split("T")[0],
       },
       {
         field: "status",
@@ -177,6 +185,7 @@ class HardwareRequestGeneral extends Component {
                     label="Start date"
                     fullWidth
                     required
+                    disabled={!this.state.checked}
                     value={this.state.hardwareRequest.startDate}
                     onChange={(event) =>
                       this.handleFieldChange(event, "startDate")
@@ -196,6 +205,7 @@ class HardwareRequestGeneral extends Component {
                     label="End date"
                     fullWidth
                     required
+                    disabled={!this.state.checked}
                     value={this.state.hardwareRequest.endDate}
                     onChange={(event) =>
                       this.handleFieldChange(event, "endDate")
@@ -205,6 +215,29 @@ class HardwareRequestGeneral extends Component {
                     }}
                   />
                 </Grid>
+                <Checkbox
+                  checked={this.state.checked}
+                  color="primary"
+                  inputProps={{ "aria-label": "secondary checkbox" }}
+                  style={{ marginTop: "25px" }}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      this.setState((prevState) => {
+                        const { hardwareRequest } = prevState;
+                        hardwareRequest.startDate = new Date();
+                        hardwareRequest.endDate = new Date();
+                        return { hardwareRequest, checked: true };
+                      });
+                    } else {
+                      this.setState((prevState) => {
+                        const { hardwareRequest } = prevState;
+                        hardwareRequest.startDate = null;
+                        hardwareRequest.endDate = null;
+                        return { hardwareRequest, checked: false };
+                      });
+                    }
+                  }}
+                />
                 <Grid
                   item
                   xs={12}

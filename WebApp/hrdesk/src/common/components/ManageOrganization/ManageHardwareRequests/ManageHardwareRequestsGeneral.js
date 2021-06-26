@@ -34,14 +34,20 @@ class ManageHardwareRequestsGeneral extends Component {
         type: "date",
         headerName: "Start date",
         width: 120,
-        valueFormatter: (params) => params.value.split("T")[0],
+        valueFormatter: (params) =>
+          params.value.split("T")[0] === "0001-01-01"
+            ? "Permanent"
+            : params.value.split("T")[0],
       },
       {
         field: "endDate",
         type: "string",
         headerName: "End date",
         width: 140,
-        valueFormatter: (params) => params.value.split("T")[0],
+        valueFormatter: (params) =>
+          params.value.split("T")[0] === "0001-01-01"
+            ? "Permanent"
+            : params.value.split("T")[0],
       },
       {
         field: "status",
