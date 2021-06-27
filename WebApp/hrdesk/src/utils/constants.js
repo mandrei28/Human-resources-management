@@ -2,6 +2,7 @@ export const Permissions = {
   Dashboard: 1,
   LeaveRequests: 2,
   DaysoffRequests: 3,
+  HardwareRequests: 12,
   Reports: 4,
   Meetings: 5,
   Team: 6,
@@ -10,13 +11,13 @@ export const Permissions = {
   ManageEmployees: 9,
   ManageHolidays: 10,
   ManageOrganization: 11,
-  HardwareRequests: 12,
 };
 
 export const PermissionsNames = {
   1: "Dashboard",
   2: "LeaveRequests",
   3: "DaysoffRequests",
+  12: "HardwareRequests",
   4: "Reports",
   5: "Meetings",
   6: "Team",
