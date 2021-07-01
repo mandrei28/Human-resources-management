@@ -129,7 +129,8 @@ class LeaveRequestGeneral extends Component {
   addLeaveRequest = async () => {
     if (
       this.state.leaveRequest.description !== "" &&
-      this.state.leaveRequest.admin !== null
+      this.state.leaveRequest.admin !== null &&
+      this.state.leaveRequest.startHour <= this.state.leaveRequest.endHour
     ) {
       const leaveRequestModel = await this.props.onAddLeaveRequest(
         this.state.leaveRequest

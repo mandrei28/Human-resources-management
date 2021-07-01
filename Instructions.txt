@@ -1,0 +1,11 @@
+1. Web app contains the frontend of the application. First of all the npm install command is needed to download all
+2. Then npm start to open the aplication
+
+3. Web api contains the backend of the application. The connection string needs to be set in the appsettings file. After the link to the database is done the command Update-database from package manager console should create the database.
+After that the application is usable, an user is created with the following credentials.
+Email : administrator@admin.com
+Password : administrator
+
+More details can be found in the section "How to use" from the documentation
+
+https://github.com/mandrei28/Human-resources-management

@@ -118,7 +118,11 @@ class DaysoffGeneral extends React.Component {
   };
 
   addDayoff = async (dayoff) => {
-    if (dayoff.description !== "" && dayoff.adminModel !== null) {
+    if (
+      dayoff.description !== "" &&
+      dayoff.adminModel !== null &&
+      dayoff.startDate <= dayoff.endDate
+    ) {
       const dayoffModel = await this.props.onAddDayoff(dayoff);
       await this.setState((prevState) => ({
         dayoffs: [dayoffModel, ...prevState.dayoffs],

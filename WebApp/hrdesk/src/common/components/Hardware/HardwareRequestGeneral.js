@@ -5,7 +5,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { DataGrid, useLogger } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -133,6 +133,15 @@ class HardwareRequestGeneral extends Component {
   };
 
   addHardwareRequest = async () => {
+    if (
+      this.state.hardwareRequest.startDate >
+        this.state.hardwareRequest.endDate &&
+      this.state.hardwareRequest.startDate !== null &&
+      this.state.hardwareRequest.endDate !== null
+    ) {
+      return;
+    }
+
     if (
       this.state.hardwareRequest.description !== "" &&
       this.state.hardwareRequest.admin !== null
