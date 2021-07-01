@@ -142,7 +142,7 @@ namespace HRDesk.Infrastructure
                 OfficeId = 1,
                 TeamId = 1,
                 Password = "AQAAAAEAACcQAAAAECB47GOoGMZ5MBmFGNmX95ffBJEzfsP/77XSzbcpeS6Oakk3M/CXQ0ul0M2SWn/pzg==",
-                WorkEmail = "administrator@company.com",
+                WorkEmail = "administrator@admin.com",
                 UpdatedDate = new DateTime(2021, 6, 5),
                 Predefined = true,
                 ImageSrc = null,
