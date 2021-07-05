@@ -17,7 +17,7 @@ namespace HRDesk.Services.Mappers
                 RRule = meeting.RecurrenceRule,
                 StartDate = meeting.StartDate,
                 EndDate = meeting.EndDate,
-                TeamId = meeting.TeamId.Value,
+                TeamId = meeting.TeamId != null ? meeting.TeamId.Value : 1,
                 RoomId = meeting.MeetingRoomId.Value,
                 RoomName = meeting.MeetingRoom.Name,
                 Notes = meeting.Notes,

@@ -54,7 +54,7 @@ class HomeGeneral extends React.Component {
               <Grid item xs={12} md={4} lg={4}>
                 <CustomCard
                   title="Human Resource"
-                  value={this.state.statistics.board}
+                  value={this.state.statistics.humanResource}
                 />
               </Grid>
               <Grid item xs={12} md={4} lg={4}>

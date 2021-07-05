@@ -156,7 +156,7 @@ class ManageDaysoffRequestsGeneral extends Component {
             <DataGrid
               rows={this.state.daysoff}
               columns={this.columns}
-              pageSize={10}
+              pageSize={9}
               rowHeight={45}
               disableSelectionOnClick={true}
               components={{

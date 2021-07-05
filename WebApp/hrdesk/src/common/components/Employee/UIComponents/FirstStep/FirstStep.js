@@ -141,6 +141,12 @@ export default class FirstStep extends Component {
                 onChange={(event) => this.props.handleChange(event, "cnp")}
                 margin="normal"
                 required
+                inputProps={{
+                  autocomplete: "new-password",
+                  form: {
+                    autocomplete: "off",
+                  },
+                }}
               />
             </Grid>
           </Grid>

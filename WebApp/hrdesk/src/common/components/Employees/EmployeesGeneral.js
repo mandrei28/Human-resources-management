@@ -157,7 +157,7 @@ class EmployeesGeneral extends Component {
                           rows={this.state.users}
                           columns={this.columns}
                           pageSize={15}
-                          rowHeight={43}
+                          rowHeight={41}
                           disableSelectionOnClick={true}
                           components={{
                             Toolbar: CustomToolbar,
